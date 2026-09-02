@@ -143,7 +143,7 @@
 <body>
     <div id="loading-overlay">
         <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
-        <span>Syncing Database...</span>
+        <span>Connecting to Server...</span>
     </div>
 
     <nav>
@@ -317,11 +317,14 @@
             <div class="course-grid" style="grid-template-columns: 350px 1fr; gap: 20px;">
                 <div class="card" style="height: fit-content;">
                     <h3 id="form-title" style="margin-bottom: 15px;">Enroll Student</h3>
-                    <input type="hidden" id="edit-idx" value="-1">
+                    <input type="hidden" id="edit-doc-id" value="">
+                    
                     <label>Full Name</label>
                     <input type="text" id="in-name" placeholder="Student Name">
+                    
                     <label>Phone Number</label>
                     <input type="tel" id="in-phone" placeholder="10-digit number">
+                    
                     <label>Program</label>
                     <select id="in-course">
                         <option value="ADCA">ADCA (₹11,000)</option>
@@ -330,8 +333,10 @@
                         <option value="DCA">DCA (₹7,000)</option>
                         <option value="Bootcamp">Bootcamp (₹5,000)</option>
                     </select>
+
                     <label>Advance Payment (₹)</label>
                     <input type="number" id="in-advance" placeholder="e.g. 1000">
+
                     <div id="edit-status-group" style="display:none;">
                         <label>Enrollment Status</label>
                         <select id="in-status">
@@ -340,6 +345,7 @@
                             <option value="Dropout">Dropout</option>
                         </select>
                     </div>
+
                     <button class="btn-action" onclick="saveStudent()">Save Record</button>
                     <button class="btn-action" id="cancel-edit-btn" onclick="resetForm()" style="background: var(--text-muted); margin-top: 10px; display:none;">Cancel</button>
                 </div>
@@ -525,15 +531,32 @@
         </div>
     </footer>
 
-    <script>
-        // Use the custom provided API URL
-        const API_URL = "https://script.google.com/macros/s/AKfycbz4vT-4B97ZQsznF2yDeMSOOrgX5VhUQhsEX3USu7UYxHIZuzuKuH4Y9pZizWm6JKND/exec";
+    <!-- FIREBASE COMPAT SDK LIBRARIES -->
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
 
-        let students = JSON.parse(localStorage.getItem('cb_students_db')) || [];
+    <script>
+        // ==========================================
+        // FIREBASE CONFIGURATION (ADDED)
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyCPexNAV26vJlBBQoPr90Zw_Q1R5kHEPDU",
+            authDomain: "careerbuild-af74b.firebaseapp.com",
+            projectId: "careerbuild-af74b",
+            storageBucket: "careerbuild-af74b.firebasestorage.app",
+            messagingSenderId: "433566227636",
+            appId: "1:433566227636:web:6f56122286d35693324be1"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // System Data
+        let students = [];
         let loggedUser = null;
         
         const courseFees = { "ADCA": 11000, "ADCPA": 12000, "Programming Basic": 12000, "DCA": 7000, "Bootcamp": 5000 };
-
         const syllabusData = {
             "ADCA": `<li><i class="fas fa-check-circle"></i> <b>Module 1:</b> Computer Fundamentals & OS</li><li><i class="fas fa-check-circle"></i> <b>Module 2:</b> MS Office (Word, Excel, PPT)</li><li><i class="fas fa-check-circle"></i> <b>Module 3:</b> Graphic Design (Canva, Photoshop)</li><li><i class="fas fa-check-circle"></i> <b>Module 4:</b> Web & Cyber Security Basics</li><li><i class="fas fa-check-circle"></i> <b>Module 5:</b> Tally Prime & Accounts</li>`,
             "ADCPA": `<li><i class="fas fa-check-circle"></i> <b>Module 1:</b> Advanced MS Office</li><li><i class="fas fa-check-circle"></i> <b>Module 2:</b> Advanced Design (Affinity, PS)</li><li><i class="fas fa-check-circle"></i> <b>Module 3:</b> Front-end Web (HTML, CSS)</li><li><i class="fas fa-check-circle"></i> <b>Module 4:</b> Financial Accounting</li><li><i class="fas fa-check-circle"></i> <b>Module 5:</b> Capstone Project</li>`,
@@ -542,40 +565,31 @@
             "Bootcamp": `<li><i class="fas fa-check-circle"></i> <b>Week 1-2:</b> HTML & CSS Crash Course</li><li><i class="fas fa-check-circle"></i> <b>Week 3-5:</b> Python Basics</li><li><i class="fas fa-check-circle"></i> <b>Week 6-8:</b> Mini Project Development</li>`
         };
 
-        // --- Database Sync Functions ---
-        async function fetchStudentsFromDB() {
-            try {
-                const response = await fetch(API_URL);
-                const data = await response.json();
-                if(data && Array.isArray(data)) {
-                    students = data;
-                    localStorage.setItem('cb_students_db', JSON.stringify(students));
+        // --- Firebase Realtime Listener ---
+        db.collection("students").onSnapshot((snapshot) => {
+            students = [];
+            snapshot.forEach((doc) => {
+                let sData = doc.data();
+                sData.docId = doc.id; 
+                students.push(sData);
+            });
+
+            if (loggedUser === 'admin') {
+                renderOverview();
+                renderStudents();
+                renderFinancials();
+                loadCertSelect();
+            } 
+            else if (loggedUser && typeof loggedUser === 'object') {
+                const freshData = students.find(s => s.id === loggedUser.id);
+                if (freshData) {
+                    loggedUser = freshData;
+                    setupStudentDash();
                 }
-            } catch (error) {
-                console.error("Failed to fetch students. Using local cache.");
             }
-        }
+        });
 
-        async function syncDatabase() {
-            localStorage.setItem('cb_students_db', JSON.stringify(students));
-            document.getElementById('loading-overlay').style.display = 'flex';
-            
-            try {
-                await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Added to bypass CORS issues
-                    body: JSON.stringify({ action: "SyncStudents", data: students })
-                });
-            } catch (e) {
-                console.error("Sync failed", e);
-            }
-            
-            document.getElementById('loading-overlay').style.display = 'none';
-        }
-
-        window.onload = () => { fetchStudentsFromDB(); };
-
-        // --- Security (Context Menu & Inspect Element Lock) ---
+        // --- Security ---
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (e.key === 'F12' || e.keyCode === 123 || ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || ((e.ctrlKey || e.metaKey) && e.key === 'U')) {
@@ -651,41 +665,55 @@
             document.getElementById('stat-dues').innerText = "₹" + dues.toLocaleString();
         }
 
-        function saveStudent() {
+        async function saveStudent() {
             const name = document.getElementById('in-name').value.trim();
             const phone = document.getElementById('in-phone').value.trim();
             const course = document.getElementById('in-course').value;
             const advance = parseFloat(document.getElementById('in-advance').value) || 0;
             const status = document.getElementById('in-status').value || 'Active';
-            const editIdx = parseInt(document.getElementById('edit-idx').value);
+            const docId = document.getElementById('edit-doc-id').value; 
             
             if(!name || !phone) return alert("Required: Name and Phone number");
             const totalFee = courseFees[course];
 
-            if(editIdx === -1) {
-                if(advance > totalFee) return alert("Advance exceeds total fee");
-                const id = "CB-" + (1000 + students.length + 1);
-                const joinDate = new Date().toLocaleDateString('en-GB');
-                students.push({ id, name, phone, course, status: 'Active', totalFee, paidFee: advance, grade: null, date: joinDate });
-            } else {
-                students[editIdx].name = name; students[editIdx].phone = phone; students[editIdx].course = course;
-                students[editIdx].status = status; students[editIdx].totalFee = totalFee;
+            document.getElementById('loading-overlay').style.display = 'flex';
+            
+            try {
+                if (docId === "") {
+                    if(advance > totalFee) { alert("Advance exceeds total fee"); document.getElementById('loading-overlay').style.display = 'none'; return; }
+                    const id = "CB-" + (1000 + students.length + 1);
+                    const joinDate = new Date().toLocaleDateString('en-GB');
+                    
+                    await db.collection("students").add({
+                        id: id, name: name, phone: phone, course: course, status: 'Active', totalFee: totalFee, paidFee: advance, grade: null, date: joinDate
+                    });
+                } else {
+                    await db.collection("students").doc(docId).update({
+                        name: name, phone: phone, course: course, status: status, totalFee: totalFee
+                    });
+                }
+                resetForm();
+            } catch (error) {
+                console.error("Error saving to database:", error);
+                alert("Failed to save. Please try again.");
             }
-
-            resetForm(); renderStudents(); renderOverview();
-            syncDatabase();
+            
+            document.getElementById('loading-overlay').style.display = 'none';
         }
 
         function resetForm() {
             ['in-name', 'in-phone', 'in-advance'].forEach(id => document.getElementById(id).value = "");
-            document.getElementById('edit-idx').value = "-1"; document.getElementById('form-title').innerText = "Enroll Student";
+            document.getElementById('edit-doc-id').value = ""; document.getElementById('form-title').innerText = "Enroll Student";
             document.getElementById('in-advance').disabled = false; document.getElementById('edit-status-group').style.display = 'none';
             document.getElementById('cancel-edit-btn').style.display = 'none';
         }
 
         function renderStudents() {
             const list = document.getElementById('student-list'); list.innerHTML = "";
-            students.forEach((s, idx) => {
+            // Sort by ID to keep the list organized
+            let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
+            
+            sortedStudents.forEach((s) => {
                 let badgeClass = s.status === 'Completed' ? 'badge-completed' : s.status === 'Dropout' ? 'badge-dropout' : 'badge-active';
                 list.innerHTML += `<tr>
                     <td style="font-weight:700;">${s.id}</td>
@@ -693,72 +721,83 @@
                     <td>${s.course}<br><span style="color:var(--text-muted); font-size:0.8rem;">Joined: ${s.date}</span></td>
                     <td><span class="badge ${badgeClass}">${s.status}</span></td>
                     <td>
-                        <button onclick="editStd(${idx})" style="border:none; background:none; color:var(--primary); cursor:pointer; font-size:1.1rem; margin-right:15px;"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteStd(${idx})" style="border:none; background:none; color:var(--danger); cursor:pointer; font-size:1.1rem;"><i class="fas fa-trash"></i></button>
+                        <button onclick="editStd('${s.docId}')" style="border:none; background:none; color:var(--primary); cursor:pointer; font-size:1.1rem; margin-right:15px;"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteStd('${s.docId}')" style="border:none; background:none; color:var(--danger); cursor:pointer; font-size:1.1rem;"><i class="fas fa-trash"></i></button>
                     </td></tr>`;
             });
         }
 
-        function editStd(idx) {
-            const s = students[idx];
+        function editStd(docId) {
+            const s = students.find(student => student.docId === docId);
+            if(!s) return;
+            
             document.getElementById('in-name').value = s.name; document.getElementById('in-phone').value = s.phone;
             document.getElementById('in-course').value = s.course; document.getElementById('in-status').value = s.status;
             document.getElementById('edit-status-group').style.display = 'block'; document.getElementById('in-advance').value = "";
             document.getElementById('in-advance').disabled = true; document.getElementById('in-advance').placeholder = "Update in Finances tab";
-            document.getElementById('edit-idx').value = idx; document.getElementById('form-title').innerText = "Edit Student";
+            document.getElementById('edit-doc-id').value = s.docId; document.getElementById('form-title').innerText = "Edit Student";
             document.getElementById('cancel-edit-btn').style.display = 'block'; window.scrollTo(0,0);
         }
 
-        function deleteStd(idx) {
+        async function deleteStd(docId) {
             if(confirm("Permanently delete this student?")) {
-                students.splice(idx, 1); renderStudents(); renderOverview();
-                syncDatabase();
+                document.getElementById('loading-overlay').style.display = 'flex';
+                await db.collection("students").doc(docId).delete();
+                document.getElementById('loading-overlay').style.display = 'none';
             }
         }
 
         function renderFinancials() {
             const list = document.getElementById('finance-list'); list.innerHTML = "";
-            students.forEach((s, idx) => {
+            let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
+
+            sortedStudents.forEach((s) => {
                 const due = s.totalFee - s.paidFee;
                 const dueColor = due > 0 ? 'var(--danger)' : 'var(--secondary)';
                 list.innerHTML += `<tr>
                     <td style="font-weight:700;">${s.id}</td><td><b>${s.name}</b></td>
                     <td>₹${s.totalFee.toLocaleString()}</td><td>₹${s.paidFee.toLocaleString()}</td>
                     <td style="color: ${dueColor}; font-weight: 800;">₹${due.toLocaleString()}</td>
-                    <td>${due > 0 ? `<div style="display:flex; gap:8px;"><input type="number" id="pay-${idx}" placeholder="Amt" style="width: 80px; padding: 6px; margin:0;"><button class="btn-action btn-small" onclick="addPayment(${idx})">Pay</button></div>` : `<span style="color:var(--secondary); font-weight:700;"><i class="fas fa-check-circle"></i> Cleared</span>`}</td>
+                    <td>${due > 0 ? `<div style="display:flex; gap:8px;"><input type="number" id="pay-${s.docId}" placeholder="Amt" style="width: 80px; padding: 6px; margin:0;"><button class="btn-action btn-small" onclick="addPayment('${s.docId}')">Pay</button></div>` : `<span style="color:var(--secondary); font-weight:700;"><i class="fas fa-check-circle"></i> Cleared</span>`}</td>
                 </tr>`;
             });
         }
 
-        function addPayment(idx) {
-            const amt = parseFloat(document.getElementById(`pay-${idx}`).value);
+        async function addPayment(docId) {
+            const inputField = document.getElementById(`pay-${docId}`);
+            const amt = parseFloat(inputField.value);
             if(!amt || amt <= 0) return alert("Invalid amount.");
-            const due = students[idx].totalFee - students[idx].paidFee;
+            
+            const s = students.find(student => student.docId === docId);
+            const due = s.totalFee - s.paidFee;
             if(amt > due) return alert(`Cannot exceed due of ₹${due}`);
             
-            students[idx].paidFee += amt;
-            renderFinancials(); renderOverview();
-            syncDatabase();
+            document.getElementById('loading-overlay').style.display = 'flex';
+            await db.collection("students").doc(docId).update({ paidFee: s.paidFee + amt });
+            document.getElementById('loading-overlay').style.display = 'none';
         }
 
         // --- Certificate Admin ---
         function loadCertSelect() {
             const sel = document.getElementById('cert-select-student');
             sel.innerHTML = '<option value="">-- Select Eligible Student --</option>';
-            students.forEach(s => sel.innerHTML += `<option value="${s.id}">${s.id} - ${s.name}</option>`);
+            students.forEach(s => sel.innerHTML += `<option value="${s.docId}">${s.id} - ${s.name}</option>`);
         }
 
-        function generateCert() {
-            const sid = document.getElementById('cert-select-student').value;
+        async function generateCert() {
+            const docId = document.getElementById('cert-select-student').value;
             const grade = document.getElementById('cert-grade').value.trim();
-            if(!sid || !grade) return alert("Select student and enter grade.");
+            if(!docId || !grade) return alert("Select student and enter grade.");
             
-            const student = students.find(s => s.id === sid);
-            if((student.totalFee - student.paidFee) > 0) return alert(`Blocked: ${student.name} has pending dues of ₹${student.totalFee - student.paidFee}.`);
+            const s = students.find(student => student.docId === docId);
+            if((s.totalFee - s.paidFee) > 0) return alert(`Blocked: ${s.name} has pending dues of ₹${s.totalFee - s.paidFee}.`);
             
-            student.grade = grade; student.status = 'Completed';
-            openCertificate(student); renderOverview();
-            syncDatabase();
+            document.getElementById('loading-overlay').style.display = 'flex';
+            await db.collection("students").doc(docId).update({ grade: grade, status: 'Completed' });
+            
+            s.grade = grade; 
+            document.getElementById('loading-overlay').style.display = 'none';
+            openCertificate(s);
         }
 
         function openCertificate(s) {
@@ -843,10 +882,11 @@
             document.getElementById('loading-overlay').style.display = 'flex';
             
             try {
-                await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Added to bypass CORS
-                    body: JSON.stringify({ action: "Admissions", name: name, phone: phone, course: course })
+                await db.collection("admissions").add({
+                    name: name,
+                    phone: phone,
+                    course: course,
+                    date: new Date().toLocaleString()
                 });
             } catch(e) { 
                 console.error("Submission failed", e); 
