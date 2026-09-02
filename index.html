@@ -137,11 +137,14 @@
             #view-manage .course-grid { grid-template-columns: 1fr; }
         }
         
-        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 3000; justify-content: center; align-items: center; font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 3000; justify-content: center; align-items: center; font-weight: 700; color: var(--primary); font-size: 1.2rem; flex-direction: column;}
     </style>
 </head>
 <body>
-    <div id="loading-overlay"><i class="fas fa-spinner fa-spin" style="margin-right: 10px;"></i> Syncing Database...</div>
+    <div id="loading-overlay">
+        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
+        <span>Syncing Database...</span>
+    </div>
 
     <nav>
         <div class="logo">CAREER <span>BUILD</span></div>
@@ -171,7 +174,6 @@
         <div style="padding: 60px 5%;">
             <h2 class="section-title">Explore Our Programs</h2>
             <div class="course-grid">
-                <!-- Courses here -->
                 <div class="course-card">
                     <div class="course-tag">Diploma</div>
                     <h3>ADCA</h3>
@@ -519,17 +521,14 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Career Build Computer Education. All rights reserved.</p>
+            <p>&copy; 2026 Career Build Computer Education & Cyber Solution. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // ==========================================
-        // PASTE YOUR GOOGLE WEB APP URL HERE:
-        // ==========================================
-        const API_URL = "https://script.google.com/macros/library/d/1FfazaJiy7aEco33YCEbqVDLMn1H0rjFcJ2AD_V5TSNt5kt-HeDNAlOML/2"; 
+        // Use the custom provided API URL
+        const API_URL = "https://script.google.com/macros/s/AKfycbz4vT-4B97ZQsznF2yDeMSOOrgX5VhUQhsEX3USu7UYxHIZuzuKuH4Y9pZizWm6JKND/exec";
 
-        // System Data
         let students = JSON.parse(localStorage.getItem('cb_students_db')) || [];
         let loggedUser = null;
         
@@ -545,11 +544,10 @@
 
         // --- Database Sync Functions ---
         async function fetchStudentsFromDB() {
-            if(API_URL === "YOUR_WEB_APP_URL_HERE") return; // Skip if URL not set
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                if(data && data.length > 0) {
+                if(data && Array.isArray(data)) {
                     students = data;
                     localStorage.setItem('cb_students_db', JSON.stringify(students));
                 }
@@ -559,25 +557,25 @@
         }
 
         async function syncDatabase() {
-            localStorage.setItem('cb_students_db', JSON.stringify(students)); // Save locally first
-            if(API_URL === "YOUR_WEB_APP_URL_HERE") return; // Skip if URL not set
-            
+            localStorage.setItem('cb_students_db', JSON.stringify(students));
             document.getElementById('loading-overlay').style.display = 'flex';
+            
             try {
                 await fetch(API_URL, {
                     method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Added to bypass CORS issues
                     body: JSON.stringify({ action: "SyncStudents", data: students })
                 });
             } catch (e) {
                 console.error("Sync failed", e);
             }
+            
             document.getElementById('loading-overlay').style.display = 'none';
         }
 
-        // Fetch on load
         window.onload = () => { fetchStudentsFromDB(); };
 
-        // --- Security (Context Menu) ---
+        // --- Security (Context Menu & Inspect Element Lock) ---
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => {
             if (e.key === 'F12' || e.keyCode === 123 || ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || ((e.ctrlKey || e.metaKey) && e.key === 'U')) {
@@ -619,7 +617,7 @@
                 document.getElementById('logout-nav').style.display = 'inline-block';
                 document.getElementById('std-id-login').value = '';
                 setupStudentDash(); switchStdTab('overview'); showPage('student-dash');
-            } else { alert("Student ID not found!"); }
+            } else { alert("Student ID not found in database."); }
         }
 
         function logout() {
@@ -675,7 +673,7 @@
             }
 
             resetForm(); renderStudents(); renderOverview();
-            syncDatabase(); // Sync to Sheets
+            syncDatabase();
         }
 
         function resetForm() {
@@ -714,7 +712,7 @@
         function deleteStd(idx) {
             if(confirm("Permanently delete this student?")) {
                 students.splice(idx, 1); renderStudents(); renderOverview();
-                syncDatabase(); // Sync to Sheets
+                syncDatabase();
             }
         }
 
@@ -740,7 +738,7 @@
             
             students[idx].paidFee += amt;
             renderFinancials(); renderOverview();
-            syncDatabase(); // Sync to Sheets
+            syncDatabase();
         }
 
         // --- Certificate Admin ---
@@ -760,7 +758,7 @@
             
             student.grade = grade; student.status = 'Completed';
             openCertificate(student); renderOverview();
-            syncDatabase(); // Sync to Sheets
+            syncDatabase();
         }
 
         function openCertificate(s) {
@@ -842,19 +840,21 @@
             const course = document.getElementById('apply-course').value;
             if(!name || !phone || !course) return alert("Fill all fields.");
             
-            // Sync Admission to Google Sheet (if API_URL is set)
-            if(API_URL !== "YOUR_WEB_APP_URL_HERE") {
-                document.getElementById('loading-overlay').style.display = 'flex';
-                try {
-                    await fetch(API_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ action: "Admissions", name: name, phone: phone, course: course })
-                    });
-                } catch(e) { console.error(e); }
-                document.getElementById('loading-overlay').style.display = 'none';
+            document.getElementById('loading-overlay').style.display = 'flex';
+            
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Added to bypass CORS
+                    body: JSON.stringify({ action: "Admissions", name: name, phone: phone, course: course })
+                });
+            } catch(e) { 
+                console.error("Submission failed", e); 
             }
             
+            document.getElementById('loading-overlay').style.display = 'none';
             alert("Application submitted successfully. Our counselor will contact you via WhatsApp shortly.");
+            
             const msg = `*New Admission Inquiry*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course:* ${course}`;
             window.open(`https://wa.me/916003778059?text=${msg}`, '_blank');
             
