@@ -110,9 +110,10 @@
         .cert-name { font-size: 2.5rem; font-weight: 700; margin: 20px 0; color: var(--dark); }
         
         /* Student Tabs Specific */
-        .std-syllabus-list li { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); list-style-type: none; }
+        .std-syllabus-list li { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); list-style-type: none; line-height: 1.7; }
         .std-syllabus-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .std-syllabus-list i { color: var(--primary); margin-right: 8px; }
+        .std-syllabus-list i { color: var(--primary); margin-right: 12px; font-size: 1.1rem; }
+        .std-syllabus-list b { color: var(--dark); }
         
         /* Footer */
         footer { background: var(--dark); color: #CBD5E1; padding: 60px 5% 40px; margin-top: 80px; }
@@ -263,7 +264,7 @@
             
             <div class="card" id="form-student">
                 <label>Student ID</label>
-                <input type="text" id="std-id-login" placeholder="e.g. CB-1001">
+                <input type="text" id="std-id-login" placeholder="student id">
                 <button class="btn-action" onclick="loginStudent()">Access Portal</button>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--text-muted);">Enter ID provided at admission</p>
             </div>
@@ -523,12 +524,12 @@
             </div>
             <div>
                 <h4>Operating Hours</h4>
-                <p>Monday - Saturday<br>08:00 AM - 10:00 PM</p>
-                <p>Sunday<br>08:00 AM - 2:00 PM</p>
+                <p>Monday - Sunday<br>08:00 AM - 10:00 PM</p>
+                <p> Sunday<br>08:00 AM - 2:00 PM</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Career Build Computer Education & Cyber Solution. All rights reserved.</p>
+            <p>&copy; 2026 Career Build Computer Education. All rights reserved.</p>
         </div>
     </footer>
 
@@ -538,7 +539,7 @@
 
     <script>
         // ==========================================
-        // FIREBASE CONFIGURATION (ADDED)
+        // FIREBASE CONFIGURATION
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyCPexNAV26vJlBBQoPr90Zw_Q1R5kHEPDU",
@@ -558,12 +559,57 @@
         let loggedUser = null;
         
         const courseFees = { "ADCA": 11000, "ADCPA": 12000, "Programming Basic": 12000, "DCA": 7000, "Bootcamp": 5000 };
+        
+        // Updated Syllabus Data mapping based on provided documents
         const syllabusData = {
-            "ADCA": `<li><i class="fas fa-check-circle"></i> <b>Module 1:</b> Computer Fundamentals & OS</li><li><i class="fas fa-check-circle"></i> <b>Module 2:</b> MS Office (Word, Excel, PPT)</li><li><i class="fas fa-check-circle"></i> <b>Module 3:</b> Graphic Design (Canva, Photoshop)</li><li><i class="fas fa-check-circle"></i> <b>Module 4:</b> Web & Cyber Security Basics</li><li><i class="fas fa-check-circle"></i> <b>Module 5:</b> Tally Prime & Accounts</li>`,
-            "ADCPA": `<li><i class="fas fa-check-circle"></i> <b>Module 1:</b> Advanced MS Office</li><li><i class="fas fa-check-circle"></i> <b>Module 2:</b> Advanced Design (Affinity, PS)</li><li><i class="fas fa-check-circle"></i> <b>Module 3:</b> Front-end Web (HTML, CSS)</li><li><i class="fas fa-check-circle"></i> <b>Module 4:</b> Financial Accounting</li><li><i class="fas fa-check-circle"></i> <b>Module 5:</b> Capstone Project</li>`,
-            "Programming Basic": `<li><i class="fas fa-check-circle"></i> <b>Module 1:</b> C Programming & Logic</li><li><i class="fas fa-check-circle"></i> <b>Module 2:</b> Python Programming</li><li><i class="fas fa-check-circle"></i> <b>Module 3:</b> Web Basics (HTML & CSS)</li><li><i class="fas fa-check-circle"></i> <b>Module 4:</b> Database Concepts (MongoDB)</li><li><i class="fas fa-check-circle"></i> <b>Module 5:</b> Simple App Building</li>`,
-            "DCA": `<li><i class="fas fa-check-circle"></i> <b>Module 1:</b> Computer Basics</li><li><i class="fas fa-check-circle"></i> <b>Module 2:</b> MS Office Suite mastery</li><li><i class="fas fa-check-circle"></i> <b>Module 3:</b> Internet Fundamentals</li><li><i class="fas fa-check-circle"></i> <b>Module 4:</b> Basic Tally Applications</li>`,
-            "Bootcamp": `<li><i class="fas fa-check-circle"></i> <b>Week 1-2:</b> HTML & CSS Crash Course</li><li><i class="fas fa-check-circle"></i> <b>Week 3-5:</b> Python Basics</li><li><i class="fas fa-check-circle"></i> <b>Week 6-8:</b> Mini Project Development</li>`
+            "ADCA": `
+                <li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li>
+                <li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li>
+                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
+                <li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li>
+                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li>
+                <li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li>
+                <li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li>
+                <li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li>
+                <li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li>
+                <li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li>
+                <li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
+            
+            "ADCPA": `
+                <li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li>
+                <li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li>
+                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
+                <li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li>
+                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li>
+                <li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li>
+                <li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li>
+                <li><i class="fas fa-bezier-curve"></i> <b>AFFINITY:</b> Vector vs Pixel, Tools, Shape Building, Creating Designs</li>
+                <li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li>
+                <li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li>
+                <li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li>
+                <li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
+            
+            "Programming Basic": `
+                <li><i class="fab fa-python"></i> <b>PYTHON (ENTRY LEVEL):</b> Intro to Programming, VS Code, Variables, Input/Output, Logic (If/Else, Operators), Loops (For)</li>
+                <li><i class="fab fa-html5"></i> <b>HTML & CSS:</b> Website Architecture, Tags, Styling, Designing with CSS</li>
+                <li><i class="fas fa-robot"></i> <b>AI INTEGRATION:</b> ChatGPT, Gemini, Handling Python & Web Dev using Prompts</li>
+                <li><i class="fas fa-code-branch"></i> <b>ADVANCE WEB DEV + AI:</b> Deep Web Concepts, Advance CSS/JS via AI, Bootstrap, Tailwind, Final Project & Exam</li>`,
+            
+            "DCA": `
+                <li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint</li>
+                <li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, File Management, Editing, Margins, Headers, Inserting Elements, Shortcuts, Document Design</li>
+                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
+                <li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li>
+                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li>
+                <li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li>
+                <li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li>
+                <li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
+            
+            "Bootcamp": `
+                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Handling, Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
+                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Management, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet</li>
+                <li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Tools, Page Layouts, Shortcuts, Pen Tool, Creating Designs</li>
+                <li><i class="fas fa-graduation-cap"></i> <b>FINAL EXAM:</b> Course Assessment</li>`
         };
 
         // --- Firebase Realtime Listener ---
@@ -711,7 +757,6 @@
 
         function renderStudents() {
             const list = document.getElementById('student-list'); list.innerHTML = "";
-            // Sort by ID to keep the list organized
             let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
             
             sortedStudents.forEach((s) => {
