@@ -23,8 +23,22 @@
             --border: #E2E8F0;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
         
+        /* Security: Disable Text Selection everywhere EXCEPT inputs */
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+        input, select, textarea {
+            -webkit-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
         /* Navigation */
         nav { background: var(--white); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .logo { font-weight: 800; font-size: 1.2rem; color: var(--dark); letter-spacing: -0.5px; }
@@ -264,7 +278,7 @@
             
             <div class="card" id="form-student">
                 <label>Student ID</label>
-                <input type="text" id="std-id-login" placeholder="student id">
+                <input type="text" id="std-id-login" placeholder="e.g. CB-1001">
                 <button class="btn-action" onclick="loginStudent()">Access Portal</button>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--text-muted);">Enter ID provided at admission</p>
             </div>
@@ -520,12 +534,11 @@
                 <h4>Contact Us</h4>
                 <p><i class="fas fa-map-marker-alt"></i> Shop No 5, Lalganesh, Banikpara, Guwahati, Assam - 781034</p>
                 <p><i class="fas fa-phone"></i> +91 6003778059</p>
-                <p><i class="fas fa-envelope"></i> devarb22@gmail.com</p>
+                <p><i class="fas fa-envelope"></i> admissions@careerbuild.in</p>
             </div>
             <div>
                 <h4>Operating Hours</h4>
                 <p>Monday - Sunday<br>08:00 AM - 10:00 PM</p>
-                <p> Sunday<br>08:00 AM - 2:00 PM</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -538,6 +551,54 @@
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore-compat.js"></script>
 
     <script>
+        // ==========================================
+        // ADVANCED SECURITY BLOCK
+        // ==========================================
+        // Prevent Right Click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Prevent Developer Tools & View Source Shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Disable F12
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Disable Ctrl+Shift+I / Cmd+Option+I (Inspect)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
+                e.preventDefault();
+                return false;
+            }
+            // Disable Ctrl+Shift+C / Cmd+Option+C (Inspect Element)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) {
+                e.preventDefault();
+                return false;
+            }
+            // Disable Ctrl+Shift+J / Cmd+Option+J (Console)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
+                e.preventDefault();
+                return false;
+            }
+            // Disable Ctrl+U / Cmd+U (View Source)
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
+                e.preventDefault();
+                return false;
+            }
+            // Disable Ctrl+S / Cmd+S (Save Page)
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's' || e.keyCode === 83)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Optional: Block manual copying to clipboard to protect syllabus content
+        document.addEventListener('copy', function(e) {
+            e.clipboardData.setData('text/plain', 'Content copying is disabled by Career Build Security.');
+            e.preventDefault();
+        });
+
         // ==========================================
         // FIREBASE CONFIGURATION
         // ==========================================
@@ -633,14 +694,6 @@
                     loggedUser = freshData;
                     setupStudentDash();
                 }
-            }
-        });
-
-        // --- Security ---
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.addEventListener('keydown', e => {
-            if (e.key === 'F12' || e.keyCode === 123 || ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || ((e.ctrlKey || e.metaKey) && e.key === 'U')) {
-                e.preventDefault(); return false;
             }
         });
 
