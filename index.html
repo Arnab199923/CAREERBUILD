@@ -10,10 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4F46E5; /* Indigo 600 */
+            /* Default Colors */
+            --primary: #4F46E5; 
             --primary-hover: #4338CA;
-            --secondary: #10B981; /* Emerald */
-            --dark: #0F172A; /* Slate 900 */
+            --secondary: #10B981; 
+            --dark: #0F172A; 
             --text-main: #1E293B;
             --text-muted: #64748B;
             --bg-body: #F8FAFC;
@@ -21,27 +22,17 @@
             --danger: #EF4444;
             --warning: #F59E0B;
             --border: #E2E8F0;
+            --hero-bg: linear-gradient(180deg, #EEF2FF 0%, var(--bg-body) 100%);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        /* Security: Disable Text Selection everywhere EXCEPT inputs */
-        body { 
-            background-color: var(--bg-body); 
-            color: var(--text-main); 
-            line-height: 1.6; 
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10 and IE 11 */
-            user-select: none; /* Standard syntax */
-        }
-        input, select, textarea {
-            -webkit-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-        }
+        /* Security */
+        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; -webkit-user-select: none; -ms-user-select: none; user-select: none; transition: background-color 0.5s ease; }
+        input, select, textarea { -webkit-user-select: text; -ms-user-select: text; user-select: text; }
 
         /* Navigation */
         nav { background: var(--white); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 800; font-size: 1.2rem; color: var(--dark); letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 1.2rem; color: var(--dark); letter-spacing: -0.5px; transition: color 0.3s; }
         .logo span { color: var(--primary); }
         .nav-links button { background: transparent; color: var(--text-main); border: none; padding: 8px 16px; margin-left: 5px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; }
         .nav-links button:hover { background: var(--bg-body); color: var(--primary); }
@@ -53,22 +44,31 @@
         .page-section.active { display: block; animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .card { background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
-        input, select { width: 100%; padding: 14px; margin: 8px 0 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; transition: border-color 0.2s; }
+        input, select, textarea { width: 100%; padding: 14px; margin: 8px 0 16px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; transition: border-color 0.2s; font-family: 'Inter', sans-serif;}
         input[type="radio"] { width: auto; margin-right: 8px; margin-bottom: 0; cursor: pointer; }
-        input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
         .quiz-option { display: flex; align-items: center; margin-bottom: 10px; background: var(--bg-body); padding: 10px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; }
         .quiz-option:hover { border-color: var(--primary); }
         label { font-weight: 500; font-size: 0.9rem; color: var(--text-main); }
-        .btn-action { width: 100%; padding: 14px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: 0.2s; }
+        .btn-action { width: 100%; padding: 14px; background: var(--primary); color: var(--white); border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: 0.2s; position: relative; z-index: 10;}
         .btn-action:hover { background: var(--primary-hover); }
         .btn-small { padding: 8px 16px; font-size: 0.85rem; width: auto; }
         
-        /* Hero Section */
-        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 80px 20px 60px; background: linear-gradient(180deg, #EEF2FF 0%, var(--bg-body) 100%); }
-        .badge-hero { background: #E0E7FF; color: var(--primary); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; margin-bottom: 24px; display: inline-block; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; color: var(--dark); line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
-        .text-gradient { background: linear-gradient(135deg, var(--primary) 0%, #9333EA 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; }
+        /* FESTIVE HERO SECTION */
+        .hero { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 80px 20px 60px; background: var(--hero-bg); transition: background 1s ease; }
+        .hero-content { position: relative; z-index: 2; }
+        #festive-decor { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; display: none; }
+        
+        /* Floating Animations for Festive Icons */
+        .float-anim { position: absolute; animation: floatUp 4s ease-in-out infinite alternate; opacity: 0.8; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.2)); }
+        .float-anim-rev { position: absolute; animation: floatDown 5s ease-in-out infinite alternate; opacity: 0.8; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.2)); }
+        @keyframes floatUp { from { transform: translateY(0px) rotate(0deg); } to { transform: translateY(-25px) rotate(10deg); } }
+        @keyframes floatDown { from { transform: translateY(0px) rotate(0deg); } to { transform: translateY(25px) rotate(-10deg); } }
+
+        .badge-hero { background: #E0E7FF; color: var(--primary); padding: 8px 20px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; margin-bottom: 24px; display: inline-block; border: 1px solid var(--primary); transition: all 0.5s;}
+        .hero h1 { font-size: 3.5rem; font-weight: 800; color: var(--dark); line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; transition: color 0.5s;}
+        .text-gradient { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-weight: 500; transition: color 0.5s;}
         
         /* Trust Bar */
         .trust-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; padding: 30px 5%; background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -79,7 +79,7 @@
         .section-title { text-align: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; }
         .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
         .course-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s ease; display: flex; flex-direction: column; }
-        .course-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #C7D2FE; }
+        .course-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: var(--primary); }
         .course-tag { background: #FEF3C7; color: #D97706; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
         .course-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
         .course-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
@@ -115,6 +115,12 @@
         
         .login-box { max-width: 400px; margin: 60px auto; }
         .login-box .tabs button { flex: 1; text-align: center; }
+        
+        /* Doubt Panels */
+        .doubt-card { border: 1px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: var(--bg-body); }
+        .doubt-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;}
+        .doubt-q { font-weight: 600; color: var(--dark); margin-bottom: 10px; }
+        .doubt-ans { background: #E0E7FF; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); font-size: 0.9rem; color: var(--dark); margin-top: 10px;}
         
         /* Certificate */
         #cert-wrapper { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 2000; overflow-y: auto; padding: 40px 20px; }
@@ -162,7 +168,7 @@
     </div>
 
     <nav>
-        <div class="logo">CAREER <span>BUILD</span></div>
+        <div class="logo" id="main-logo">CAREER <span>BUILD</span></div>
         <div class="nav-links">
             <button onclick="showPage('home')">Home</button>
             <button onclick="showPage('login')" id="login-nav">Login</button>
@@ -173,11 +179,16 @@
 
     <!-- Home Page -->
     <section id="home" class="page-section active" style="padding-top: 0;">
-        <div class="hero">
-            <span class="badge-hero">📢 Admissions Open - Enroll Today!</span>
-            <h1>Build Your Future with <span class="text-gradient">Essential Tech Skills</span></h1>
-            <p>Master basic to advanced computer applications, programming, and design with our hands-on, practical training programs tailored for your success.</p>
-            <button onclick="showPage('apply')" class="btn-action" style="max-width: 200px;">Start Your Journey</button>
+        <div class="hero" id="hero-section">
+            <!-- Dynamic Festive Decorations Container -->
+            <div id="festive-decor"></div>
+            
+            <div class="hero-content">
+                <span class="badge-hero" id="hero-badge">📢 Admissions Open - Enroll Today!</span>
+                <h1 id="hero-title">Build Your Future with <span class="text-gradient" id="hero-gradient">Essential Tech Skills</span></h1>
+                <p id="hero-desc">Master basic to advanced computer applications, programming, and design with our hands-on, practical training programs tailored for your success.</p>
+                <button onclick="showPage('apply')" class="btn-action" style="max-width: 200px; font-size: 1.1rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">Start Your Journey</button>
+            </div>
         </div>
         
         <div class="trust-bar">
@@ -195,7 +206,6 @@
                     <p>Advanced Diploma in Computer Application.</p>
                     <div class="course-features">
                         <div><i class="fas fa-book"></i> Office, Tally, PS, Canva, Web</div>
-                        <div><i class="fas fa-clock"></i> 12 Months Duration</div>
                     </div>
                     <div class="course-price">
                         <div><span class="price-amt">₹11,000</span><br><span class="price-sub">Total Fee</span></div>
@@ -208,7 +218,6 @@
                     <p>Advanced Diploma in Computer Pro Application.</p>
                     <div class="course-features">
                         <div><i class="fas fa-book"></i> ADCA + Affinity & Adv. Web Dev</div>
-                        <div><i class="fas fa-clock"></i> 12 Months Duration</div>
                     </div>
                     <div class="course-price">
                         <div><span class="price-amt">₹12,000</span><br><span class="price-sub">Total Fee</span></div>
@@ -221,7 +230,6 @@
                     <p>Master Python, Web Design, and AI implementations.</p>
                     <div class="course-features">
                         <div><i class="fas fa-code"></i> Python, HTML, CSS, JS</div>
-                        <div><i class="fas fa-clock"></i> Flexible Duration</div>
                     </div>
                     <div class="course-price">
                         <div><span class="price-amt">₹12,000</span><br><span class="price-sub">Total Fee</span></div>
@@ -234,7 +242,6 @@
                     <p>Diploma in Computer Application.</p>
                     <div class="course-features">
                         <div><i class="fas fa-book"></i> MS Office, Tally Prime, Canva</div>
-                        <div><i class="fas fa-clock"></i> 8 Months Duration</div>
                     </div>
                     <div class="course-price">
                         <div><span class="price-amt">₹7,000</span><br><span class="price-sub">Total Fee</span></div>
@@ -257,11 +264,11 @@
             <label>Select Program</label>
             <select id="apply-course" required>
                 <option value="" disabled selected>Choose a course...</option>
-                <option value="ADCA">ADCA (1 Year)</option>
-                <option value="ADCPA">ADCPA (1 Year)</option>
+                <option value="ADCA">ADCA</option>
+                <option value="ADCPA">ADCPA</option>
                 <option value="Programming Basic">Programming Basic</option>
-                <option value="DCA">DCA (8 Months)</option>
-                <option value="Bootcamp">Bootcamp (2 Months)</option>
+                <option value="DCA">DCA</option>
+                <option value="Bootcamp">Bootcamp</option>
             </select>
             <button class="btn-action" onclick="submitApplication()" style="margin-top: 10px;">Submit Application</button>
         </div>
@@ -296,10 +303,13 @@
     <!-- Admin Dashboard -->
     <section id="admin-dash" class="page-section">
         <h2 style="font-weight: 800; margin-bottom: 20px;">Admin Workspace</h2>
+        
         <div class="tabs">
             <button id="tab-overview" class="active" onclick="switchAdminTab('overview')"><i class="fas fa-chart-line"></i> Dashboard</button>
             <button id="tab-mng" onclick="switchAdminTab('manage')"><i class="fas fa-users"></i> Directory</button>
             <button id="tab-fin" onclick="switchAdminTab('finance')"><i class="fas fa-wallet"></i> Finances</button>
+            <button id="tab-inq" onclick="switchAdminTab('inquiries')"><i class="fas fa-envelope"></i> Inquiries</button>
+            <button id="tab-admin-doubts" onclick="switchAdminTab('doubts')"><i class="fas fa-question-circle"></i> Doubts</button>
             <button id="tab-cert" onclick="switchAdminTab('cert')"><i class="fas fa-certificate"></i> Certificates</button>
         </div>
 
@@ -333,13 +343,8 @@
                 <div class="card" style="height: fit-content;">
                     <h3 id="form-title" style="margin-bottom: 15px;">Enroll Student</h3>
                     <input type="hidden" id="edit-doc-id" value="">
-                    
-                    <label>Full Name</label>
-                    <input type="text" id="in-name" placeholder="Student Name">
-                    
-                    <label>Phone Number</label>
-                    <input type="tel" id="in-phone" placeholder="10-digit number">
-                    
+                    <label>Full Name</label><input type="text" id="in-name" placeholder="Student Name">
+                    <label>Phone Number</label><input type="tel" id="in-phone" placeholder="10-digit number">
                     <label>Program</label>
                     <select id="in-course">
                         <option value="ADCA">ADCA (₹11,000)</option>
@@ -348,10 +353,7 @@
                         <option value="DCA">DCA (₹7,000)</option>
                         <option value="Bootcamp">Bootcamp (₹5,000)</option>
                     </select>
-
-                    <label>Advance Payment (₹)</label>
-                    <input type="number" id="in-advance" placeholder="e.g. 1000">
-
+                    <label>Advance Payment (₹)</label><input type="number" id="in-advance" placeholder="e.g. 1000">
                     <div id="edit-status-group" style="display:none;">
                         <label>Enrollment Status</label>
                         <select id="in-status">
@@ -360,17 +362,13 @@
                             <option value="Dropout">Dropout</option>
                         </select>
                     </div>
-
                     <button class="btn-action" onclick="saveStudent()">Save Record</button>
                     <button class="btn-action" id="cancel-edit-btn" onclick="resetForm()" style="background: var(--text-muted); margin-top: 10px; display:none;">Cancel</button>
                 </div>
-
                 <div class="card" style="overflow-x: auto;">
                     <h3 style="margin-bottom: 15px;">Student Directory</h3>
                     <table>
-                        <thead>
-                            <tr><th>ID</th><th>Student details</th><th>Course</th><th>Status</th><th>Actions</th></tr>
-                        </thead>
+                        <thead><tr><th>ID</th><th>Student details</th><th>Course</th><th>Status</th><th>Actions</th></tr></thead>
                         <tbody id="student-list"></tbody>
                     </table>
                 </div>
@@ -381,11 +379,28 @@
             <div class="card" style="overflow-x: auto;">
                 <h3 style="margin-bottom: 15px;">Fee Collection</h3>
                 <table>
-                    <thead>
-                        <tr><th>ID</th><th>Name</th><th>Total Fee</th><th>Paid</th><th>Due</th><th>Action</th></tr>
-                    </thead>
+                    <thead><tr><th>ID</th><th>Name</th><th>Total Fee</th><th>Paid</th><th>Due</th><th>Action</th></tr></thead>
                     <tbody id="finance-list"></tbody>
                 </table>
+            </div>
+        </div>
+
+        <div id="view-inquiries" style="display:none;">
+            <div class="card" style="overflow-x: auto;">
+                <h3 style="margin-bottom: 15px;">Admission Inquiries (Leads)</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">List of students who submitted the "Apply Now" form. Click the WhatsApp icon to message them.</p>
+                <table>
+                    <thead><tr><th>Date</th><th>Name</th><th>WhatsApp</th><th>Course</th><th>Action</th></tr></thead>
+                    <tbody id="inquiries-list"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="view-doubts" style="display:none;">
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">Student Doubts & Questions</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Review and reply to doubts raised by your students.</p>
+                <div id="admin-doubts-list"></div>
             </div>
         </div>
 
@@ -413,11 +428,13 @@
         <div class="tabs" style="margin-bottom: 20px;">
             <button id="tab-std-overview" class="active" onclick="switchStdTab('overview')"><i class="fas fa-home"></i> Overview</button>
             <button id="tab-std-syllabus" onclick="switchStdTab('syllabus')"><i class="fas fa-book"></i> Course Syllabus</button>
-            <button id="tab-std-quiz" onclick="switchStdTab('quiz')"><i class="fas fa-question-circle"></i> Daily Quiz</button>
             <button id="tab-std-editor" onclick="switchStdTab('editor')"><i class="fas fa-code"></i> Code Practice</button>
+            <button id="tab-std-doubts" onclick="switchStdTab('doubts')"><i class="fas fa-question-circle"></i> Ask a Doubt</button>
+            <button id="tab-std-quiz" onclick="switchStdTab('quiz')"><i class="fas fa-brain"></i> Daily Quiz</button>
         </div>
 
         <div class="course-grid" style="grid-template-columns: 1fr; max-width: 900px; margin: 0;">
+            
             <div id="std-view-overview" class="std-content-section card">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
                     <div>
@@ -429,18 +446,9 @@
                 </div>
 
                 <div style="background: var(--bg-body); border: 1px solid var(--border); padding: 20px; border-radius: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
-                    <div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">TOTAL FEE</p>
-                        <h3 id="std-view-total" style="color: var(--dark);"></h3>
-                    </div>
-                    <div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PAID</p>
-                        <h3 id="std-view-paid" style="color: var(--secondary);"></h3>
-                    </div>
-                    <div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DUE</p>
-                        <h3 id="std-view-due" style="color: var(--danger);"></h3>
-                    </div>
+                    <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">TOTAL FEE</p><h3 id="std-view-total" style="color: var(--dark);"></h3></div>
+                    <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PAID</p><h3 id="std-view-paid" style="color: var(--secondary);"></h3></div>
+                    <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DUE</p><h3 id="std-view-due" style="color: var(--danger);"></h3></div>
                 </div>
 
                 <div id="std-cert-area" style="display: none; background: #E0E7FF; border: 1px solid #C7D2FE; padding: 20px; border-radius: 12px; text-align: center;">
@@ -461,33 +469,6 @@
                 <ul id="syllabus-content" class="std-syllabus-list"></ul>
             </div>
 
-            <div id="std-view-quiz" class="std-content-section card" style="display: none;">
-                <h3 style="margin-bottom: 5px;"><i class="fas fa-brain" style="color: var(--primary);"></i> Daily Knowledge Check</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Test your computer logic and programming fundamentals.</p>
-                <div id="quiz-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                    <div style="margin-bottom: 20px;">
-                        <p style="font-weight: 600; margin-bottom: 10px;">1. What does HTML stand for?</p>
-                        <label class="quiz-option"><input type="radio" name="q1" value="A"> Hyper Text Markup Language</label>
-                        <label class="quiz-option"><input type="radio" name="q1" value="B"> High Tech Modern Language</label>
-                        <label class="quiz-option"><input type="radio" name="q1" value="C"> Hyperlink and Text Markup Language</label>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <p style="font-weight: 600; margin-bottom: 10px;">2. Which language uses indentation for scoping?</p>
-                        <label class="quiz-option"><input type="radio" name="q2" value="A"> C</label>
-                        <label class="quiz-option"><input type="radio" name="q2" value="B"> Python</label>
-                        <label class="quiz-option"><input type="radio" name="q2" value="C"> Java</label>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <p style="font-weight: 600; margin-bottom: 10px;">3. In MongoDB, data is stored as:</p>
-                        <label class="quiz-option"><input type="radio" name="q3" value="A"> Tables and Rows</label>
-                        <label class="quiz-option"><input type="radio" name="q3" value="B"> JSON-like Documents</label>
-                        <label class="quiz-option"><input type="radio" name="q3" value="C"> Nodes and Edges</label>
-                    </div>
-                    <button class="btn-action" onclick="submitQuiz()" style="max-width: 200px;">Submit Answers</button>
-                    <div id="quiz-result" style="display:none; margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: bold;"></div>
-                </div>
-            </div>
-
             <div id="std-view-editor" class="std-content-section card" style="display: none;">
                 <h3 style="margin-bottom: 5px;"><i class="fas fa-laptop-code" style="color: var(--primary);"></i> Practice Code Editor</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Write, run, and test your code directly in the browser. Supports Python, C, HTML/CSS, and more.</p>
@@ -495,6 +476,30 @@
                     <iframe src="https://onecompiler.com/embed/" width="100%" height="100%" style="border:none;"></iframe>
                 </div>
             </div>
+
+            <div id="std-view-doubts" class="std-content-section card" style="display: none;">
+                <h3 style="margin-bottom: 5px;"><i class="fas fa-comment-dots" style="color: var(--primary);"></i> Ask a Doubt</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Stuck on a problem? Send your question directly to the mentors.</p>
+                
+                <textarea id="std-doubt-text" rows="4" placeholder="Type your doubt or question here..." style="width:100%; padding:15px; border-radius:8px; border:1px solid var(--border); font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                <button class="btn-action" onclick="submitDoubt()" style="max-width: 200px; margin-top:10px;">Submit Doubt</button>
+                
+                <h4 style="margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom:10px; color: var(--dark);">Your Doubt History</h4>
+                <div id="std-doubts-list" style="margin-top: 15px;"></div>
+            </div>
+
+            <div id="std-view-quiz" class="std-content-section card" style="display: none;">
+                <h3 style="margin-bottom: 5px;"><i class="fas fa-brain" style="color: var(--primary);"></i> Daily Knowledge Check</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Test your computer logic and programming fundamentals.</p>
+                <div id="quiz-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">1. What does HTML stand for?</p><label class="quiz-option"><input type="radio" name="q1" value="A"> Hyper Text Markup Language</label><label class="quiz-option"><input type="radio" name="q1" value="B"> High Tech Modern Language</label></div>
+                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">2. Which language uses indentation for scoping?</p><label class="quiz-option"><input type="radio" name="q2" value="A"> C</label><label class="quiz-option"><input type="radio" name="q2" value="B"> Python</label></div>
+                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">3. In MongoDB, data is stored as:</p><label class="quiz-option"><input type="radio" name="q3" value="A"> Tables and Rows</label><label class="quiz-option"><input type="radio" name="q3" value="B"> JSON-like Documents</label></div>
+                    <button class="btn-action" onclick="submitQuiz()" style="max-width: 200px;">Submit Answers</button>
+                    <div id="quiz-result" style="display:none; margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: bold;"></div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -552,52 +557,100 @@
 
     <script>
         // ==========================================
+        // DYNAMIC FESTIVE THEME ENGINE
+        // ==========================================
+        function applyFestiveTheme() {
+            const date = new Date();
+            const month = date.getMonth(); // 0-11
+            const day = date.getDate();
+            
+            const root = document.documentElement;
+            const logo = document.getElementById('main-logo');
+            const heroBadge = document.getElementById('hero-badge');
+            const decorContainer = document.getElementById('festive-decor');
+            const heroGradientText = document.getElementById('hero-gradient');
+            
+            let isFestive = false;
+            let decorHtml = '';
+
+            // 1. JANMASHTAMI (Late Aug - Early Sept) - CURRENTLY ACTIVE IN SEPT
+            if ((month === 7 && day >= 20) || (month === 8 && day <= 10)) {
+                isFestive = true;
+                root.style.setProperty('--primary', '#1E3A8A'); // Deep Krishna Blue
+                root.style.setProperty('--primary-hover', '#172554');
+                root.style.setProperty('--secondary', '#F59E0B'); // Gold
+                root.style.setProperty('--hero-bg', 'linear-gradient(180deg, #1E3A8A 0%, #3B82F6 100%)');
+                
+                logo.innerHTML = 'CAREER <span>BUILD</span> 🦚';
+                heroBadge.innerText = "🦚 Happy Janmashtami - Special Admissions Open!";
+                heroBadge.style.background = "#FEF3C7"; heroBadge.style.color = "#D97706"; heroBadge.style.borderColor = "#F59E0B";
+                
+                // Change Hero Text colors to contrast against dark blue bg
+                document.querySelector('.hero h1').style.color = '#FFFFFF';
+                document.querySelector('.hero p').style.color = '#DBEAFE';
+                heroGradientText.style.background = 'linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%)';
+                heroGradientText.style.webkitBackgroundClip = 'text';
+                
+                decorHtml = `
+                    <div class="float-anim" style="left: 10%; top: 15%; font-size: 4rem;">🦚</div>
+                    <div class="float-anim-rev" style="right: 15%; top: 20%; font-size: 4.5rem;">🍯</div>
+                    <div class="float-anim" style="left: 20%; bottom: 10%; font-size: 3rem;">✨</div>
+                    <div class="float-anim-rev" style="right: 25%; bottom: 15%; font-size: 3.5rem;">🪈</div>
+                `;
+            }
+            // 2. DURGA PUJA / NAVRATRI (October)
+            else if (month === 9 && day <= 25) {
+                isFestive = true;
+                root.style.setProperty('--primary', '#BE123C'); // Crimson Red
+                root.style.setProperty('--primary-hover', '#9F1239');
+                root.style.setProperty('--secondary', '#D97706'); // Gold
+                root.style.setProperty('--hero-bg', 'linear-gradient(180deg, #FFE4E6 0%, var(--bg-body) 100%)');
+                logo.innerHTML = 'CAREER <span>BUILD</span> 🌺';
+                heroBadge.innerText = "🌺 Subho Sharadiya - Festive Offers!";
+                decorHtml = `<div class="float-anim" style="left: 15%; top: 20%; font-size: 4rem;">🥁</div><div class="float-anim-rev" style="right: 20%; top: 30%; font-size: 4rem;">🌺</div>`;
+            }
+            // 3. DIWALI (Late Oct - Nov)
+            else if ((month === 9 && day > 25) || (month === 10 && day <= 15)) {
+                isFestive = true;
+                root.style.setProperty('--primary', '#6D28D9'); // Purple
+                root.style.setProperty('--hero-bg', 'linear-gradient(180deg, #F3E8FF 0%, var(--bg-body) 100%)');
+                logo.innerHTML = 'CAREER <span>BUILD</span> 🪔';
+                heroBadge.innerText = "🪔 Happy Diwali - Light up your career!";
+                decorHtml = `<div class="float-anim" style="left: 15%; top: 20%; font-size: 4rem;">🪔</div><div class="float-anim-rev" style="right: 20%; top: 30%; font-size: 4rem;">✨</div>`;
+            }
+            // 4. MAGH BIHU (January)
+            else if (month === 0 && day >= 10 && day <= 20) {
+                isFestive = true;
+                root.style.setProperty('--primary', '#D90429'); // Gamusa Red
+                logo.innerHTML = 'CAREER <span>BUILD</span> 🌾';
+                heroBadge.innerText = "🌾 Happy Magh Bihu!";
+                decorHtml = `<div class="float-anim" style="left: 15%; top: 20%; font-size: 4rem;">🔥</div><div class="float-anim-rev" style="right: 20%; top: 30%; font-size: 4rem;">🌾</div>`;
+            }
+
+            if (isFestive) {
+                decorContainer.innerHTML = decorHtml;
+                decorContainer.style.display = 'block';
+            }
+        }
+        applyFestiveTheme();
+
+
+        // ==========================================
         // ADVANCED SECURITY BLOCK
         // ==========================================
-        // Prevent Right Click
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // Prevent Developer Tools & View Source Shortcuts
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
-            // Disable F12
-            if (e.key === 'F12' || e.keyCode === 123) {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+Shift+I / Cmd+Option+I (Inspect)
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+Shift+C / Cmd+Option+C (Inspect Element)
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+Shift+J / Cmd+Option+J (Console)
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+U / Cmd+U (View Source)
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
-                e.preventDefault();
-                return false;
-            }
-            // Disable Ctrl+S / Cmd+S (Save Page)
-            if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's' || e.keyCode === 83)) {
-                e.preventDefault();
-                return false;
-            }
+            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) { e.preventDefault(); return false; }
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's' || e.keyCode === 83)) { e.preventDefault(); return false; }
+        });
+        document.addEventListener('copy', function(e) {
+            e.clipboardData.setData('text/plain', 'Content copying is disabled by Career Build Security.'); e.preventDefault();
         });
 
-        // Optional: Block manual copying to clipboard to protect syllabus content
-        document.addEventListener('copy', function(e) {
-            e.clipboardData.setData('text/plain', 'Content copying is disabled by Career Build Security.');
-            e.preventDefault();
-        });
 
         // ==========================================
         // FIREBASE CONFIGURATION
@@ -610,101 +663,64 @@
             messagingSenderId: "433566227636",
             appId: "1:433566227636:web:6f56122286d35693324be1"
         };
-
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         // System Data
         let students = [];
+        let admissions = []; 
+        let allDoubts = []; 
         let loggedUser = null;
         
         const courseFees = { "ADCA": 11000, "ADCPA": 12000, "Programming Basic": 12000, "DCA": 7000, "Bootcamp": 5000 };
         
-        // Updated Syllabus Data mapping based on provided documents
         const syllabusData = {
-            "ADCA": `
-                <li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li>
-                <li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li>
-                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
-                <li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li>
-                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li>
-                <li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li>
-                <li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li>
-                <li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li>
-                <li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li>
-                <li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li>
-                <li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
-            
-            "ADCPA": `
-                <li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li>
-                <li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li>
-                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
-                <li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li>
-                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li>
-                <li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li>
-                <li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li>
-                <li><i class="fas fa-bezier-curve"></i> <b>AFFINITY:</b> Vector vs Pixel, Tools, Shape Building, Creating Designs</li>
-                <li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li>
-                <li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li>
-                <li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li>
-                <li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
-            
-            "Programming Basic": `
-                <li><i class="fab fa-python"></i> <b>PYTHON (ENTRY LEVEL):</b> Intro to Programming, VS Code, Variables, Input/Output, Logic (If/Else, Operators), Loops (For)</li>
-                <li><i class="fab fa-html5"></i> <b>HTML & CSS:</b> Website Architecture, Tags, Styling, Designing with CSS</li>
-                <li><i class="fas fa-robot"></i> <b>AI INTEGRATION:</b> ChatGPT, Gemini, Handling Python & Web Dev using Prompts</li>
-                <li><i class="fas fa-code-branch"></i> <b>ADVANCE WEB DEV + AI:</b> Deep Web Concepts, Advance CSS/JS via AI, Bootstrap, Tailwind, Final Project & Exam</li>`,
-            
-            "DCA": `
-                <li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint</li>
-                <li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, File Management, Editing, Margins, Headers, Inserting Elements, Shortcuts, Document Design</li>
-                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
-                <li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li>
-                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li>
-                <li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li>
-                <li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li>
-                <li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
-            
-            "Bootcamp": `
-                <li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Handling, Formulas, Advance Excel (Lookup, Pivot, Filter)</li>
-                <li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Management, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet</li>
-                <li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Tools, Page Layouts, Shortcuts, Pen Tool, Creating Designs</li>
-                <li><i class="fas fa-graduation-cap"></i> <b>FINAL EXAM:</b> Course Assessment</li>`
+            "ADCA": `<li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li><li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li><li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li><li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li><li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li><li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li><li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li><li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
+            "ADCPA": `<li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li><li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li><li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li><li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li><li><i class="fas fa-bezier-curve"></i> <b>AFFINITY:</b> Vector vs Pixel, Tools, Shape Building, Creating Designs</li><li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li><li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li><li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li><li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
+            "Programming Basic": `<li><i class="fab fa-python"></i> <b>PYTHON (ENTRY LEVEL):</b> Intro to Programming, VS Code, Variables, Input/Output, Logic (If/Else, Operators), Loops (For)</li><li><i class="fab fa-html5"></i> <b>HTML & CSS:</b> Website Architecture, Tags, Styling, Designing with CSS</li><li><i class="fas fa-robot"></i> <b>AI INTEGRATION:</b> ChatGPT, Gemini, Handling Python & Web Dev using Prompts</li><li><i class="fas fa-code-branch"></i> <b>ADVANCE WEB DEV + AI:</b> Deep Web Concepts, Advance CSS/JS via AI, Bootstrap, Tailwind, Final Project & Exam</li>`,
+            "DCA": `<li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint</li><li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, File Management, Editing, Margins, Headers, Inserting Elements, Shortcuts, Document Design</li><li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li><li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li><li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li><li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
+            "Bootcamp": `<li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Handling, Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Management, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Tools, Page Layouts, Shortcuts, Pen Tool, Creating Designs</li><li><i class="fas fa-graduation-cap"></i> <b>FINAL EXAM:</b> Course Assessment</li>`
         };
 
-        // --- Firebase Realtime Listener ---
+        // --- Firebase Listeners ---
         db.collection("students").onSnapshot((snapshot) => {
             students = [];
             snapshot.forEach((doc) => {
-                let sData = doc.data();
-                sData.docId = doc.id; 
-                students.push(sData);
+                let sData = doc.data(); sData.docId = doc.id; students.push(sData);
             });
-
             if (loggedUser === 'admin') {
-                renderOverview();
-                renderStudents();
-                renderFinancials();
-                loadCertSelect();
-            } 
-            else if (loggedUser && typeof loggedUser === 'object') {
+                renderOverview(); renderStudents(); renderFinancials(); loadCertSelect();
+            } else if (loggedUser && typeof loggedUser === 'object') {
                 const freshData = students.find(s => s.id === loggedUser.id);
-                if (freshData) {
-                    loggedUser = freshData;
-                    setupStudentDash();
-                }
+                if (freshData) { loggedUser = freshData; setupStudentDash(); }
             }
         });
 
-        // --- Routing ---
+        db.collection("admissions").onSnapshot((snapshot) => {
+            admissions = [];
+            snapshot.forEach((doc) => {
+                let aData = doc.data(); aData.docId = doc.id; admissions.push(aData);
+            });
+            if (loggedUser === 'admin') renderInquiries();
+        });
+
+        db.collection("doubts").onSnapshot((snapshot) => {
+            allDoubts = [];
+            snapshot.forEach((doc) => {
+                let dData = doc.data(); dData.docId = doc.id; allDoubts.push(dData);
+            });
+            allDoubts.sort((a,b) => b.timestamp - a.timestamp);
+
+            if (loggedUser === 'admin') { renderAdminDoubts(); } 
+            else if (loggedUser && typeof loggedUser === 'object') { renderStudentDoubts(); }
+        });
+
+        // --- Routing & Auth ---
         function showPage(id) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
+            document.getElementById(id).classList.add('active'); window.scrollTo(0,0);
         }
 
-        // --- Auth ---
         function switchLogin(type) {
             document.getElementById('form-admin').style.display = type === 'admin' ? 'block' : 'none';
             document.getElementById('form-student').style.display = type === 'student' ? 'block' : 'none';
@@ -715,8 +731,7 @@
         function loginAdmin() {
             if (document.getElementById('adm-id').value === 'Comp_Admin' && document.getElementById('adm-pass').value === 'admin@123') {
                 loggedUser = 'admin';
-                document.getElementById('login-nav').style.display = 'none';
-                document.getElementById('logout-nav').style.display = 'inline-block';
+                document.getElementById('login-nav').style.display = 'none'; document.getElementById('logout-nav').style.display = 'inline-block';
                 document.getElementById('adm-id').value = ''; document.getElementById('adm-pass').value = '';
                 switchAdminTab('overview'); showPage('admin-dash');
             } else { alert("Invalid Credentials"); }
@@ -727,8 +742,7 @@
             const student = students.find(s => s.id.toUpperCase() === sid.toUpperCase());
             if(student) {
                 loggedUser = student;
-                document.getElementById('login-nav').style.display = 'none';
-                document.getElementById('logout-nav').style.display = 'inline-block';
+                document.getElementById('login-nav').style.display = 'none'; document.getElementById('logout-nav').style.display = 'inline-block';
                 document.getElementById('std-id-login').value = '';
                 setupStudentDash(); switchStdTab('overview'); showPage('student-dash');
             } else { alert("Student ID not found in database."); }
@@ -736,20 +750,22 @@
 
         function logout() {
             loggedUser = null;
-            document.getElementById('login-nav').style.display = 'inline-block';
-            document.getElementById('logout-nav').style.display = 'none';
+            document.getElementById('login-nav').style.display = 'inline-block'; document.getElementById('logout-nav').style.display = 'none';
             showPage('home');
         }
 
         // --- Admin Functions ---
         function switchAdminTab(t) {
-            ['overview', 'manage', 'finance', 'cert'].forEach(tab => {
+            ['overview', 'manage', 'finance', 'inquiries', 'doubts', 'cert'].forEach(tab => {
                 document.getElementById(`view-${tab}`).style.display = t === tab ? 'block' : 'none';
-                document.getElementById(`tab-${tab === 'manage' ? 'mng' : tab === 'finance' ? 'fin' : tab}`).classList.toggle('active', t === tab);
+                let tabId = tab === 'manage' ? 'mng' : tab === 'finance' ? 'fin' : tab === 'inquiries' ? 'inq' : tab === 'doubts' ? 'admin-doubts' : tab;
+                document.getElementById(`tab-${tabId}`).classList.toggle('active', t === tab);
             });
             if(t === 'overview') renderOverview();
             if(t === 'manage') renderStudents();
             if(t === 'finance') renderFinancials();
+            if(t === 'inquiries') renderInquiries();
+            if(t === 'doubts') renderAdminDoubts();
             if(t === 'cert') loadCertSelect();
         }
 
@@ -777,27 +793,18 @@
             const totalFee = courseFees[course];
 
             document.getElementById('loading-overlay').style.display = 'flex';
-            
             try {
                 if (docId === "") {
                     if(advance > totalFee) { alert("Advance exceeds total fee"); document.getElementById('loading-overlay').style.display = 'none'; return; }
                     const id = "CB-" + (1000 + students.length + 1);
-                    const joinDate = new Date().toLocaleDateString('en-GB');
-                    
                     await db.collection("students").add({
-                        id: id, name: name, phone: phone, course: course, status: 'Active', totalFee: totalFee, paidFee: advance, grade: null, date: joinDate
+                        id: id, name: name, phone: phone, course: course, status: 'Active', totalFee: totalFee, paidFee: advance, grade: null, date: new Date().toLocaleDateString('en-GB')
                     });
                 } else {
-                    await db.collection("students").doc(docId).update({
-                        name: name, phone: phone, course: course, status: status, totalFee: totalFee
-                    });
+                    await db.collection("students").doc(docId).update({ name: name, phone: phone, course: course, status: status, totalFee: totalFee });
                 }
                 resetForm();
-            } catch (error) {
-                console.error("Error saving to database:", error);
-                alert("Failed to save. Please try again.");
-            }
-            
+            } catch (error) { alert("Failed to save."); }
             document.getElementById('loading-overlay').style.display = 'none';
         }
 
@@ -811,7 +818,6 @@
         function renderStudents() {
             const list = document.getElementById('student-list'); list.innerHTML = "";
             let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
-            
             sortedStudents.forEach((s) => {
                 let badgeClass = s.status === 'Completed' ? 'badge-completed' : s.status === 'Dropout' ? 'badge-dropout' : 'badge-active';
                 list.innerHTML += `<tr>
@@ -829,7 +835,6 @@
         function editStd(docId) {
             const s = students.find(student => student.docId === docId);
             if(!s) return;
-            
             document.getElementById('in-name').value = s.name; document.getElementById('in-phone').value = s.phone;
             document.getElementById('in-course').value = s.course; document.getElementById('in-status').value = s.status;
             document.getElementById('edit-status-group').style.display = 'block'; document.getElementById('in-advance').value = "";
@@ -849,7 +854,6 @@
         function renderFinancials() {
             const list = document.getElementById('finance-list'); list.innerHTML = "";
             let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
-
             sortedStudents.forEach((s) => {
                 const due = s.totalFee - s.paidFee;
                 const dueColor = due > 0 ? 'var(--danger)' : 'var(--secondary)';
@@ -866,39 +870,67 @@
             const inputField = document.getElementById(`pay-${docId}`);
             const amt = parseFloat(inputField.value);
             if(!amt || amt <= 0) return alert("Invalid amount.");
-            
             const s = students.find(student => student.docId === docId);
-            const due = s.totalFee - s.paidFee;
-            if(amt > due) return alert(`Cannot exceed due of ₹${due}`);
-            
+            if(amt > (s.totalFee - s.paidFee)) return alert(`Cannot exceed due.`);
             document.getElementById('loading-overlay').style.display = 'flex';
             await db.collection("students").doc(docId).update({ paidFee: s.paidFee + amt });
             document.getElementById('loading-overlay').style.display = 'none';
         }
 
-        // --- Certificate Admin ---
+        function renderInquiries() {
+            const list = document.getElementById('inquiries-list'); if(!list) return; list.innerHTML = "";
+            if(admissions.length === 0) { list.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No new inquiries.</td></tr>`; return; }
+            admissions.forEach((a) => {
+                list.innerHTML += `<tr>
+                    <td style="font-size: 0.8rem; color: var(--text-muted);">${a.date}</td><td><b>${a.name}</b></td>
+                    <td><a href="https://wa.me/91${a.phone}" target="_blank" style="color: var(--secondary); text-decoration: none; font-weight: 600;"><i class="fab fa-whatsapp" style="font-size: 1.1rem; margin-right: 5px;"></i>${a.phone}</a></td>
+                    <td><span class="badge badge-active">${a.course}</span></td>
+                    <td><button onclick="deleteInquiry('${a.docId}')" style="border:none; background:none; color:var(--danger); cursor:pointer; font-size:1.1rem;"><i class="fas fa-trash"></i></button></td>
+                </tr>`;
+            });
+        }
+
+        async function deleteInquiry(docId) {
+            if(confirm("Delete this inquiry?")) { await db.collection("admissions").doc(docId).delete(); }
+        }
+
+        function renderAdminDoubts() {
+            const list = document.getElementById('admin-doubts-list'); if(!list) return; list.innerHTML = "";
+            if(allDoubts.length === 0) { list.innerHTML = `<p style="text-align:center; color:var(--text-muted); margin-top:20px;">No doubts found.</p>`; return; }
+            allDoubts.forEach(d => {
+                let statusBadge = d.status === "Pending" ? `<span class="badge badge-dropout">Pending</span>` : `<span class="badge badge-completed">Resolved</span>`;
+                let replySection = d.status === "Pending" ? `
+                    <textarea id="reply-input-${d.docId}" rows="2" placeholder="Type your reply here..." style="width:100%; padding:10px; margin-top:10px; border-radius:8px; border:1px solid var(--border);"></textarea>
+                    <button class="btn-action btn-small" onclick="replyToDoubt('${d.docId}')" style="margin-top:5px; background:var(--secondary);">Submit Reply</button>
+                ` : `<div class="doubt-ans"><b>Admin Reply:</b><br>${d.reply}</div>`;
+                list.innerHTML += `<div class="doubt-card"><div class="doubt-header"><span><b>${d.studentName}</b> (${d.studentId}) - ${d.date}</span>${statusBadge}</div><div class="doubt-q">Q: ${d.question}</div>${replySection}</div>`;
+            });
+        }
+
+        async function replyToDoubt(docId) {
+            const text = document.getElementById(`reply-input-${docId}`).value.trim();
+            if(!text) return alert("Please type a reply.");
+            document.getElementById('loading-overlay').style.display = 'flex';
+            try { await db.collection("doubts").doc(docId).update({ reply: text, status: "Resolved" }); } 
+            catch(e) { console.error(e); alert("Failed to send reply."); }
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
         function loadCertSelect() {
             const sel = document.getElementById('cert-select-student');
             sel.innerHTML = '<option value="">-- Select Eligible Student --</option>';
             students.forEach(s => sel.innerHTML += `<option value="${s.docId}">${s.id} - ${s.name}</option>`);
         }
-
         async function generateCert() {
             const docId = document.getElementById('cert-select-student').value;
             const grade = document.getElementById('cert-grade').value.trim();
             if(!docId || !grade) return alert("Select student and enter grade.");
-            
             const s = students.find(student => student.docId === docId);
-            if((s.totalFee - s.paidFee) > 0) return alert(`Blocked: ${s.name} has pending dues of ₹${s.totalFee - s.paidFee}.`);
-            
+            if((s.totalFee - s.paidFee) > 0) return alert(`Blocked: Pending dues.`);
             document.getElementById('loading-overlay').style.display = 'flex';
             await db.collection("students").doc(docId).update({ grade: grade, status: 'Completed' });
-            
-            s.grade = grade; 
-            document.getElementById('loading-overlay').style.display = 'none';
-            openCertificate(s);
+            s.grade = grade; document.getElementById('loading-overlay').style.display = 'none'; openCertificate(s);
         }
-
         function openCertificate(s) {
             document.getElementById('c-name').innerText = s.name.toUpperCase();
             document.getElementById('c-id').innerText = s.id;
@@ -908,7 +940,6 @@
             document.getElementById('c-date').innerText = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
             document.getElementById('cert-wrapper').style.display = 'block';
         }
-
         function closeCert() { document.getElementById('cert-wrapper').style.display = 'none'; }
 
         // --- Student UI Features ---
@@ -924,81 +955,73 @@
             document.getElementById('std-view-paid').innerText = "₹" + (loggedUser.paidFee || 0).toLocaleString();
             document.getElementById('std-view-due').innerText = "₹" + ((loggedUser.totalFee || 0) - (loggedUser.paidFee || 0)).toLocaleString();
 
-            if(loggedUser.grade) {
-                document.getElementById('std-cert-area').style.display = 'block';
-                document.getElementById('std-pending-msg').style.display = 'none';
-            } else {
-                document.getElementById('std-cert-area').style.display = 'none';
-                document.getElementById('std-pending-msg').style.display = 'flex';
-            }
+            if(loggedUser.grade) { document.getElementById('std-cert-area').style.display = 'block'; document.getElementById('std-pending-msg').style.display = 'none'; } 
+            else { document.getElementById('std-cert-area').style.display = 'none'; document.getElementById('std-pending-msg').style.display = 'flex'; }
 
             document.getElementById('syllabus-title').innerText = loggedUser.course;
             document.getElementById('syllabus-content').innerHTML = syllabusData[loggedUser.course] || "<li><i class='fas fa-info-circle'></i> Syllabus will be available shortly.</li>";
             
-            document.getElementById('quiz-result').style.display = 'none';
             document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
+            document.getElementById('quiz-result').style.display = 'none';
+            renderStudentDoubts();
         }
 
         function switchStdTab(tabName) {
             document.querySelectorAll('.std-content-section').forEach(el => el.style.display = 'none');
-            document.getElementById('tab-std-overview').classList.remove('active');
-            document.getElementById('tab-std-syllabus').classList.remove('active');
-            document.getElementById('tab-std-quiz').classList.remove('active');
-            document.getElementById('tab-std-editor').classList.remove('active');
+            ['overview', 'syllabus', 'editor', 'doubts', 'quiz'].forEach(t => document.getElementById(`tab-std-${t}`).classList.remove('active'));
             document.getElementById(`std-view-${tabName}`).style.display = 'block';
             document.getElementById(`tab-std-${tabName}`).classList.add('active');
         }
 
+        async function submitDoubt() {
+            const text = document.getElementById('std-doubt-text').value.trim();
+            if(!text) return alert("Please type your doubt before submitting.");
+            
+            document.getElementById('loading-overlay').style.display = 'flex';
+            try {
+                await db.collection("doubts").add({ studentId: loggedUser.id, studentName: loggedUser.name, question: text, reply: "", status: "Pending", date: new Date().toLocaleDateString('en-GB'), timestamp: Date.now() });
+                document.getElementById('std-doubt-text').value = "";
+                alert("Doubt submitted successfully! Mentors will review it shortly.");
+            } catch(e) { console.error(e); alert("Failed to submit doubt."); }
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        function renderStudentDoubts() {
+            if(!loggedUser) return;
+            const list = document.getElementById('std-doubts-list'); list.innerHTML = "";
+            const myDoubts = allDoubts.filter(d => d.studentId === loggedUser.id);
+            if(myDoubts.length === 0) { list.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">You haven't asked any doubts yet.</p>`; return; }
+            myDoubts.forEach(d => {
+                let statusBadge = d.status === "Pending" ? `<span class="badge badge-dropout">Pending Review</span>` : `<span class="badge badge-completed">Resolved</span>`;
+                let replySection = d.status === "Resolved" ? `<div class="doubt-ans"><b>Mentor Reply:</b><br>${d.reply}</div>` : ``;
+                list.innerHTML += `<div class="doubt-card"><div class="doubt-header"><span>Asked on: ${d.date}</span>${statusBadge}</div><div class="doubt-q">Q: ${d.question}</div>${replySection}</div>`;
+            });
+        }
+
         function submitQuiz() {
             let score = 0;
-            const q1 = document.querySelector('input[name="q1"]:checked');
-            const q2 = document.querySelector('input[name="q2"]:checked');
-            const q3 = document.querySelector('input[name="q3"]:checked');
-
+            const q1 = document.querySelector('input[name="q1"]:checked'); const q2 = document.querySelector('input[name="q2"]:checked'); const q3 = document.querySelector('input[name="q3"]:checked');
             if (!q1 || !q2 || !q3) return alert("Please answer all questions before submitting.");
             if (q1.value === 'A') score++; if (q2.value === 'B') score++; if (q3.value === 'B') score++;
-
-            const resultBox = document.getElementById('quiz-result');
-            resultBox.style.display = 'block';
-            
-            if(score === 3) {
-                resultBox.style.background = '#D1FAE5'; resultBox.style.color = '#047857';
-                resultBox.innerHTML = `<i class="fas fa-star"></i> Excellent! You scored 3 out of 3.`;
-            } else {
-                resultBox.style.background = '#FEF3C7'; resultBox.style.color = '#B45309';
-                resultBox.innerHTML = `You scored ${score} out of 3. Keep practicing!`;
-            }
+            const resultBox = document.getElementById('quiz-result'); resultBox.style.display = 'block';
+            if(score === 3) { resultBox.style.background = '#D1FAE5'; resultBox.style.color = '#047857'; resultBox.innerHTML = `<i class="fas fa-star"></i> Excellent! You scored 3 out of 3.`; } 
+            else { resultBox.style.background = '#FEF3C7'; resultBox.style.color = '#B45309'; resultBox.innerHTML = `You scored ${score} out of 3. Keep practicing!`; }
         }
         function previewCertUI() { openCertificate(loggedUser); }
 
-        // --- Application Form ---
         async function submitApplication() {
             const name = document.getElementById('apply-name').value.trim();
             const phone = document.getElementById('apply-phone').value.trim();
             const course = document.getElementById('apply-course').value;
             if(!name || !phone || !course) return alert("Fill all fields.");
-            
             document.getElementById('loading-overlay').style.display = 'flex';
-            
-            try {
-                await db.collection("admissions").add({
-                    name: name,
-                    phone: phone,
-                    course: course,
-                    date: new Date().toLocaleString()
-                });
-            } catch(e) { 
-                console.error("Submission failed", e); 
-            }
-            
+            try { await db.collection("admissions").add({ name: name, phone: phone, course: course, date: new Date().toLocaleString('en-GB') }); } 
+            catch(e) { console.error("Submission failed", e); }
             document.getElementById('loading-overlay').style.display = 'none';
             alert("Application submitted successfully. Our counselor will contact you via WhatsApp shortly.");
-            
             const msg = `*New Admission Inquiry*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course:* ${course}`;
             window.open(`https://wa.me/916003778059?text=${msg}`, '_blank');
-            
-            document.getElementById('apply-name').value = ''; document.getElementById('apply-phone').value = '';
-            document.getElementById('apply-course').value = ''; showPage('home');
+            document.getElementById('apply-name').value = ''; document.getElementById('apply-phone').value = ''; document.getElementById('apply-course').value = ''; showPage('home');
         }
     </script>
 </body>
