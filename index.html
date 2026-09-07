@@ -256,7 +256,7 @@
     <section id="apply" class="page-section">
         <div class="card" style="max-width: 500px; margin: 0 auto;">
             <h2 style="text-align: center; color: var(--dark); font-weight: 800; margin-bottom: 10px;">Start Your Application</h2>
-            <p style="text-align: center; margin-bottom: 30px; font-size: 0.95rem; color: var(--text-muted);">Fill out the form below. Our career counselor will connect with you via WhatsApp.</p>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 0.95rem; color: var(--text-muted);">Fill out the form below. Our career counselor will connect with you shortly.</p>
             <label>Full Name</label>
             <input type="text" id="apply-name" placeholder="e.g. Rahul Sharma" required>
             <label>WhatsApp Number</label>
@@ -396,6 +396,7 @@
             </div>
         </div>
 
+        <!-- ADMIN DOUBTS VIEW -->
         <div id="view-doubts" style="display:none;">
             <div class="card">
                 <h3 style="margin-bottom: 15px;">Student Doubts & Questions</h3>
@@ -492,9 +493,9 @@
                 <h3 style="margin-bottom: 5px;"><i class="fas fa-brain" style="color: var(--primary);"></i> Daily Knowledge Check</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Test your computer logic and programming fundamentals.</p>
                 <div id="quiz-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">1. What does HTML stand for?</p><label class="quiz-option"><input type="radio" name="q1" value="A"> Hyper Text Markup Language</label><label class="quiz-option"><input type="radio" name="q1" value="B"> High Tech Modern Language</label></div>
-                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">2. Which language uses indentation for scoping?</p><label class="quiz-option"><input type="radio" name="q2" value="A"> C</label><label class="quiz-option"><input type="radio" name="q2" value="B"> Python</label></div>
-                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">3. In MongoDB, data is stored as:</p><label class="quiz-option"><input type="radio" name="q3" value="A"> Tables and Rows</label><label class="quiz-option"><input type="radio" name="q3" value="B"> JSON-like Documents</label></div>
+                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">1. What does HTML stand for?</p><label class="quiz-option"><input type="radio" name="q1" value="A"> Hyper Text Markup Language</label><label class="quiz-option"><input type="radio" name="q1" value="B"> High Tech Modern Language</label><label class="quiz-option"><input type="radio" name="q1" value="C"> Hyperlink and Text Markup Language</label></div>
+                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">2. Which language uses indentation for scoping?</p><label class="quiz-option"><input type="radio" name="q2" value="A"> C</label><label class="quiz-option"><input type="radio" name="q2" value="B"> Python</label><label class="quiz-option"><input type="radio" name="q2" value="C"> Java</label></div>
+                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">3. In MongoDB, data is stored as:</p><label class="quiz-option"><input type="radio" name="q3" value="A"> Tables and Rows</label><label class="quiz-option"><input type="radio" name="q3" value="B"> JSON-like Documents</label><label class="quiz-option"><input type="radio" name="q3" value="C"> Nodes and Edges</label></div>
                     <button class="btn-action" onclick="submitQuiz()" style="max-width: 200px;">Submit Answers</button>
                     <div id="quiz-result" style="display:none; margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: bold;"></div>
                 </div>
@@ -547,7 +548,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Career Build Computer Education. All rights reserved.</p>
+            <p>&copy; 2026 Career Build Computer Education & Cyber Solution. All rights reserved.</p>
         </div>
     </footer>
 
@@ -561,7 +562,7 @@
         // ==========================================
         function applyFestiveTheme() {
             const date = new Date();
-            const month = date.getMonth(); // 0-11
+            const month = date.getMonth(); // 0 = Jan, 8 = Sept, 9 = Oct, 10 = Nov
             const day = date.getDate();
             
             const root = document.documentElement;
@@ -573,7 +574,7 @@
             let isFestive = false;
             let decorHtml = '';
 
-            // 1. JANMASHTAMI (Late Aug - Early Sept) - CURRENTLY ACTIVE IN SEPT
+            // 1. JANMASHTAMI (Late Aug - Early Sept) - CURRENTLY ACTIVE
             if ((month === 7 && day >= 20) || (month === 8 && day <= 10)) {
                 isFestive = true;
                 root.style.setProperty('--primary', '#1E3A8A'); // Deep Krishna Blue
@@ -582,10 +583,9 @@
                 root.style.setProperty('--hero-bg', 'linear-gradient(180deg, #1E3A8A 0%, #3B82F6 100%)');
                 
                 logo.innerHTML = 'CAREER <span>BUILD</span> 🦚';
-                heroBadge.innerText = "🦚 Happy Janmashtami - Special Admissions Open!";
+                heroBadge.innerText = "🦚 Happy Janmashtami - Enroll Today!";
                 heroBadge.style.background = "#FEF3C7"; heroBadge.style.color = "#D97706"; heroBadge.style.borderColor = "#F59E0B";
                 
-                // Change Hero Text colors to contrast against dark blue bg
                 document.querySelector('.hero h1').style.color = '#FFFFFF';
                 document.querySelector('.hero p').style.color = '#DBEAFE';
                 heroGradientText.style.background = 'linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%)';
@@ -598,8 +598,8 @@
                     <div class="float-anim-rev" style="right: 25%; bottom: 15%; font-size: 3.5rem;">🪈</div>
                 `;
             }
-            // 2. DURGA PUJA / NAVRATRI (October)
-            else if (month === 9 && day <= 25) {
+            // 2. DURGA PUJA / NAVRATRI (Late Sept - October)
+            else if ((month === 8 && day > 10) || (month === 9 && day <= 25)) {
                 isFestive = true;
                 root.style.setProperty('--primary', '#BE123C'); // Crimson Red
                 root.style.setProperty('--primary-hover', '#9F1239');
@@ -1018,9 +1018,7 @@
             try { await db.collection("admissions").add({ name: name, phone: phone, course: course, date: new Date().toLocaleString('en-GB') }); } 
             catch(e) { console.error("Submission failed", e); }
             document.getElementById('loading-overlay').style.display = 'none';
-            alert("Application submitted successfully. Our counselor will contact you via WhatsApp shortly.");
-            const msg = `*New Admission Inquiry*%0A%0A*Name:* ${name}%0A*Phone:* ${phone}%0A*Course:* ${course}`;
-            window.open(`https://wa.me/916003778059?text=${msg}`, '_blank');
+            alert("Application submitted successfully. Our counselor will contact you shortly.");
             document.getElementById('apply-name').value = ''; document.getElementById('apply-phone').value = ''; document.getElementById('apply-course').value = ''; showPage('home');
         }
     </script>
