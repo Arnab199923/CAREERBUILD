@@ -10,133 +10,224 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Dark Theme Colors */
-            --primary: #6366F1; 
-            --primary-hover: #4F46E5;
-            --secondary: #10B981; 
-            --dark: #F8FAFC; /* Reassigned to light color for headings */
-            --text-main: #E2E8F0; /* Light gray for readability */
-            --text-muted: #94A3B8;
-            --bg-body: #0F172A; /* Deep dark blue background */
-            --white: #1E293B; /* Card and surface color */
+            /* 🔴 RED THEME COLORS */
+            --primary: #E11D48; /* Vibrant Rose Red */
+            --primary-hover: #BE123C; /* Darker Crimson */
+            --secondary: #F59E0B; /* Amber for contrasts */
+            --dark: #F8FAFC; /* White text for headings */
+            --text-main: #E2E8F0; /* Off-white for readability */
+            --text-muted: #9CA3AF; /* Muted gray for secondary text */
+            --bg-body: #130f0f; /* Very dark warm burgundy/black */
+            --white: #1c1515; /* Card and surface color */
             --danger: #EF4444;
             --warning: #F59E0B;
-            --border: #334155; /* Subtle dark border */
-            --hero-bg: linear-gradient(180deg, #162032 0%, var(--bg-body) 100%);
+            --border: #382525; /* Subtle red-tinted dark border */
+            --hero-bg: linear-gradient(180deg, #2a1616 0%, var(--bg-body) 100%);
         }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
         /* Security */
-        body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; -webkit-user-select: none; -ms-user-select: none; user-select: none; transition: background-color 0.5s ease; }
+        body { 
+            background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; 
+            -webkit-user-select: none; -ms-user-select: none; user-select: none; transition: background-color 0.5s ease; 
+        }
         input, select, textarea { -webkit-user-select: text; -ms-user-select: text; user-select: text; }
 
-        /* Navigation */
-        nav { background: var(--white); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 800; font-size: 1.2rem; color: var(--dark); letter-spacing: -0.5px; transition: color 0.3s; }
-        .logo span { color: var(--primary); }
-        .nav-links button { background: transparent; color: var(--text-main); border: none; padding: 8px 16px; margin-left: 5px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.2s; }
-        .nav-links button:hover { background: var(--bg-body); color: var(--primary); }
-        .nav-links button.btn-nav-primary { background: var(--primary); color: #FFFFFF; }
-        .nav-links button.btn-nav-primary:hover { background: var(--primary-hover); color: #FFFFFF; }
-        
-        /* General UI */
-        .page-section { display: none; padding: 60px 5%; min-height: 85vh; }
-        .page-section.active { display: block; animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .card { background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1); }
-        input, select, textarea { width: 100%; padding: 14px; margin: 8px 0 16px; background-color: var(--bg-body); color: var(--text-main); border: 1px solid var(--border); border-radius: 8px; font-size: 0.95rem; transition: border-color 0.2s; font-family: 'Inter', sans-serif;}
-        input[type="radio"] { width: auto; margin-right: 8px; margin-bottom: 0; cursor: pointer; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
-        .quiz-option { display: flex; align-items: center; margin-bottom: 10px; background: var(--bg-body); padding: 10px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; }
-        .quiz-option:hover { border-color: var(--primary); }
-        label { font-weight: 500; font-size: 0.9rem; color: var(--text-main); }
-        .btn-action { width: 100%; padding: 14px; background: var(--primary); color: #FFFFFF; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: 0.2s; position: relative; z-index: 10;}
-        .btn-action:hover { background: var(--primary-hover); }
-        .btn-small { padding: 8px 16px; font-size: 0.85rem; width: auto; }
-        
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUpStagger { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        @keyframes pulseGlow { 
+            0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.5); } 
+            70% { box-shadow: 0 0 0 12px rgba(225, 29, 72, 0); } 
+            100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); } 
+        }
+
+        /* Nav */
+        nav { 
+            background: var(--white); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+            backdrop-filter: blur(10px); background: rgba(28, 21, 21, 0.95);
+            
+            .logo { 
+                font-weight: 800; font-size: 1.2rem; color: var(--dark); letter-spacing: -0.5px; 
+                span { color: var(--primary); }
+            }
+            .nav-links button { 
+                background: transparent; color: var(--text-main); border: none; padding: 8px 16px; margin-left: 5px; 
+                border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease;
+                
+                &:hover { background: var(--bg-body); color: var(--primary); transform: translateY(-2px); }
+                &.btn-nav-primary { background: var(--primary); color: #FFFFFF; }
+                &.btn-nav-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3); }
+            }
+        }
+
+        .page-section { 
+            display: none; padding: 60px 5%; min-height: 85vh; 
+            &.active { display: block; animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        }
+
+        .card { 
+            background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border); 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); 
+            transition: transform 0.3s ease;
+        }
+
+        input, select, textarea { 
+            width: 100%; padding: 14px; margin: 8px 0 16px; background-color: var(--bg-body); 
+            color: var(--text-main); border: 1px solid var(--border); border-radius: 8px; 
+            font-size: 0.95rem; transition: all 0.3s ease;
+            
+            &:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2); transform: translateY(-1px); }
+        }
+
+        .btn-action { 
+            width: 100%; padding: 14px; background: var(--primary); color: #FFFFFF; border: none; 
+            border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: all 0.3s ease; position: relative; z-index: 10;
+            
+            &:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(225, 29, 72, 0.3); }
+            &.pulse { animation: pulseGlow 2s infinite; }
+        }
+
         /* HERO SECTION */
-        .hero { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 80px 20px 60px; background: var(--hero-bg); transition: background 1s ease; }
-        .hero-content { position: relative; z-index: 2; }
+        .hero { 
+            position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; 
+            text-align: center; padding: 80px 20px 60px; background: var(--hero-bg); 
+            
+            .hero-content { position: relative; z-index: 2; animation: slideUpStagger 0.8s ease-out; }
+            .badge-hero { 
+                background: rgba(225, 29, 72, 0.15); color: #FDA4AF; padding: 8px 20px; border-radius: 20px; 
+                font-weight: 700; font-size: 0.9rem; margin-bottom: 24px; display: inline-block; 
+                border: 1px solid rgba(225, 29, 72, 0.3); animation: float 3s ease-in-out infinite;
+            }
+            h1 { font-size: 3.5rem; font-weight: 800; color: var(--dark); line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
+            .text-gradient { background: linear-gradient(135deg, #FDA4AF 0%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-weight: 500; }
+        }
+
+        /* Course Cards with Hover FX */
+        .course-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; 
+            
+            .course-card { 
+                background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; 
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
+                animation: slideUpStagger 0.6s backwards;
+                
+                &:nth-child(1) { animation-delay: 0.1s; }
+                &:nth-child(2) { animation-delay: 0.2s; }
+                &:nth-child(3) { animation-delay: 0.3s; }
+                &:nth-child(4) { animation-delay: 0.4s; }
+
+                &:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 25px -5px rgba(225, 29, 72, 0.15); border-color: var(--primary); }
+                
+                .course-tag { background: rgba(245, 158, 11, 0.15); color: #FCD34D; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
+                h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
+                p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
+                .course-features div { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; margin-bottom: 6px; font-weight: 500; i { color: var(--primary); } }
+                .course-price { border-top: 1px solid var(--border); padding-top: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
+                .price-amt { font-size: 1.5rem; font-weight: 800; color: var(--dark); }
+                .price-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
+            }
+        }
+
+        /* AI Interactive Companion */
+        .ai-companion {
+            position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: center; pointer-events: none;
+        }
+        .ai-avatar {
+            width: 80px; height: 80px; border-radius: 50%; background: var(--white); border: 3px solid var(--primary);
+            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4); position: relative; pointer-events: auto; cursor: pointer;
+            transition: transform 0.1s ease-out; /* Fast reaction to mouse */
+        }
+        .ai-avatar svg { width: 100%; height: 100%; border-radius: 50%; display: block; }
+        .ai-pupil { transition: transform 0.05s linear; }
         
-        .badge-hero { background: rgba(99, 102, 241, 0.15); color: #818CF8; padding: 8px 20px; border-radius: 20px; font-weight: 700; font-size: 0.9rem; margin-bottom: 24px; display: inline-block; border: 1px solid rgba(99, 102, 241, 0.3); transition: all 0.5s;}
-        .hero h1 { font-size: 3.5rem; font-weight: 800; color: var(--dark); line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; transition: color 0.5s;}
-        .text-gradient { background: linear-gradient(135deg, #818CF8 0%, #34D399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-weight: 500; transition: color 0.5s;}
-        
-        /* Trust Bar */
+        .ai-speech-bubble {
+            background: var(--white); color: var(--text-main); padding: 12px 18px; border-radius: 12px; font-size: 0.85rem;
+            font-weight: 600; margin-bottom: 15px; border: 1px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            opacity: 0; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; text-align: center;
+        }
+        .ai-speech-bubble::after {
+            content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%) rotate(45deg);
+            width: 12px; height: 12px; background: var(--white); border-right: 1px solid var(--primary); border-bottom: 1px solid var(--primary);
+        }
+        /* Show on hover or via JS */
+        .ai-companion:hover .ai-speech-bubble, .ai-speech-bubble.show-temp { opacity: 1; transform: translateY(0); }
+
+        /* Modern Footer & Social Links */
+        footer { 
+            background: #090707; color: #9CA3AF; padding: 60px 5% 40px; margin-top: 80px; position: relative; border-top: 1px solid var(--border);
+            
+            .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+            h3, h4 { color: #FFFFFF; font-weight: 700; margin-bottom: 20px; }
+            p { margin-bottom: 12px; font-size: 0.9rem; transition: color 0.2s; display: flex; align-items: center; gap: 10px; }
+            a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+            a:hover { color: var(--primary); }
+            i { color: var(--primary); width: 20px;}
+            
+            .social-links {
+                display: flex; gap: 15px; margin-top: 20px;
+                .social-btn {
+                    width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+                    background: var(--white); font-size: 1.2rem; transition: all 0.3s ease; border: 1px solid var(--border);
+                    i { margin: 0; color: var(--text-main); transition: color 0.3s ease; }
+                    &:hover { transform: translateY(-5px); }
+                    &.instagram:hover { border-color: #E1306C; box-shadow: 0 10px 15px rgba(225, 48, 108, 0.2); i { color: #E1306C; } }
+                    &.whatsapp:hover { border-color: #25D366; box-shadow: 0 10px 15px rgba(37, 211, 102, 0.2); i { color: #25D366; } }
+                    &.email:hover { border-color: #EA4335; box-shadow: 0 10px 15px rgba(234, 67, 53, 0.2); i { color: #EA4335; } }
+                }
+            }
+        }
+
+        /* Standard CSS (Non-Nested UI defaults) */
         .trust-bar { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; padding: 30px 5%; background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
         .trust-item { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--dark); }
         .trust-item i { color: var(--primary); font-size: 1.2rem; }
-        
-        /* Course Cards */
         .section-title { text-align: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 40px; color: var(--dark); }
-        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
-        .course-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s ease; display: flex; flex-direction: column; }
-        .course-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); border-color: var(--primary); }
-        .course-tag { background: rgba(245, 158, 11, 0.15); color: #FCD34D; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
-        .course-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
-        .course-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
-        .course-features div { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-main); margin-bottom: 6px; font-weight: 500; }
-        .course-features i { color: var(--primary); }
-        .course-price { border-top: 1px solid var(--border); padding-top: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
-        .price-amt { font-size: 1.5rem; font-weight: 800; color: var(--dark); }
-        .price-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
         
-        /* Tabs & Dashboard */
         .tabs { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
         .tabs button { padding: 10px 20px; border: 1px solid var(--border); background: var(--bg-body); cursor: pointer; border-radius: 8px; font-weight: 600; color: var(--text-muted); transition: 0.2s; }
         .tabs button:hover { border-color: var(--primary); color: var(--primary); }
         .tabs button.active { background: var(--primary); color: #FFFFFF; border-color: var(--primary); }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: var(--white); padding: 20px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
-        .stat-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 15px; }
-        .stat-card.blue .stat-icon { background: rgba(99, 102, 241, 0.15); color: var(--primary); }
-        .stat-card.green .stat-icon { background: rgba(16, 185, 129, 0.15); color: var(--secondary); }
-        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-        .stat-card p { color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
-        .stat-card h3 { font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-top: 5px; }
-        
         table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--border); }
-        th { background: #0F172A; color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
+        th { background: #1a1010; color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
         tr:hover td { background: var(--bg-body); }
         .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
         .badge-active { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.3); }
         .badge-completed { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .badge-dropout { background: rgba(239, 68, 68, 0.15); color: #F87171; border: 1px solid rgba(239, 68, 68, 0.3); }
         
-        .login-box { max-width: 400px; margin: 60px auto; }
-        .login-box .tabs button { flex: 1; text-align: center; }
+        /* Helpers */
+        .btn-small { padding: 8px 16px; font-size: 0.85rem; width: auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--white); padding: 20px; border-radius: 12px; border: 1px solid var(--border); display: flex; flex-direction: column; }
+        .stat-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 15px; }
         
-        /* Doubt Panels */
+        /* Updated stat colors to match Red theme safely */
+        .stat-card.blue .stat-icon { background: rgba(225, 29, 72, 0.15); color: var(--primary); }
+        .stat-card.green .stat-icon { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .stat-card.red .stat-icon { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        
+        .stat-card p { color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+        .stat-card h3 { font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-top: 5px; }
+
         .doubt-card { border: 1px solid var(--border); border-radius: 8px; padding: 15px; margin-bottom: 15px; background: var(--bg-body); }
         .doubt-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;}
         .doubt-q { font-weight: 600; color: var(--dark); margin-bottom: 10px; }
-        .doubt-ans { background: rgba(99, 102, 241, 0.1); padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); font-size: 0.9rem; color: var(--text-main); margin-top: 10px;}
-        
+        .doubt-ans { background: rgba(225, 29, 72, 0.1); padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary); font-size: 0.9rem; color: var(--text-main); margin-top: 10px;}
+
         /* Certificate (Force Light Theme for Printing) */
-        #cert-wrapper { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 2000; overflow-y: auto; padding: 40px 20px; }
-        .cert-container { width: 1000px; height: 700px; background: #FFFFFF; color: #0F172A; margin: auto; padding: 40px; border: 20px solid #0F172A; position: relative; text-align: center; font-family: 'Inter', sans-serif; }
+        #cert-wrapper { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 10, 10, 0.9); z-index: 2000; overflow-y: auto; padding: 40px 20px; }
+        .cert-container { width: 1000px; height: 700px; background: #FFFFFF; color: #0F172A; margin: auto; padding: 40px; border: 20px solid #2a1616; position: relative; text-align: center; font-family: 'Inter', sans-serif; }
         .cert-inner { border: 2px solid #CBD5E1; height: 100%; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
-        .cert-title { font-size: 3.5rem; color: #4F46E5; font-weight: 800; margin-bottom: 0; letter-spacing: 2px; }
-        .cert-name { font-size: 2.5rem; font-weight: 700; margin: 20px 0; color: #0F172A; }
-        
-        /* Student Tabs Specific */
-        .std-syllabus-list li { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); list-style-type: none; line-height: 1.7; color: var(--text-main); }
-        .std-syllabus-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .std-syllabus-list i { color: var(--primary); margin-right: 12px; font-size: 1.1rem; }
-        .std-syllabus-list b { color: var(--dark); }
-        
-        /* Footer */
-        footer { background: #0B1120; color: #94A3B8; padding: 60px 5% 40px; margin-top: 80px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        footer h3 { color: #FFFFFF; font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
-        footer h4 { color: #FFFFFF; font-size: 1rem; font-weight: 600; margin-bottom: 20px; }
-        footer p { margin-bottom: 10px; font-size: 0.9rem; }
-        footer i { color: var(--primary); margin-right: 10px; }
-        .footer-bottom { border-top: 1px solid #1E293B; padding-top: 20px; text-align: center; font-size: 0.85rem; }
-        
+        .cert-title { font-size: 3.5rem; color: #E11D48; font-weight: 800; margin-bottom: 0; letter-spacing: 2px; }
+        .cert-name { font-size: 2.5rem; font-weight: 700; margin: 20px 0; color: #1a1010; }
+
         @media print {
             body * { visibility: hidden; }
             #cert-wrapper, .cert-container, .cert-container * { visibility: visible; }
@@ -148,16 +239,67 @@
             .hero h1 { font-size: 2.5rem; }
             .trust-bar { flex-direction: column; align-items: center; gap: 15px; }
             .course-grid { grid-template-columns: 1fr; }
-            #view-manage .course-grid { grid-template-columns: 1fr; }
+            #view-manage .course-grid, #view-add-course .course-grid { grid-template-columns: 1fr; }
+            .ai-companion { display: none; /* Hide interactive cursor AI on mobile to save screen space */ }
         }
         
-        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 3000; justify-content: center; align-items: center; font-weight: 700; color: var(--primary); font-size: 1.2rem; flex-direction: column;}
+        #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 10, 10, 0.9); z-index: 3000; justify-content: center; align-items: center; font-weight: 700; color: var(--primary); font-size: 1.2rem; flex-direction: column;}
     </style>
 </head>
 <body>
     <div id="loading-overlay">
         <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 15px;"></i>
         <span>Connecting to Server...</span>
+    </div>
+
+    <!-- AI Companion Widget -->
+    <div id="ai-companion" class="ai-companion">
+        <div class="ai-speech-bubble" id="ai-speech">Hello! I'm your AI guide.</div>
+        <div class="ai-avatar">
+            <!-- Custom Tech-Girl SVG -->
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <clipPath id="circle-clip">
+                        <circle cx="50" cy="50" r="48" />
+                    </clipPath>
+                </defs>
+                <!-- Background/Halo -->
+                <circle cx="50" cy="50" r="48" fill="#2a1616" />
+                
+                <g clip-path="url(#circle-clip)">
+                    <!-- Hair Back -->
+                    <path d="M 20,40 Q 50,10 80,40 L 90,100 L 10,100 Z" fill="#991B1B"/>
+                    
+                    <!-- Face -->
+                    <path d="M 30,50 Q 50,85 70,50 Q 70,30 30,30 Z" fill="#FFE0BD"/>
+                    
+                    <!-- Hair Front/Bangs -->
+                    <path d="M 25,35 Q 50,20 75,35 Q 60,45 50,30 Q 40,45 25,35 Z" fill="#DC2626"/>
+                    <path d="M 15,35 Q 25,70 25,100 L 10,100 Z" fill="#B91C1C"/>
+                    <path d="M 85,35 Q 75,70 75,100 L 90,100 Z" fill="#B91C1C"/>
+
+                    <!-- Blush -->
+                    <ellipse cx="40" cy="58" rx="4" ry="2" fill="#FFA5A5" opacity="0.6"/>
+                    <ellipse cx="60" cy="58" rx="4" ry="2" fill="#FFA5A5" opacity="0.6"/>
+
+                    <!-- Eyes Base (Whites) -->
+                    <circle cx="42" cy="50" r="5" fill="#FFF"/>
+                    <circle cx="58" cy="50" r="5" fill="#FFF"/>
+
+                    <!-- Pupils (Class added for JS tracking interaction) -->
+                    <circle cx="42" cy="50" r="2.5" fill="#111" class="ai-pupil"/>
+                    <circle cx="58" cy="50" r="2.5" fill="#111" class="ai-pupil"/>
+
+                    <!-- Smile -->
+                    <path d="M 47,62 Q 50,65 53,62" stroke="#D97777" stroke-width="1.5" fill="transparent" stroke-linecap="round"/>
+                    
+                    <!-- Tech Headset (Cyber vibe) -->
+                    <rect x="25" y="45" width="5" height="15" rx="2" fill="#F87171"/>
+                    <rect x="70" y="45" width="5" height="15" rx="2" fill="#F87171"/>
+                    <path d="M 27,52 Q 50,85 73,52" stroke="#F87171" stroke-width="1" fill="transparent" opacity="0.5"/>
+                </g>
+            </svg>
+        </div>
     </div>
 
     <nav>
@@ -177,7 +319,7 @@
                 <span class="badge-hero" id="hero-badge">📢 Admissions Open - Enroll Today!</span>
                 <h1 id="hero-title">Build Your Future with <span class="text-gradient" id="hero-gradient">Essential Tech Skills</span></h1>
                 <p id="hero-desc">Master basic to advanced computer applications, programming, and design with our hands-on, practical training programs tailored for your success.</p>
-                <button onclick="showPage('apply')" class="btn-action" style="max-width: 200px; font-size: 1.1rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);">Start Your Journey</button>
+                <button onclick="showPage('apply')" class="btn-action pulse" style="max-width: 200px; font-size: 1.1rem;">Start Your Journey</button>
             </div>
         </div>
         
@@ -203,7 +345,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-tag" style="background:rgba(59, 130, 246, 0.15); color:#60A5FA;">Advanced</div>
+                    <div class="course-tag" style="background:rgba(225, 29, 72, 0.15); color:var(--primary);">Advanced</div>
                     <h3>ADCPA</h3>
                     <p>Advanced Diploma in Computer Pro Application.</p>
                     <div class="course-features">
@@ -215,7 +357,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-tag" style="background:rgba(16, 185, 129, 0.15); color:#34D399;">Popular</div>
+                    <div class="course-tag" style="background:rgba(245, 158, 11, 0.15); color:var(--warning);">Popular</div>
                     <h3>Programming Basic</h3>
                     <p>Master Python, Web Design, and AI implementations.</p>
                     <div class="course-features">
@@ -244,7 +386,7 @@
 
     <!-- Apply Page -->
     <section id="apply" class="page-section">
-        <div class="card" style="max-width: 500px; margin: 0 auto;">
+        <div class="card" style="max-width: 500px; margin: 0 auto; animation: slideUpStagger 0.6s ease-out;">
             <h2 style="text-align: center; color: var(--dark); font-weight: 800; margin-bottom: 10px;">Start Your Application</h2>
             <p style="text-align: center; margin-bottom: 30px; font-size: 0.95rem; color: var(--text-muted);">Fill out the form below. Our career counselor will connect with you shortly.</p>
             <label>Full Name</label>
@@ -253,14 +395,9 @@
             <input type="tel" id="apply-phone" placeholder="10-digit mobile number" required>
             <label>Select Program</label>
             <select id="apply-course" required>
-                <option value="" disabled selected>Choose a course...</option>
-                <option value="ADCA">ADCA</option>
-                <option value="ADCPA">ADCPA</option>
-                <option value="Programming Basic">Programming Basic</option>
-                <option value="DCA">DCA</option>
-                <option value="Bootcamp">Bootcamp</option>
+                <!-- Filled dynamically by JS -->
             </select>
-            <button class="btn-action" onclick="submitApplication()" style="margin-top: 10px;">Submit Application</button>
+            <button class="btn-action pulse" onclick="submitApplication()" style="margin-top: 10px;">Submit Application</button>
         </div>
     </section>
 
@@ -273,14 +410,14 @@
                 <button id="tab-admin" onclick="switchLogin('admin')">Administrator</button>
             </div>
             
-            <div class="card" id="form-student">
+            <div class="card" id="form-student" style="animation: slideUpStagger 0.4s ease-out;">
                 <label>Student ID</label>
                 <input type="text" id="std-id-login" placeholder="e.g. CB-1001">
                 <button class="btn-action" onclick="loginStudent()">Access Portal</button>
                 <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--text-muted);">Enter ID provided at admission</p>
             </div>
 
-            <div class="card" id="form-admin" style="display:none;">
+            <div class="card" id="form-admin" style="display:none; animation: slideUpStagger 0.4s ease-out;">
                 <label>Admin User ID</label>
                 <input type="text" id="adm-id" placeholder="Username">
                 <label>Password</label>
@@ -301,6 +438,7 @@
             <button id="tab-inq" onclick="switchAdminTab('inquiries')"><i class="fas fa-envelope"></i> Inquiries</button>
             <button id="tab-admin-doubts" onclick="switchAdminTab('doubts')"><i class="fas fa-question-circle"></i> Doubts</button>
             <button id="tab-cert" onclick="switchAdminTab('cert')"><i class="fas fa-certificate"></i> Certificates</button>
+            <button id="tab-add-course" onclick="switchAdminTab('add-course')"><i class="fas fa-book-open"></i> New Courses</button> 
         </div>
 
         <div id="view-overview">
@@ -328,20 +466,28 @@
             </div>
         </div>
 
+        <div id="view-add-course" style="display:none;">
+            <div class="card" style="max-width: 600px; margin: 0 auto; animation: slideUpStagger 0.4s ease-out;">
+                <h3 style="margin-bottom: 15px; color: var(--dark);">Add Custom Course Name</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Use this to add a new course name and fee. It will instantly appear in the Application and Enrollment dropdown lists.</p>
+                <label>Course Name</label><input type="text" id="custom-course-name" placeholder="e.g. Graphic Design Basics">
+                <label>Total Fee (₹)</label><input type="number" id="custom-course-fee" placeholder="e.g. 8000">
+                <button class="btn-action pulse" onclick="saveCustomCourse()">Add Course</button>
+                <h4 style="margin-top: 30px; margin-bottom: 10px; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 10px;">Custom Courses List</h4>
+                <ul id="custom-courses-list" style="list-style: none;"></ul>
+            </div>
+        </div>
+
         <div id="view-manage" style="display:none;">
             <div class="course-grid" style="grid-template-columns: 350px 1fr; gap: 20px;">
-                <div class="card" style="height: fit-content;">
+                <div class="card" style="height: fit-content; animation: slideUpStagger 0.4s ease-out;">
                     <h3 id="form-title" style="margin-bottom: 15px; color: var(--dark);">Enroll Student</h3>
                     <input type="hidden" id="edit-doc-id" value="">
                     <label>Full Name</label><input type="text" id="in-name" placeholder="Student Name">
                     <label>Phone Number</label><input type="tel" id="in-phone" placeholder="10-digit number">
                     <label>Program</label>
                     <select id="in-course">
-                        <option value="ADCA">ADCA (₹11,000)</option>
-                        <option value="ADCPA">ADCPA (₹12,000)</option>
-                        <option value="Programming Basic">Programming Basic (₹12,000)</option>
-                        <option value="DCA">DCA (₹7,000)</option>
-                        <option value="Bootcamp">Bootcamp (₹5,000)</option>
+                        <!-- Filled dynamically by JS -->
                     </select>
                     <label>Advance Payment (₹)</label><input type="number" id="in-advance" placeholder="e.g. 1000">
                     <label>Discount (₹)</label><input type="number" id="in-discount" placeholder="e.g. 0" value="0">
@@ -356,7 +502,7 @@
                     <button class="btn-action" onclick="saveStudent()">Save Record</button>
                     <button class="btn-action" id="cancel-edit-btn" onclick="resetForm()" style="background: var(--text-muted); margin-top: 10px; display:none;">Cancel</button>
                 </div>
-                <div class="card" style="overflow-x: auto;">
+                <div class="card" style="overflow-x: auto; animation: slideUpStagger 0.5s ease-out;">
                     <h3 style="margin-bottom: 15px; color: var(--dark);">Student Directory</h3>
                     <table>
                         <thead><tr><th>ID</th><th>Student details</th><th>Course</th><th>Status</th><th>Actions</th></tr></thead>
@@ -397,8 +543,8 @@
         </div>
 
         <div id="view-cert" style="display:none;">
-            <div class="card" style="max-width: 500px; margin: 0 auto; text-align: center;">
-                <div class="stat-icon" style="background:rgba(99, 102, 241, 0.15); color:var(--primary); margin: 0 auto 15px; width: 60px; height: 60px; font-size: 1.5rem;"><i class="fas fa-award"></i></div>
+            <div class="card" style="max-width: 500px; margin: 0 auto; text-align: center; animation: slideUpStagger 0.4s ease-out;">
+                <div class="stat-icon" style="background:rgba(225, 29, 72, 0.15); color:var(--primary); margin: 0 auto 15px; width: 60px; height: 60px; font-size: 1.5rem;"><i class="fas fa-award"></i></div>
                 <h3 style="margin-bottom: 10px; color: var(--dark);">Issue Certificate</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Select a student and assign a final grade.</p>
                 <div style="background: rgba(239, 68, 68, 0.1); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; text-align: left;">
@@ -408,7 +554,7 @@
                     <option value="">-- Select Eligible Student --</option>
                 </select>
                 <input type="text" id="cert-grade" placeholder="Enter Grade (e.g., A+, A, B)">
-                <button class="btn-action" onclick="generateCert()">Generate Certificate</button>
+                <button class="btn-action pulse" onclick="generateCert()">Generate Certificate</button>
             </div>
         </div>
     </section>
@@ -443,10 +589,10 @@
                     <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DUE</p><h3 id="std-view-due" style="color: var(--danger);"></h3></div>
                 </div>
 
-                <div id="std-cert-area" style="display: none; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); padding: 20px; border-radius: 12px; text-align: center;">
+                <div id="std-cert-area" style="display: none; background: rgba(225, 29, 72, 0.1); border: 1px solid rgba(225, 29, 72, 0.3); padding: 20px; border-radius: 12px; text-align: center;">
                     <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-graduation-cap"></i> Congratulations!</h3>
                     <p style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 15px;">Your course is marked as completed and your certificate is ready.</p>
-                    <button class="btn-action" onclick="previewCertUI()" style="max-width: 250px;">View Certificate</button>
+                    <button class="btn-action pulse" onclick="previewCertUI()" style="max-width: 250px;">View Certificate</button>
                 </div>
                 
                 <p id="std-pending-msg" style="color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
@@ -499,7 +645,7 @@
     <div id="cert-wrapper">
         <div class="no-print" style="max-width: 1000px; margin: 0 auto 15px; display: flex; gap: 15px; justify-content: flex-end;">
             <button onclick="closeCert()" class="btn-action" style="background: #1E293B; max-width: 150px;">Close</button>
-            <button onclick="window.print()" class="btn-action" style="background: #4F46E5; max-width: 150px;"><i class="fas fa-print"></i> Print</button>
+            <button onclick="window.print()" class="btn-action" style="background: var(--primary); max-width: 150px;"><i class="fas fa-print"></i> Print</button>
         </div>
         <div class="cert-container">
             <div class="cert-inner">
@@ -511,7 +657,7 @@
                 <div class="cert-name" id="c-name">STUDENT NAME</div>
                 <p style="color: #64748B; font-weight: 500;">Student ID: <b id="c-id" style="color:#0F172A;"></b> &nbsp;|&nbsp; Certificate No: <b id="c-no" style="color:#0F172A;"></b></p>
                 <p style="margin-top: 30px; font-size: 1.1rem; color: #0F172A;">for successfully completing the professional program</p>
-                <h2 id="c-course" style="color: #4F46E5; margin: 15px 0; font-size: 2rem;">COURSE NAME</h2>
+                <h2 id="c-course" style="color: #E11D48; margin: 15px 0; font-size: 2rem;">COURSE NAME</h2>
                 <p style="font-size: 1.1rem; color: #0F172A;">with an overall grade of <b id="c-grade" style="font-size: 1.8rem; color: #0F172A; padding-left: 5px;"></b></p>
                 <div style="margin-top: 50px; display: flex; justify-content: space-between; padding: 0 60px; align-items: flex-end;">
                     <div style="text-align: left;"><b id="c-date" style="font-size: 1.2rem; color: #0F172A;"></b><br><small style="color: #64748B; font-weight: 600; text-transform: uppercase;">Issue Date</small></div>
@@ -525,21 +671,26 @@
         <div class="footer-grid">
             <div>
                 <h3>CAREER BUILD</h3>
-                <p>Empowering the next generation of tech professionals with industry-standard skills and practical knowledge.</p>
+                <p style="color: var(--text-muted);">Empowering the next generation of tech professionals with industry-standard skills and practical knowledge.</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/careerbuild_comp?stkn=Mzl1N2R5bXhwNmJi" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/916003778059" target="_blank" class="social-btn whatsapp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:devarb22@gmail.com" class="social-btn email"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
             <div>
                 <h4>Contact Us</h4>
-                <p><i class="fas fa-map-marker-alt"></i> Shop No 5, Lalganesh, Banikpara, Guwahati, Assam - 781034</p>
-                <p><i class="fas fa-phone"></i> +91 6003778059</p>
-                <p><i class="fas fa-envelope"></i> admissions@careerbuild.in</p>
+                <p><i class="fas fa-map-marker-alt"></i> Shop No 5, Lalganesh, Banikpara, <br>Guwahati, Assam - 781034</p>
+                <p><i class="fas fa-phone"></i> <a href="tel:+916003778059">+91 6003778059</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:devarb22@gmail.com">devarb22@gmail.com</a></p>
             </div>
             <div>
                 <h4>Operating Hours</h4>
-                <p>Monday - Sunday<br>08:00 AM - 10:00 PM</p>
+                <p><i class="fas fa-clock"></i> Monday - Sunday<br>08:00 AM - 10:00 PM</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Career Build Computer Education & Cyber Solution. All rights reserved.</p>
+            <p style="justify-content: center;">&copy; 2026 Career Build Computer Education & Cyber Solution. All rights reserved.</p>
         </div>
     </footer>
 
@@ -566,6 +717,56 @@
 
 
         // ==========================================
+        // AI AVATAR INTERACTION SCRIPT
+        // ==========================================
+        document.addEventListener('mousemove', (e) => {
+            const avatar = document.querySelector('.ai-avatar');
+            const pupils = document.querySelectorAll('.ai-pupil');
+            if(!avatar) return;
+
+            const rect = avatar.getBoundingClientRect();
+            const avatarCenterX = rect.left + rect.width / 2;
+            const avatarCenterY = rect.top + rect.height / 2;
+
+            // Calculate angle and distance
+            const deltaX = e.clientX - avatarCenterX;
+            const deltaY = e.clientY - avatarCenterY;
+            const angle = Math.atan2(deltaY, deltaX);
+            const distance = Math.min(Math.sqrt(deltaX*deltaX + deltaY*deltaY), 40); 
+
+            // Tilt avatar base
+            const tiltX = Math.cos(angle) * (distance / 4);
+            const tiltY = Math.sin(angle) * (distance / 4);
+            avatar.style.transform = `translate(${tiltX}px, ${tiltY}px) rotate(${tiltX/3}deg)`;
+
+            // Move pupils to follow cursor
+            const pupilMaxMove = 3.5; 
+            const pupilX = Math.cos(angle) * pupilMaxMove;
+            const pupilY = Math.sin(angle) * pupilMaxMove;
+            pupils.forEach(pupil => {
+                pupil.style.transform = `translate(${pupilX}px,${pupilY}px)`;
+            });
+        });
+
+        // Dynamic AI Speech updates
+        const aiMessages = [
+            "Hi there! Check out our courses.",
+            "I'm keeping an eye on you! 😉",
+            "Any doubts? Use the Ask Mentor tab!",
+            "Code Practice is fun, try it!",
+            "Don't forget to submit your assignments."
+        ];
+        setInterval(() => {
+            const bubble = document.getElementById('ai-speech');
+            if(bubble) {
+                bubble.innerText = aiMessages[Math.floor(Math.random() * aiMessages.length)];
+                bubble.classList.add('show-temp');
+                setTimeout(() => bubble.classList.remove('show-temp'), 3000);
+            }
+        }, 12000);
+
+
+        // ==========================================
         // FIREBASE CONFIGURATION
         // ==========================================
         const firebaseConfig = {
@@ -579,7 +780,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // System Data
+        // Original System Data
         let students = [];
         let admissions = []; 
         let allDoubts = []; 
@@ -595,7 +796,20 @@
             "Bootcamp": `<li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Handling, Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Management, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Tools, Page Layouts, Shortcuts, Pen Tool, Creating Designs</li><li><i class="fas fa-graduation-cap"></i> <b>FINAL EXAM:</b> Course Assessment</li>`
         };
 
+        let customCourses = [];
+
         // --- Firebase Listeners ---
+        db.collection("custom_courses").onSnapshot((snapshot) => {
+            customCourses = [];
+            snapshot.forEach((doc) => {
+                let data = doc.data(); 
+                data.docId = doc.id; 
+                customCourses.push(data);
+            });
+            updateCourseDropdowns();
+            renderCustomCoursesAdminList();
+        });
+
         db.collection("students").onSnapshot((snapshot) => {
             students = [];
             snapshot.forEach((doc) => {
@@ -669,7 +883,7 @@
 
         // --- Admin Functions ---
         function switchAdminTab(t) {
-            ['overview', 'manage', 'finance', 'inquiries', 'doubts', 'cert'].forEach(tab => {
+            ['overview', 'manage', 'finance', 'inquiries', 'doubts', 'cert', 'add-course'].forEach(tab => {
                 document.getElementById(`view-${tab}`).style.display = t === tab ? 'block' : 'none';
                 let tabId = tab === 'manage' ? 'mng' : tab === 'finance' ? 'fin' : tab === 'inquiries' ? 'inq' : tab === 'doubts' ? 'admin-doubts' : tab;
                 document.getElementById(`tab-${tabId}`).classList.toggle('active', t === tab);
@@ -680,6 +894,7 @@
             if(t === 'inquiries') renderInquiries();
             if(t === 'doubts') renderAdminDoubts();
             if(t === 'cert') loadCertSelect();
+            if(t === 'add-course') renderCustomCoursesAdminList();
         }
 
         function renderOverview() {
@@ -694,6 +909,79 @@
             document.getElementById('stat-dues').innerText = "₹" + dues.toLocaleString();
         }
 
+        // --- Custom Courses Functions ---
+        function updateCourseDropdowns() {
+            // Apply Select (Public)
+            const applySelect = document.getElementById('apply-course');
+            applySelect.innerHTML = `
+                <option value="" disabled selected>Choose a course...</option>
+                <option value="ADCA">ADCA</option>
+                <option value="ADCPA">ADCPA</option>
+                <option value="Programming Basic">Programming Basic</option>
+                <option value="DCA">DCA</option>
+                <option value="Bootcamp">Bootcamp</option>
+            `;
+            
+            // Enroll Select (Admin)
+            const enrollSelect = document.getElementById('in-course');
+            enrollSelect.innerHTML = `
+                <option value="" disabled selected>Select a program...</option>
+                <option value="ADCA">ADCA (₹11,000)</option>
+                <option value="ADCPA">ADCPA (₹12,000)</option>
+                <option value="Programming Basic">Programming Basic (₹12,000)</option>
+                <option value="DCA">DCA (₹7,000)</option>
+                <option value="Bootcamp">Bootcamp (₹5,000)</option>
+            `;
+            
+            // Append Dynamic Custom Courses
+            customCourses.forEach(c => {
+                applySelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+                enrollSelect.innerHTML += `<option value="${c.name}">${c.name} (₹${c.fee})</option>`;
+            });
+        }
+
+        async function saveCustomCourse() {
+            const name = document.getElementById('custom-course-name').value.trim();
+            const fee = parseFloat(document.getElementById('custom-course-fee').value);
+            if (!name || isNaN(fee)) return alert("Course name and fee are required.");
+            
+            document.getElementById('loading-overlay').style.display = 'flex';
+            try {
+                await db.collection("custom_courses").add({ name, fee });
+                document.getElementById('custom-course-name').value = '';
+                document.getElementById('custom-course-fee').value = '';
+                alert("Custom course added. It is now available in dropdowns.");
+            } catch (error) { alert("Failed to add course."); }
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        function renderCustomCoursesAdminList() {
+            const list = document.getElementById('custom-courses-list');
+            if(!list) return;
+            list.innerHTML = "";
+            if(customCourses.length === 0) {
+                list.innerHTML = "<p style='color:var(--text-muted);'>No custom courses added yet.</p>";
+                return;
+            }
+            customCourses.forEach(c => {
+                list.innerHTML += `
+                    <li style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-body); padding: 10px; margin-bottom: 8px; border-radius: 6px; border: 1px solid var(--border);">
+                        <span><b>${c.name}</b> - ₹${c.fee}</span>
+                        <button onclick="deleteCustomCourse('${c.docId}')" style="background: none; border: none; color: var(--danger); cursor: pointer;"><i class="fas fa-trash"></i></button>
+                    </li>
+                `;
+            });
+        }
+
+        async function deleteCustomCourse(docId) {
+            if(confirm("Delete this custom course? It will be removed from dropdown lists.")) {
+                document.getElementById('loading-overlay').style.display = 'flex';
+                await db.collection("custom_courses").doc(docId).delete();
+                document.getElementById('loading-overlay').style.display = 'none';
+            }
+        }
+
+        // --- Students Functions ---
         async function saveStudent() {
             const name = document.getElementById('in-name').value.trim();
             const phone = document.getElementById('in-phone').value.trim();
@@ -703,8 +991,14 @@
             const status = document.getElementById('in-status').value || 'Active';
             const docId = document.getElementById('edit-doc-id').value; 
             
-            if(!name || !phone) return alert("Required: Name and Phone number");
-            const totalFee = courseFees[course];
+            if(!name || !phone || !course) return alert("Required: Name, Phone number, and course.");
+            
+            // Determine Total Fee: Check default first, then custom courses
+            let totalFee = courseFees[course];
+            if (totalFee === undefined) {
+                const c = customCourses.find(x => x.name === course);
+                totalFee = c ? c.fee : 0;
+            }
 
             document.getElementById('loading-overlay').style.display = 'flex';
             try {
@@ -808,7 +1102,7 @@
             const due = s.totalFee - (s.discount || 0) - (s.paidFee || 0);
             if(due <= 0) return alert("No pending dues for this student.");
 
-            const text = `Hello *${s.name}*,%0A%0AThis is a gentle reminder from *Career Build Computer Education* regarding your pending fee for the ${s.course} course.%0A%0A*Pending Amount:* ₹${due.toLocaleString()}%0A%0AKindly clear the dues at your earliest convenience to avoid interruption in your classes and certificate generation.%0A%0AIf you have already paid, please ignore this message.%0A%0ARegards,%0AAdmin, Career Build`;
+            const text = `Hello *${s.name}*,%0A%0AThis is a gentle reminder from *Career Build Computer Education* regarding your pending fee for the ${s.course} course.\%0A\%0A*Pending Amount:* ₹${due.toLocaleString()}%0A%0AKindly clear the dues at your earliest convenience to avoid interruption in your classes and certificate generation.%0A%0AIf you have already paid, please ignore this message.%0A%0ARegards,%0AAdmin, Career Build`;
 
             let phone = s.phone.replace(/[^0-9]/g, ''); 
             if(phone.length === 10) phone = '91' + phone;
@@ -858,8 +1152,9 @@
         function loadCertSelect() {
             const sel = document.getElementById('cert-select-student');
             sel.innerHTML = '<option value="">-- Select Eligible Student --</option>';
-            students.forEach(s => sel.innerHTML += `<option value="${s.docId}">${s.id} - ${s.name}</option>`);
+            students.forEach(s => sel.innerHTML += `<option value="${s.docId}">${s.id} -${s.name}</option>`);
         }
+        
         async function generateCert() {
             const docId = document.getElementById('cert-select-student').value;
             const grade = document.getElementById('cert-grade').value.trim();
@@ -870,6 +1165,7 @@
             await db.collection("students").doc(docId).update({ grade: grade, status: 'Completed' });
             s.grade = grade; document.getElementById('loading-overlay').style.display = 'none'; openCertificate(s);
         }
+        
         function openCertificate(s) {
             document.getElementById('c-name').innerText = s.name.toUpperCase();
             document.getElementById('c-id').innerText = s.id;
@@ -879,6 +1175,7 @@
             document.getElementById('c-date').innerText = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
             document.getElementById('cert-wrapper').style.display = 'block';
         }
+        
         function closeCert() { document.getElementById('cert-wrapper').style.display = 'none'; }
 
         // --- Student UI Features ---
@@ -898,7 +1195,12 @@
             else { document.getElementById('std-cert-area').style.display = 'none'; document.getElementById('std-pending-msg').style.display = 'flex'; }
 
             document.getElementById('syllabus-title').innerText = loggedUser.course;
-            document.getElementById('syllabus-content').innerHTML = syllabusData[loggedUser.course] || "<li><i class='fas fa-info-circle'></i> Syllabus will be available shortly.</li>";
+            
+            let courseSyllabus = syllabusData[loggedUser.course];
+            if (!courseSyllabus) {
+                courseSyllabus = "<li><i class='fas fa-info-circle'></i> Syllabus mapping is not required for this custom course.</li>";
+            }
+            document.getElementById('syllabus-content').innerHTML = courseSyllabus;
             
             document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
             document.getElementById('quiz-result').style.display = 'none';
@@ -946,6 +1248,7 @@
             if(score === 3) { resultBox.style.background = 'rgba(16, 185, 129, 0.2)'; resultBox.style.color = '#34D399'; resultBox.innerHTML = `<i class="fas fa-star"></i> Excellent! You scored 3 out of 3.`; } 
             else { resultBox.style.background = 'rgba(245, 158, 11, 0.2)'; resultBox.style.color = '#FCD34D'; resultBox.innerHTML = `You scored ${score} out of 3. Keep practicing!`; }
         }
+        
         function previewCertUI() { openCertificate(loggedUser); }
 
         async function submitApplication() {
