@@ -568,7 +568,7 @@
             <button id="tab-std-syllabus" onclick="switchStdTab('syllabus')"><i class="fas fa-book"></i> Course Syllabus</button>
             <button id="tab-std-editor" onclick="switchStdTab('editor')"><i class="fas fa-code"></i> Code Practice</button>
             <button id="tab-std-doubts" onclick="switchStdTab('doubts')"><i class="fas fa-question-circle"></i> Ask a Doubt</button>
-            <button id="tab-std-quiz" onclick="switchStdTab('quiz')"><i class="fas fa-brain"></i> Daily Quiz</button>
+            <button id="tab-std-assignments" onclick="switchStdTab('assignments')"><i class="fas fa-clipboard-list"></i> Assignments</button>
         </div>
 
         <div class="course-grid" style="grid-template-columns: 1fr; max-width: 900px; margin: 0;">
@@ -626,15 +626,11 @@
                 <div id="std-doubts-list" style="margin-top: 15px;"></div>
             </div>
 
-            <div id="std-view-quiz" class="std-content-section card" style="display: none;">
-                <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-brain" style="color: var(--primary);"></i> Daily Knowledge Check</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Test your computer logic and programming fundamentals.</p>
-                <div id="quiz-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">1. What does HTML stand for?</p><label class="quiz-option"><input type="radio" name="q1" value="A"> Hyper Text Markup Language</label><label class="quiz-option"><input type="radio" name="q1" value="B"> High Tech Modern Language</label><label class="quiz-option"><input type="radio" name="q1" value="C"> Hyperlink and Text Markup Language</label></div>
-                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">2. Which language uses indentation for scoping?</p><label class="quiz-option"><input type="radio" name="q2" value="A"> C</label><label class="quiz-option"><input type="radio" name="q2" value="B"> Python</label><label class="quiz-option"><input type="radio" name="q2" value="C"> Java</label></div>
-                    <div style="margin-bottom: 20px;"><p style="font-weight: 600; margin-bottom: 10px;">3. In MongoDB, data is stored as:</p><label class="quiz-option"><input type="radio" name="q3" value="A"> Tables and Rows</label><label class="quiz-option"><input type="radio" name="q3" value="B"> JSON-like Documents</label><label class="quiz-option"><input type="radio" name="q3" value="C"> Nodes and Edges</label></div>
-                    <button class="btn-action" onclick="submitQuiz()" style="max-width: 200px;">Submit Answers</button>
-                    <div id="quiz-result" style="display:none; margin-top: 15px; padding: 15px; border-radius: 8px; font-weight: bold;"></div>
+            <div id="std-view-assignments" class="std-content-section card" style="display: none;">
+                <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> Course Assignments</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Complete these practical tasks to build your portfolio and enhance your skills.</p>
+                <div id="assignments-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                    <!-- Dynamically populated by JS based on enrolled course -->
                 </div>
             </div>
 
@@ -794,6 +790,35 @@
             "Programming Basic": `<li><i class="fab fa-python"></i> <b>PYTHON (ENTRY LEVEL):</b> Intro to Programming, VS Code, Variables, Input/Output, Logic (If/Else, Operators), Loops (For)</li><li><i class="fab fa-html5"></i> <b>HTML & CSS:</b> Website Architecture, Tags, Styling, Designing with CSS</li><li><i class="fas fa-robot"></i> <b>AI INTEGRATION:</b> ChatGPT, Gemini, Handling Python & Web Dev using Prompts</li><li><i class="fas fa-code-branch"></i> <b>ADVANCE WEB DEV + AI:</b> Deep Web Concepts, Advance CSS/JS via AI, Bootstrap, Tailwind, Final Project & Exam</li>`,
             "DCA": `<li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint</li><li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, File Management, Editing, Margins, Headers, Inserting Elements, Shortcuts, Document Design</li><li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li><li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li><li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li><li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
             "Bootcamp": `<li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Handling, Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Management, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Tools, Page Layouts, Shortcuts, Pen Tool, Creating Designs</li><li><i class="fas fa-graduation-cap"></i> <b>FINAL EXAM:</b> Course Assessment</li>`
+        };
+
+        // Course-specific Assignments
+        const assignmentsData = {
+            "ADCA": [
+                { title: "MS Word: Create a Resume", desc: "Design a professional resume using tables, formatting, and inserting images." },
+                { title: "Excel: Salary Sheet", desc: "Create a salary sheet calculating HRA, DA, PF, and Net Salary using formulas." },
+                { title: "Tally: Company Setup", desc: "Create a company in Tally, set up ledgers, and pass 10 basic accounting vouchers." }
+            ],
+            "ADCPA": [
+                { title: "Photoshop: Movie Poster", desc: "Design a movie poster using layer masks, blending options, and typography." },
+                { title: "Affinity: Logo Design", desc: "Create a vector logo for a tech startup." },
+                { title: "Web Dev: Personal Portfolio", desc: "Build a single-page HTML/CSS portfolio with a contact form." }
+            ],
+            "Programming Basic": [
+                { title: "Python: Calculator App", desc: "Write a Python script that takes user input to perform addition, subtraction, multiplication, and division." },
+                { title: "HTML/CSS: Landing Page", desc: "Clone the layout of a popular website homepage using HTML and CSS." },
+                { title: "AI Prompting: Code Review", desc: "Use ChatGPT/Gemini to optimize a given buggy Python code and document the changes." }
+            ],
+            "DCA": [
+                { title: "MS Word: Official Letter", desc: "Draft an official business letter with proper alignment, headers, and footers." },
+                { title: "PowerPoint: Presentation", desc: "Create a 5-slide presentation on 'Future of AI' with transitions and animations." },
+                { title: "Canva: Social Media Post", desc: "Design an Instagram post promoting a weekend sale." }
+            ],
+            "Bootcamp": [
+                { title: "Excel: Data Analysis", desc: "Use VLOOKUP and Pivot Tables to analyze a given sales dataset." },
+                { title: "Tally: GST Billing", desc: "Generate a GST invoice with SGST and CGST calculations." },
+                { title: "Photoshop: Photo Retouching", desc: "Remove blemishes and adjust color balance on a portrait." }
+            ]
         };
 
         let customCourses = [];
@@ -1202,14 +1227,31 @@
             }
             document.getElementById('syllabus-content').innerHTML = courseSyllabus;
             
-            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.checked = false);
-            document.getElementById('quiz-result').style.display = 'none';
+            // Populate Assignments based on course
+            let courseAssignments = assignmentsData[loggedUser.course];
+            const assignmentsContainer = document.getElementById('assignments-container');
+            if (!courseAssignments) {
+                assignmentsContainer.innerHTML = "<p style='color:var(--text-muted);'>No assignments currently mapped for this custom course.</p>";
+            } else {
+                let html = "";
+                courseAssignments.forEach((task, index) => {
+                    html += `
+                        <div style="margin-bottom: 15px; padding: 15px; background: var(--white); border: 1px solid var(--border); border-radius: 8px;">
+                            <h4 style="color: var(--dark); margin-bottom: 5px;">${index + 1}.${task.title}</h4>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 10px;">${task.desc}</p>
+                            <button class="btn-action btn-small" onclick="alert('Assignment submission portal is coming soon!')">Submit Assignment</button>
+                        </div>
+                    `;
+                });
+                assignmentsContainer.innerHTML = html;
+            }
+
             renderStudentDoubts();
         }
 
         function switchStdTab(tabName) {
             document.querySelectorAll('.std-content-section').forEach(el => el.style.display = 'none');
-            ['overview', 'syllabus', 'editor', 'doubts', 'quiz'].forEach(t => document.getElementById(`tab-std-${t}`).classList.remove('active'));
+            ['overview', 'syllabus', 'editor', 'doubts', 'assignments'].forEach(t => document.getElementById(`tab-std-${t}`).classList.remove('active'));
             document.getElementById(`std-view-${tabName}`).style.display = 'block';
             document.getElementById(`tab-std-${tabName}`).classList.add('active');
         }
@@ -1237,16 +1279,6 @@
                 let replySection = d.status === "Resolved" ? `<div class="doubt-ans"><b>Mentor Reply:</b><br>${d.reply}</div>` : ``;
                 list.innerHTML += `<div class="doubt-card"><div class="doubt-header"><span>Asked on: ${d.date}</span>${statusBadge}</div><div class="doubt-q">Q: ${d.question}</div>${replySection}</div>`;
             });
-        }
-
-        function submitQuiz() {
-            let score = 0;
-            const q1 = document.querySelector('input[name="q1"]:checked'); const q2 = document.querySelector('input[name="q2"]:checked'); const q3 = document.querySelector('input[name="q3"]:checked');
-            if (!q1 || !q2 || !q3) return alert("Please answer all questions before submitting.");
-            if (q1.value === 'A') score++; if (q2.value === 'B') score++; if (q3.value === 'B') score++;
-            const resultBox = document.getElementById('quiz-result'); resultBox.style.display = 'block';
-            if(score === 3) { resultBox.style.background = 'rgba(16, 185, 129, 0.2)'; resultBox.style.color = '#34D399'; resultBox.innerHTML = `<i class="fas fa-star"></i> Excellent! You scored 3 out of 3.`; } 
-            else { resultBox.style.background = 'rgba(245, 158, 11, 0.2)'; resultBox.style.color = '#FCD34D'; resultBox.innerHTML = `You scored ${score} out of 3. Keep practicing!`; }
         }
         
         function previewCertUI() { openCertificate(loggedUser); }
