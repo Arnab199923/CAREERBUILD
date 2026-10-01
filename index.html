@@ -69,6 +69,12 @@
             &.active { display: block; animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         }
 
+        /* Dashboard Wrapper - Keeps layout contained instead of full width */
+        .dashboard-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .card { 
             background: var(--white); padding: 30px; border-radius: 16px; border: 1px solid var(--border); 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); 
@@ -89,6 +95,35 @@
             
             &:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 15px rgba(225, 29, 72, 0.3); }
             &.pulse { animation: pulseGlow 2s infinite; }
+        }
+
+        /* REDESIGNED LOGIN BOX */
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+        .login-box {
+            width: 100%;
+            max-width: 420px;
+            background: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(225, 29, 72, 0.1);
+            animation: slideUpStagger 0.5s ease-out;
+        }
+        .login-box .tabs {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .login-box .tabs button {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
         }
 
         /* HERO SECTION */
@@ -318,7 +353,7 @@
             <div class="trust-item"><i class="fas fa-chalkboard-teacher"></i> Expert Mentors</div>
         </div>
 
-        <div style="padding: 60px 5%;">
+        <div style="padding: 60px 5%; max-width: 1200px; margin: 0 auto;">
             <h2 class="section-title">Explore Our Programs</h2>
             <div class="course-grid">
                 <div class="course-card">
@@ -392,251 +427,262 @@
 
     <!-- Login Page -->
     <section id="login" class="page-section">
-        <div class="login-box">
-            <h2 style="text-align: center; margin-bottom: 20px; font-weight: 800; color: var(--dark);">Welcome Back</h2>
-            <div class="tabs">
-                <button id="tab-student" class="active" onclick="switchLogin('student')">Student</button>
-                <button id="tab-admin" onclick="switchLogin('admin')">Administrator</button>
-            </div>
-            
-            <div class="card" id="form-student" style="animation: slideUpStagger 0.4s ease-out;">
-                <label>Student ID</label>
-                <input type="text" id="std-id-login" placeholder="e.g. CB-1001">
-                <button class="btn-action" onclick="loginStudent()">Access Portal</button>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--text-muted);">Enter ID provided at admission</p>
-            </div>
+        <div class="login-wrapper">
+            <div class="login-box">
+                <h2 style="text-align: center; margin-bottom: 25px; font-weight: 800; color: var(--dark);">Welcome Back</h2>
+                <div class="tabs">
+                    <button id="tab-student" class="active" onclick="switchLogin('student')">Student</button>
+                    <button id="tab-admin" onclick="switchLogin('admin')">Administrator</button>
+                </div>
+                
+                <div id="form-student" style="animation: fadeIn 0.4s ease-out;">
+                    <label>Student ID</label>
+                    <input type="text" id="std-id-login" placeholder="e.g. CB-1001">
+                    <button class="btn-action" onclick="loginStudent()" style="margin-top: 10px;">Access Portal</button>
+                    <p style="text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">Enter ID provided at admission</p>
+                </div>
 
-            <div class="card" id="form-admin" style="display:none; animation: slideUpStagger 0.4s ease-out;">
-                <label>Admin User ID</label>
-                <input type="text" id="adm-id" placeholder="Username">
-                <label>Password</label>
-                <input type="password" id="adm-pass" placeholder="••••••••">
-                <button class="btn-action" onclick="loginAdmin()">Secure Login</button>
+                <div id="form-admin" style="display:none; animation: fadeIn 0.4s ease-out;">
+                    <label>Admin User ID</label>
+                    <input type="text" id="adm-id" placeholder="Username">
+                    <label>Password</label>
+                    <input type="password" id="adm-pass" placeholder="••••••••">
+                    <button class="btn-action" onclick="loginAdmin()" style="margin-top: 10px;">Secure Login</button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Admin Dashboard -->
     <section id="admin-dash" class="page-section">
-        <h2 style="font-weight: 800; margin-bottom: 20px; color: var(--dark);">Admin Workspace</h2>
-        
-        <div class="tabs">
-            <button id="tab-overview" class="active" onclick="switchAdminTab('overview')"><i class="fas fa-chart-line"></i> Dashboard</button>
-            <button id="tab-mng" onclick="switchAdminTab('manage')"><i class="fas fa-users"></i> Directory</button>
-            <button id="tab-fin" onclick="switchAdminTab('finance')"><i class="fas fa-wallet"></i> Finances</button>
-            <button id="tab-inq" onclick="switchAdminTab('inquiries')"><i class="fas fa-envelope"></i> Inquiries</button>
-            <button id="tab-admin-doubts" onclick="switchAdminTab('doubts')"><i class="fas fa-question-circle"></i> Doubts</button>
-            <button id="tab-cert" onclick="switchAdminTab('cert')"><i class="fas fa-certificate"></i> Certificates</button>
-            <button id="tab-add-course" onclick="switchAdminTab('add-course')"><i class="fas fa-book-open"></i> Setup/Courses</button> 
-        </div>
-
-        <div id="view-overview">
-            <div class="stats-grid">
-                <div class="stat-card blue">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <p>Total Enrollments</p>
-                    <h3 id="stat-total">0</h3>
-                </div>
-                <div class="stat-card green">
-                    <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
-                    <p>Active Students</p>
-                    <h3 id="stat-active">0</h3>
-                </div>
-                <div class="stat-card green">
-                    <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
-                    <p>Revenue Collected</p>
-                    <h3 id="stat-revenue">₹0</h3>
-                </div>
-                <div class="stat-card red">
-                    <div class="stat-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <p>Pending Dues</p>
-                    <h3 id="stat-dues">₹0</h3>
-                </div>
+        <div class="dashboard-wrapper">
+            <h2 style="font-weight: 800; margin-bottom: 20px; color: var(--dark);">Admin Workspace</h2>
+            
+            <div class="tabs">
+                <button id="tab-overview" class="active" onclick="switchAdminTab('overview')"><i class="fas fa-chart-line"></i> Dashboard</button>
+                <button id="tab-mng" onclick="switchAdminTab('manage')"><i class="fas fa-users"></i> Directory</button>
+                <button id="tab-fin" onclick="switchAdminTab('finance')"><i class="fas fa-wallet"></i> Finances</button>
+                <button id="tab-inq" onclick="switchAdminTab('inquiries')"><i class="fas fa-envelope"></i> Inquiries</button>
+                <button id="tab-admin-doubts" onclick="switchAdminTab('doubts')"><i class="fas fa-question-circle"></i> Doubts</button>
+                <button id="tab-cert" onclick="switchAdminTab('cert')"><i class="fas fa-certificate"></i> Certificates</button>
+                <button id="tab-add-course" onclick="switchAdminTab('add-course')"><i class="fas fa-book-open"></i> Setup/Courses</button> 
             </div>
-        </div>
 
-        <div id="view-add-course" style="display:none;">
-            <div class="card" style="max-width: 600px; margin: 0 auto; animation: slideUpStagger 0.4s ease-out;">
-                <h3 style="margin-bottom: 15px; color: var(--dark);">Add Custom Course Name</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Use this to add a new course name and fee. It will instantly appear in the Application and Enrollment dropdown lists.</p>
-                <label>Course Name</label><input type="text" id="custom-course-name" placeholder="e.g. Graphic Design Basics">
-                <label>Total Fee (₹)</label><input type="number" id="custom-course-fee" placeholder="e.g. 8000">
-                <button class="btn-action pulse" onclick="saveCustomCourse()">Add Course</button>
-                <h4 style="margin-top: 30px; margin-bottom: 10px; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 10px;">Custom Courses List</h4>
-                <ul id="custom-courses-list" style="list-style: none;"></ul>
-            </div>
-        </div>
+            <div id="view-overview">
+                <!-- Operational Launch Banner -->
+                <div style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 15px; border-radius: 12px; margin-bottom: 25px; text-align: center; font-weight: 600; animation: slideUpStagger 0.3s ease-out;">
+                    <i class="fas fa-rocket"></i> Official Operational Launch (October 2026) - All systems active and ready for batch enrollments.
+                </div>
 
-        <div id="view-manage" style="display:none;">
-            <div class="course-grid" style="grid-template-columns: 350px 1fr; gap: 20px;">
-                <div class="card" style="height: fit-content; animation: slideUpStagger 0.4s ease-out;">
-                    <h3 id="form-title" style="margin-bottom: 15px; color: var(--dark);">Enroll Student</h3>
-                    <input type="hidden" id="edit-doc-id" value="">
-                    <label>Full Name</label><input type="text" id="in-name" placeholder="Student Name">
-                    <label>Phone Number</label><input type="tel" id="in-phone" placeholder="10-digit number">
-                    
-                    <label>Program</label>
-                    <select id="in-course">
-                        <!-- Filled dynamically by JS -->
-                    </select>
-
-                    <label>Batch Timing</label>
-                    <input type="text" id="in-batch" placeholder="e.g. 10:00 AM - 11:30 AM" list="batch-options">
-                    <datalist id="batch-options">
-                        <option value="08:00 AM - 09:30 AM">
-                        <option value="10:00 AM - 11:30 AM">
-                        <option value="12:00 PM - 01:30 PM">
-                        <option value="02:00 PM - 03:30 PM">
-                        <option value="04:00 PM - 05:30 PM">
-                        <option value="06:00 PM - 07:30 PM">
-                    </datalist>
-
-                    <label>Advance Payment (₹)</label><input type="number" id="in-advance" placeholder="e.g. 1000">
-                    <label>Discount (₹)</label><input type="number" id="in-discount" placeholder="e.g. 0" value="0">
-                    
-                    <div id="edit-status-group" style="display:none;">
-                        <label>Enrollment Status</label>
-                        <select id="in-status">
-                            <option value="Active">Active</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Dropout">Dropout</option>
-                        </select>
+                <div class="stats-grid">
+                    <div class="stat-card blue">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <p>Total Enrollments</p>
+                        <h3 id="stat-total">0</h3>
                     </div>
-                    <button class="btn-action" onclick="saveStudent()">Save Record</button>
-                    <button class="btn-action" id="cancel-edit-btn" onclick="resetForm()" style="background: var(--text-muted); margin-top: 10px; display:none;">Cancel</button>
+                    <div class="stat-card green">
+                        <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                        <p>Active Students</p>
+                        <h3 id="stat-active">0</h3>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
+                        <p>Revenue Collected</p>
+                        <h3 id="stat-revenue">₹0</h3>
+                    </div>
+                    <div class="stat-card red">
+                        <div class="stat-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <p>Pending Dues</p>
+                        <h3 id="stat-dues">₹0</h3>
+                    </div>
                 </div>
-                <div class="card" style="overflow-x: auto; animation: slideUpStagger 0.5s ease-out;">
-                    <h3 style="margin-bottom: 15px; color: var(--dark);">Student Directory</h3>
+            </div>
+
+            <div id="view-add-course" style="display:none;">
+                <div class="card" style="max-width: 600px; margin: 0 auto; animation: slideUpStagger 0.4s ease-out;">
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Add Custom Course Name</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Use this to add a new course name and fee. It will instantly appear in the Application and Enrollment dropdown lists.</p>
+                    <label>Course Name</label><input type="text" id="custom-course-name" placeholder="e.g. Graphic Design Basics">
+                    <label>Total Fee (₹)</label><input type="number" id="custom-course-fee" placeholder="e.g. 8000">
+                    <button class="btn-action pulse" onclick="saveCustomCourse()">Add Course</button>
+                    <h4 style="margin-top: 30px; margin-bottom: 10px; color: var(--dark); border-bottom: 1px solid var(--border); padding-bottom: 10px;">Custom Courses List</h4>
+                    <ul id="custom-courses-list" style="list-style: none;"></ul>
+                </div>
+            </div>
+
+            <div id="view-manage" style="display:none;">
+                <div class="course-grid" style="grid-template-columns: 350px 1fr; gap: 20px;">
+                    <div class="card" style="height: fit-content; animation: slideUpStagger 0.4s ease-out;">
+                        <h3 id="form-title" style="margin-bottom: 15px; color: var(--dark);">Enroll Student</h3>
+                        <input type="hidden" id="edit-doc-id" value="">
+                        <label>Full Name</label><input type="text" id="in-name" placeholder="Student Name">
+                        <label>Phone Number</label><input type="tel" id="in-phone" placeholder="10-digit number">
+                        
+                        <label>Program</label>
+                        <select id="in-course">
+                            <!-- Filled dynamically by JS -->
+                        </select>
+
+                        <label>Batch Timing</label>
+                        <input type="text" id="in-batch" placeholder="e.g. 10:00 AM - 11:30 AM" list="batch-options">
+                        <datalist id="batch-options">
+                            <option value="08:00 AM - 09:30 AM">
+                            <option value="10:00 AM - 11:30 AM">
+                            <option value="12:00 PM - 01:30 PM">
+                            <option value="02:00 PM - 03:30 PM">
+                            <option value="04:00 PM - 05:30 PM">
+                            <option value="06:00 PM - 07:30 PM">
+                        </datalist>
+
+                        <label>Advance Payment (₹)</label><input type="number" id="in-advance" placeholder="e.g. 1000">
+                        <label>Discount (₹)</label><input type="number" id="in-discount" placeholder="e.g. 0" value="0">
+                        
+                        <div id="edit-status-group" style="display:none;">
+                            <label>Enrollment Status</label>
+                            <select id="in-status">
+                                <option value="Active">Active</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Dropout">Dropout</option>
+                            </select>
+                        </div>
+                        <button class="btn-action" onclick="saveStudent()">Save Record</button>
+                        <button class="btn-action" id="cancel-edit-btn" onclick="resetForm()" style="background: var(--text-muted); margin-top: 10px; display:none;">Cancel</button>
+                    </div>
+                    <div class="card" style="overflow-x: auto; animation: slideUpStagger 0.5s ease-out;">
+                        <h3 style="margin-bottom: 15px; color: var(--dark);">Student Directory</h3>
+                        <table>
+                            <thead><tr><th>ID</th><th>Student details</th><th>Course & Batch</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody id="student-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-finance" style="display:none;">
+                <div class="card" style="overflow-x: auto;">
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Fee Collection</h3>
                     <table>
-                        <thead><tr><th>ID</th><th>Student details</th><th>Course & Batch</th><th>Status</th><th>Actions</th></tr></thead>
-                        <tbody id="student-list"></tbody>
+                        <thead><tr><th>ID</th><th>Name</th><th>Total Fee</th><th>Paid</th><th>Due</th><th>Action</th></tr></thead>
+                        <tbody id="finance-list"></tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
-        <div id="view-finance" style="display:none;">
-            <div class="card" style="overflow-x: auto;">
-                <h3 style="margin-bottom: 15px; color: var(--dark);">Fee Collection</h3>
-                <table>
-                    <thead><tr><th>ID</th><th>Name</th><th>Total Fee</th><th>Paid</th><th>Due</th><th>Action</th></tr></thead>
-                    <tbody id="finance-list"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <div id="view-inquiries" style="display:none;">
-            <div class="card" style="overflow-x: auto;">
-                <h3 style="margin-bottom: 15px; color: var(--dark);">Admission Inquiries (Leads)</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">List of students who submitted the "Apply Now" form. Click the WhatsApp icon to message them.</p>
-                <table>
-                    <thead><tr><th>Date</th><th>Name</th><th>WhatsApp</th><th>Course</th><th>Action</th></tr></thead>
-                    <tbody id="inquiries-list"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- ADMIN DOUBTS VIEW -->
-        <div id="view-doubts" style="display:none;">
-            <div class="card">
-                <h3 style="margin-bottom: 15px; color: var(--dark);">Student Doubts & Questions</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Review and reply to doubts raised by your students.</p>
-                <div id="admin-doubts-list"></div>
-            </div>
-        </div>
-
-        <div id="view-cert" style="display:none;">
-            <div class="card" style="max-width: 500px; margin: 0 auto; text-align: center; animation: slideUpStagger 0.4s ease-out;">
-                <div class="stat-icon" style="background:rgba(225, 29, 72, 0.15); color:var(--primary); margin: 0 auto 15px; width: 60px; height: 60px; font-size: 1.5rem;"><i class="fas fa-award"></i></div>
-                <h3 style="margin-bottom: 10px; color: var(--dark);">Issue Certificate</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Select a student and assign a final grade.</p>
-                <div style="background: rgba(239, 68, 68, 0.1); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; text-align: left;">
-                    <i class="fas fa-exclamation-circle"></i> Note: Certificates can only be generated for students with zero pending dues.
+            <div id="view-inquiries" style="display:none;">
+                <div class="card" style="overflow-x: auto;">
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Admission Inquiries (Leads)</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">List of students who submitted the "Apply Now" form. Click the WhatsApp icon to message them.</p>
+                    <table>
+                        <thead><tr><th>Date</th><th>Name</th><th>WhatsApp</th><th>Course</th><th>Action</th></tr></thead>
+                        <tbody id="inquiries-list"></tbody>
+                    </table>
                 </div>
-                <select id="cert-select-student" style="text-align: left;">
-                    <option value="">-- Select Eligible Student --</option>
-                </select>
-                <input type="text" id="cert-grade" placeholder="Enter Grade (e.g., A+, A, B)">
-                <button class="btn-action pulse" onclick="generateCert()">Generate Certificate</button>
+            </div>
+
+            <!-- ADMIN DOUBTS VIEW -->
+            <div id="view-doubts" style="display:none;">
+                <div class="card">
+                    <h3 style="margin-bottom: 15px; color: var(--dark);">Student Doubts & Questions</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Review and reply to doubts raised by your students.</p>
+                    <div id="admin-doubts-list"></div>
+                </div>
+            </div>
+
+            <div id="view-cert" style="display:none;">
+                <div class="card" style="max-width: 500px; margin: 0 auto; text-align: center; animation: slideUpStagger 0.4s ease-out;">
+                    <div class="stat-icon" style="background:rgba(225, 29, 72, 0.15); color:var(--primary); margin: 0 auto 15px; width: 60px; height: 60px; font-size: 1.5rem;"><i class="fas fa-award"></i></div>
+                    <h3 style="margin-bottom: 10px; color: var(--dark);">Issue Certificate</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Select a student and assign a final grade.</p>
+                    <div style="background: rgba(239, 68, 68, 0.1); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.3); padding: 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; text-align: left;">
+                        <i class="fas fa-exclamation-circle"></i> Note: Certificates can only be generated for students with zero pending dues.
+                    </div>
+                    <select id="cert-select-student" style="text-align: left;">
+                        <option value="">-- Select Eligible Student --</option>
+                    </select>
+                    <input type="text" id="cert-grade" placeholder="Enter Grade (e.g., A+, A, B)">
+                    <button class="btn-action pulse" onclick="generateCert()">Generate Certificate</button>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Student Dashboard -->
     <section id="student-dash" class="page-section">
-        <h2 id="std-welcome" style="font-weight: 800; margin-bottom: 20px; color: var(--dark);">Welcome Student</h2>
-        
-        <div class="tabs" style="margin-bottom: 20px;">
-            <button id="tab-std-overview" class="active" onclick="switchStdTab('overview')"><i class="fas fa-home"></i> Overview</button>
-            <button id="tab-std-syllabus" onclick="switchStdTab('syllabus')"><i class="fas fa-book"></i> Course Syllabus</button>
-            <button id="tab-std-editor" onclick="switchStdTab('editor')"><i class="fas fa-code"></i> Code Practice</button>
-            <button id="tab-std-doubts" onclick="switchStdTab('doubts')"><i class="fas fa-question-circle"></i> Ask a Doubt</button>
-            <button id="tab-std-assignments" onclick="switchStdTab('assignments')"><i class="fas fa-clipboard-list"></i> Assignments</button>
-        </div>
-
-        <div class="course-grid" style="grid-template-columns: 1fr; max-width: 900px; margin: 0;">
+        <div class="dashboard-wrapper">
+            <h2 id="std-welcome" style="font-weight: 800; margin-bottom: 20px; color: var(--dark);">Welcome Student</h2>
             
-            <div id="std-view-overview" class="std-content-section card">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-                    <div>
-                        <h3 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase;">Program Enrolled</h3>
-                        <h2 id="std-view-course" style="color: var(--dark);"></h2>
-                        <p style="font-weight: 600; margin-top: 5px;">ID: <span id="std-view-id" style="color: var(--primary);"></span> | Batch: <span id="std-view-batch" style="color: var(--warning);"></span></p>
+            <div class="tabs" style="margin-bottom: 20px;">
+                <button id="tab-std-overview" class="active" onclick="switchStdTab('overview')"><i class="fas fa-home"></i> Overview</button>
+                <button id="tab-std-syllabus" onclick="switchStdTab('syllabus')"><i class="fas fa-book"></i> Course Syllabus</button>
+                <button id="tab-std-editor" onclick="switchStdTab('editor')"><i class="fas fa-code"></i> Code Practice</button>
+                <button id="tab-std-doubts" onclick="switchStdTab('doubts')"><i class="fas fa-question-circle"></i> Ask a Doubt</button>
+                <button id="tab-std-assignments" onclick="switchStdTab('assignments')"><i class="fas fa-clipboard-list"></i> Assignments</button>
+            </div>
+
+            <div class="course-grid" style="grid-template-columns: 1fr; margin: 0 auto;">
+                
+                <div id="std-view-overview" class="std-content-section card">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                        <div>
+                            <h3 style="color: var(--text-muted); font-size: 0.9rem; text-transform: uppercase;">Program Enrolled</h3>
+                            <h2 id="std-view-course" style="color: var(--dark);"></h2>
+                            <p style="font-weight: 600; margin-top: 5px;">ID: <span id="std-view-id" style="color: var(--primary);"></span> | Batch: <span id="std-view-batch" style="color: var(--warning);"></span></p>
+                        </div>
+                        <div id="std-view-status"></div>
                     </div>
-                    <div id="std-view-status"></div>
+
+                    <div style="background: var(--bg-body); border: 1px solid var(--border); padding: 20px; border-radius: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                        <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">TOTAL FEE</p><h3 id="std-view-total" style="color: var(--dark);"></h3></div>
+                        <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PAID</p><h3 id="std-view-paid" style="color: var(--secondary);"></h3></div>
+                        <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DUE</p><h3 id="std-view-due" style="color: var(--danger);"></h3></div>
+                    </div>
+
+                    <div id="std-cert-area" style="display: none; background: rgba(225, 29, 72, 0.1); border: 1px solid rgba(225, 29, 72, 0.3); padding: 20px; border-radius: 12px; text-align: center;">
+                        <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-graduation-cap"></i> Congratulations!</h3>
+                        <p style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 15px;">Your course is marked as completed and your certificate is ready.</p>
+                        <button class="btn-action pulse" onclick="previewCertUI()" style="max-width: 250px;">View Certificate</button>
+                    </div>
+                    
+                    <p id="std-pending-msg" style="color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-info-circle"></i> Your certificate will be available here upon course completion and fee clearance.
+                    </p>
                 </div>
 
-                <div style="background: var(--bg-body); border: 1px solid var(--border); padding: 20px; border-radius: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
-                    <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">TOTAL FEE</p><h3 id="std-view-total" style="color: var(--dark);"></h3></div>
-                    <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">PAID</p><h3 id="std-view-paid" style="color: var(--secondary);"></h3></div>
-                    <div><p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DUE</p><h3 id="std-view-due" style="color: var(--danger);"></h3></div>
+                <div id="std-view-syllabus" class="std-content-section card" style="display: none;">
+                    <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; color: var(--dark);">
+                        Curriculum Breakdown: <span id="syllabus-title" style="color: var(--primary);"></span>
+                    </h3>
+                    <ul id="syllabus-content" class="std-syllabus-list"></ul>
                 </div>
 
-                <div id="std-cert-area" style="display: none; background: rgba(225, 29, 72, 0.1); border: 1px solid rgba(225, 29, 72, 0.3); padding: 20px; border-radius: 12px; text-align: center;">
-                    <h3 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-graduation-cap"></i> Congratulations!</h3>
-                    <p style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 15px;">Your course is marked as completed and your certificate is ready.</p>
-                    <button class="btn-action pulse" onclick="previewCertUI()" style="max-width: 250px;">View Certificate</button>
+                <div id="std-view-editor" class="std-content-section card" style="display: none;">
+                    <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-laptop-code" style="color: var(--primary);"></i> Practice Code Editor</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Write, run, and test your code directly in the browser. Supports Python, C, HTML/CSS, and more.</p>
+                    <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; height: 600px; background: #1e1e1e;">
+                        <iframe src="https://onecompiler.com/embed/" width="100%" height="100%" style="border:none;"></iframe>
+                    </div>
                 </div>
-                
-                <p id="std-pending-msg" style="color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
-                    <i class="fas fa-info-circle"></i> Your certificate will be available here upon course completion and fee clearance.
-                </p>
-            </div>
 
-            <div id="std-view-syllabus" class="std-content-section card" style="display: none;">
-                <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; color: var(--dark);">
-                    Curriculum Breakdown: <span id="syllabus-title" style="color: var(--primary);"></span>
-                </h3>
-                <ul id="syllabus-content" class="std-syllabus-list"></ul>
-            </div>
-
-            <div id="std-view-editor" class="std-content-section card" style="display: none;">
-                <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-laptop-code" style="color: var(--primary);"></i> Practice Code Editor</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Write, run, and test your code directly in the browser. Supports Python, C, HTML/CSS, and more.</p>
-                <div style="border: 1px solid var(--border); border-radius: 8px; overflow: hidden; height: 600px; background: #1e1e1e;">
-                    <iframe src="https://onecompiler.com/embed/" width="100%" height="100%" style="border:none;"></iframe>
+                <div id="std-view-doubts" class="std-content-section card" style="display: none;">
+                    <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-comment-dots" style="color: var(--primary);"></i> Ask a Doubt</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Stuck on a problem? Send your question directly to the mentors.</p>
+                    
+                    <textarea id="std-doubt-text" rows="4" placeholder="Type your doubt or question here..." style="width:100%; padding:15px; border-radius:8px; border:1px solid var(--border); font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                    <button class="btn-action" onclick="submitDoubt()" style="max-width: 200px; margin-top:10px;">Submit Doubt</button>
+                    
+                    <h4 style="margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom:10px; color: var(--dark);">Your Doubt History</h4>
+                    <div id="std-doubts-list" style="margin-top: 15px;"></div>
                 </div>
-            </div>
 
-            <div id="std-view-doubts" class="std-content-section card" style="display: none;">
-                <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-comment-dots" style="color: var(--primary);"></i> Ask a Doubt</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Stuck on a problem? Send your question directly to the mentors.</p>
-                
-                <textarea id="std-doubt-text" rows="4" placeholder="Type your doubt or question here..." style="width:100%; padding:15px; border-radius:8px; border:1px solid var(--border); font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
-                <button class="btn-action" onclick="submitDoubt()" style="max-width: 200px; margin-top:10px;">Submit Doubt</button>
-                
-                <h4 style="margin-top: 40px; border-bottom: 1px solid var(--border); padding-bottom:10px; color: var(--dark);">Your Doubt History</h4>
-                <div id="std-doubts-list" style="margin-top: 15px;"></div>
-            </div>
-
-            <div id="std-view-assignments" class="std-content-section card" style="display: none;">
-                <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> Course Assignments</h3>
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Complete these practical tasks to build your portfolio and enhance your skills.</p>
-                <div id="assignments-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-                    <!-- Dynamically populated by JS based on enrolled course -->
+                <div id="std-view-assignments" class="std-content-section card" style="display: none;">
+                    <h3 style="margin-bottom: 5px; color: var(--dark);"><i class="fas fa-clipboard-list" style="color: var(--primary);"></i> Course Assignments</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Complete these practical tasks to build your portfolio and enhance your skills.</p>
+                    <div id="assignments-container" style="background: var(--bg-body); padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+                        <!-- Dynamically populated by JS based on enrolled course -->
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </section>
 
@@ -714,7 +760,6 @@
             e.clipboardData.setData('text/plain', 'Content copying is disabled by Career Build Security.'); e.preventDefault();
         });
 
-
         // ==========================================
         // AI AVATAR INTERACTION SCRIPT
         // ==========================================
@@ -760,9 +805,8 @@
             }
         }, 12000);
 
-
         // ==========================================
-        // FIREBASE CONFIGURATION
+        // FIREBASE CONFIGURATION & STATE
         // ==========================================
         const firebaseConfig = {
             apiKey: "AIzaSyCPexNAV26vJlBBQoPr90Zw_Q1R5kHEPDU",
@@ -775,14 +819,14 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Original System Data
+        // System Data
         let students = [];
         let admissions = []; 
         let allDoubts = []; 
         let loggedUser = null;
+        let customCourses = [];
         
         const courseFees = { "ADCA": 11000, "ADCPA": 12000, "Programming Basic": 12000, "DCA": 7000, "Bootcamp": 5000 };
-        
         const syllabusData = {
             "ADCA": `<li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li><li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li><li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li><li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li><li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li><li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li><li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li><li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
             "ADCPA": `<li><i class="fas fa-laptop"></i> <b>INTRO TO COMPUTER:</b> Hardware, Software, OS, Touch Typing, MS Paint, File Management</li><li><i class="fas fa-file-word"></i> <b>MS WORD:</b> Typing, Editing, Margins, Headers, Inserting Elements, PDF Printing, Shortcuts, Document Design</li><li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-file-powerpoint"></i> <b>POWERPOINT:</b> Creating Slides, Transitions, Animations, Professional Designs</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Creation, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet, Security</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Intro, Layouts, Pen Tool, Card/Poster/Disk/Photo Design</li><li><i class="fas fa-paint-brush"></i> <b>CANVA:</b> Templates, Typography, Creating Posts/Banners</li><li><i class="fas fa-bezier-curve"></i> <b>AFFINITY:</b> Vector vs Pixel, Tools, Shape Building, Creating Designs</li><li><i class="fas fa-keyboard"></i> <b>BI LINGUAL TYPING:</b> Assamese / Hindi / Bengali</li><li><i class="fas fa-code"></i> <b>HTML & CSS (ENTRY LEVEL):</b> Intro to HTML/CSS, Webpage Styling</li><li><i class="fas fa-robot"></i> <b>AI & INTERNET:</b> ChatGPT, Gemini, Prompting, Email Handling</li><li><i class="fas fa-briefcase"></i> <b>VALUE ADDED:</b> Freelancing Ideas, Pvt Job Skills, Final Exam</li>`,
@@ -791,7 +835,6 @@
             "Bootcamp": `<li><i class="fas fa-file-excel"></i> <b>EXCEL:</b> Intro, Formatting, Math Handling, Formulas, Advance Excel (Lookup, Pivot, Filter)</li><li><i class="fas fa-calculator"></i> <b>ACCOUNTING:</b> Accounting Basics, Company Management, Ledgers, Vouchers, Orders, BRS, GST, Balance Sheet</li><li><i class="fas fa-image"></i> <b>PHOTOSHOP:</b> Tools, Page Layouts, Shortcuts, Pen Tool, Creating Designs</li><li><i class="fas fa-graduation-cap"></i> <b>FINAL EXAM:</b> Course Assessment</li>`
         };
 
-        // Course-specific Assignments
         const assignmentsData = {
             "ADCA": [
                 { title: "MS Word: Create a Resume", desc: "Design a professional resume using tables, formatting, and inserting images." },
@@ -820,8 +863,6 @@
             ]
         };
 
-        let customCourses = [];
-
         // --- Firebase Listeners ---
         db.collection("custom_courses").onSnapshot((snapshot) => {
             customCourses = [];
@@ -839,12 +880,9 @@
             snapshot.forEach((doc) => {
                 let sData = doc.data(); sData.docId = doc.id; students.push(sData);
             });
-            if (loggedUser === 'admin') {
-                renderOverview(); renderStudents(); renderFinancials(); loadCertSelect();
-            } else if (loggedUser && typeof loggedUser === 'object') {
-                const freshData = students.find(s => s.id === loggedUser.id);
-                if (freshData) { loggedUser = freshData; setupStudentDash(); }
-            }
+            
+            // Check session state on load/update
+            checkSessionState();
         });
 
         db.collection("admissions").onSnapshot((snapshot) => {
@@ -866,7 +904,35 @@
             else if (loggedUser && typeof loggedUser === 'object') { renderStudentDoubts(); }
         });
 
-        // --- Routing & Auth ---
+        // --- Routing & Auth (With Session Persistence) ---
+        window.onload = () => { checkSessionState(); };
+
+        function checkSessionState() {
+            const sessionType = sessionStorage.getItem('loggedUserType');
+            const sessionUserId = sessionStorage.getItem('loggedUserId');
+
+            if (sessionType === 'admin') {
+                loggedUser = 'admin';
+                document.getElementById('login-nav').style.display = 'none'; 
+                document.getElementById('logout-nav').style.display = 'inline-block';
+                renderOverview(); renderStudents(); renderFinancials(); loadCertSelect(); renderInquiries(); renderAdminDoubts();
+                showPage('admin-dash');
+            } else if (sessionType === 'student' && sessionUserId) {
+                const freshData = students.find(s => s.id.toUpperCase() === sessionUserId.toUpperCase());
+                if (freshData) {
+                    loggedUser = freshData;
+                    document.getElementById('login-nav').style.display = 'none'; 
+                    document.getElementById('logout-nav').style.display = 'inline-block';
+                    setupStudentDash();
+                    showPage('student-dash');
+                }
+            } else {
+                if(!document.querySelector('.page-section.active')) {
+                    showPage('home');
+                }
+            }
+        }
+
         function showPage(id) {
             document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
             document.getElementById(id).classList.add('active'); window.scrollTo(0,0);
@@ -880,28 +946,45 @@
         }
 
         function loginAdmin() {
-            if (document.getElementById('adm-id').value === 'Comp_Admin' && document.getElementById('adm-pass').value === 'admin@123') {
+            const idInput = document.getElementById('adm-id').value.trim();
+            const passInput = document.getElementById('adm-pass').value.trim();
+
+            if (idInput === 'Comp_Admin' && passInput === 'admin@123') {
+                sessionStorage.setItem('loggedUserType', 'admin');
                 loggedUser = 'admin';
-                document.getElementById('login-nav').style.display = 'none'; document.getElementById('logout-nav').style.display = 'inline-block';
+                document.getElementById('login-nav').style.display = 'none'; 
+                document.getElementById('logout-nav').style.display = 'inline-block';
                 document.getElementById('adm-id').value = ''; document.getElementById('adm-pass').value = '';
-                switchAdminTab('overview'); showPage('admin-dash');
-            } else { alert("Invalid Credentials"); }
+                switchAdminTab('overview'); 
+                checkSessionState();
+            } else { 
+                alert("Invalid Administrator Credentials"); 
+            }
         }
 
         function loginStudent() {
             const sid = document.getElementById('std-id-login').value.trim();
             const student = students.find(s => s.id.toUpperCase() === sid.toUpperCase());
             if(student) {
+                sessionStorage.setItem('loggedUserType', 'student');
+                sessionStorage.setItem('loggedUserId', student.id);
                 loggedUser = student;
-                document.getElementById('login-nav').style.display = 'none'; document.getElementById('logout-nav').style.display = 'inline-block';
+                document.getElementById('login-nav').style.display = 'none'; 
+                document.getElementById('logout-nav').style.display = 'inline-block';
                 document.getElementById('std-id-login').value = '';
-                setupStudentDash(); switchStdTab('overview'); showPage('student-dash');
-            } else { alert("Student ID not found in database."); }
+                switchStdTab('overview'); 
+                checkSessionState();
+            } else { 
+                alert("Student ID not found in database. Please check and try again."); 
+            }
         }
 
         function logout() {
+            sessionStorage.removeItem('loggedUserType');
+            sessionStorage.removeItem('loggedUserId');
             loggedUser = null;
-            document.getElementById('login-nav').style.display = 'inline-block'; document.getElementById('logout-nav').style.display = 'none';
+            document.getElementById('login-nav').style.display = 'inline-block'; 
+            document.getElementById('logout-nav').style.display = 'none';
             showPage('home');
         }
 
@@ -936,26 +1019,28 @@
         // --- Custom Courses Functions ---
         function updateCourseDropdowns() {
             const applySelect = document.getElementById('apply-course');
-            applySelect.innerHTML = `
-                <option value="" disabled selected>Choose a course...</option>
-                <option value="ADCA">ADCA</option>
-                <option value="ADCPA">ADCPA</option>
-                <option value="Programming Basic">Programming Basic</option>
-                <option value="DCA">DCA</option>
-                <option value="Bootcamp">Bootcamp</option>
-            `;
+            if(applySelect) {
+                applySelect.innerHTML = `<option value="" disabled selected>Choose a course...</option>
+                    <option value="ADCA">ADCA</option>
+                    <option value="ADCPA">ADCPA</option>
+                    <option value="Programming Basic">Programming Basic</option>
+                    <option value="DCA">DCA</option>
+                    <option value="Bootcamp">Bootcamp</option>`;
+            }
+            
             const enrollSelect = document.getElementById('in-course');
-            enrollSelect.innerHTML = `
-                <option value="" disabled selected>Select a program...</option>
-                <option value="ADCA">ADCA (₹11,000)</option>
-                <option value="ADCPA">ADCPA (₹12,000)</option>
-                <option value="Programming Basic">Programming Basic (₹12,000)</option>
-                <option value="DCA">DCA (₹7,000)</option>
-                <option value="Bootcamp">Bootcamp (₹5,000)</option>
-            `;
+            if(enrollSelect) {
+                enrollSelect.innerHTML = `<option value="" disabled selected>Select a program...</option>
+                    <option value="ADCA">ADCA (₹11,000)</option>
+                    <option value="ADCPA">ADCPA (₹12,000)</option>
+                    <option value="Programming Basic">Programming Basic (₹12,000)</option>
+                    <option value="DCA">DCA (₹7,000)</option>
+                    <option value="Bootcamp">Bootcamp (₹5,000)</option>`;
+            }
+            
             customCourses.forEach(c => {
-                applySelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
-                enrollSelect.innerHTML += `<option value="${c.name}">${c.name} (₹${c.fee})</option>`;
+                if(applySelect) applySelect.innerHTML += `<option value="${c.name}">${c.name}</option>`;
+                if(enrollSelect) enrollSelect.innerHTML += `<option value="${c.name}">${c.name} (₹${c.fee})</option>`;
             });
         }
 
@@ -969,7 +1054,6 @@
                 await db.collection("custom_courses").add({ name, fee });
                 document.getElementById('custom-course-name').value = '';
                 document.getElementById('custom-course-fee').value = '';
-                alert("Custom course added. It is now available in dropdowns.");
             } catch (error) { alert("Failed to add course."); }
             document.getElementById('loading-overlay').style.display = 'none';
         }
@@ -1005,7 +1089,7 @@
             const name = document.getElementById('in-name').value.trim();
             const phone = document.getElementById('in-phone').value.trim();
             const course = document.getElementById('in-course').value;
-            const batch = document.getElementById('in-batch').value.trim(); // NEW BATCH INPUT
+            const batch = document.getElementById('in-batch').value.trim();
             const advance = parseFloat(document.getElementById('in-advance').value) || 0;
             const discount = parseFloat(document.getElementById('in-discount').value) || 0;
             const status = document.getElementById('in-status').value || 'Active';
@@ -1043,7 +1127,7 @@
         }
 
         function renderStudents() {
-            const list = document.getElementById('student-list'); list.innerHTML = "";
+            const list = document.getElementById('student-list'); if(!list) return; list.innerHTML = "";
             let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
             sortedStudents.forEach((s) => {
                 let badgeClass = s.status === 'Completed' ? 'badge-completed' : s.status === 'Dropout' ? 'badge-dropout' : 'badge-active';
@@ -1080,7 +1164,7 @@
         }
 
         function renderFinancials() {
-            const list = document.getElementById('finance-list'); list.innerHTML = "";
+            const list = document.getElementById('finance-list'); if(!list) return; list.innerHTML = "";
             let sortedStudents = [...students].sort((a, b) => a.id.localeCompare(b.id));
             sortedStudents.forEach((s) => {
                 const due = s.totalFee - (s.discount || 0) - s.paidFee;
@@ -1170,6 +1254,7 @@
 
         function loadCertSelect() {
             const sel = document.getElementById('cert-select-student');
+            if(!sel) return;
             sel.innerHTML = '<option value="">-- Select Eligible Student --</option>';
             students.forEach(s => sel.innerHTML += `<option value="${s.docId}">${s.id} -${s.name}</option>`);
         }
@@ -1202,7 +1287,7 @@
             document.getElementById('std-welcome').innerText = "Welcome, " + loggedUser.name;
             document.getElementById('std-view-id').innerText = loggedUser.id;
             document.getElementById('std-view-course').innerText = loggedUser.course;
-            document.getElementById('std-view-batch').innerText = loggedUser.batch || "Not Assigned"; // Display Batch
+            document.getElementById('std-view-batch').innerText = loggedUser.batch || "Not Assigned"; 
             
             let badgeClass = loggedUser.status === 'Completed' ? 'badge-completed' : loggedUser.status === 'Dropout' ? 'badge-dropout' : 'badge-active';
             document.getElementById('std-view-status').innerHTML = `<span class="badge ${badgeClass}">${loggedUser.status}</span>`;
@@ -1211,8 +1296,13 @@
             document.getElementById('std-view-paid').innerText = "₹" + (loggedUser.paidFee || 0).toLocaleString();
             document.getElementById('std-view-due').innerText = "₹" + ((loggedUser.totalFee || 0) - (loggedUser.discount || 0) - (loggedUser.paidFee || 0)).toLocaleString();
 
-            if(loggedUser.grade) { document.getElementById('std-cert-area').style.display = 'block'; document.getElementById('std-pending-msg').style.display = 'none'; } 
-            else { document.getElementById('std-cert-area').style.display = 'none'; document.getElementById('std-pending-msg').style.display = 'flex'; }
+            if(loggedUser.grade) { 
+                document.getElementById('std-cert-area').style.display = 'block'; 
+                document.getElementById('std-pending-msg').style.display = 'none'; 
+            } else { 
+                document.getElementById('std-cert-area').style.display = 'none'; 
+                document.getElementById('std-pending-msg').style.display = 'flex'; 
+            }
 
             document.getElementById('syllabus-title').innerText = loggedUser.course;
             
@@ -1222,7 +1312,6 @@
             }
             document.getElementById('syllabus-content').innerHTML = courseSyllabus;
             
-            // Populate Assignments based on course
             let courseAssignments = assignmentsData[loggedUser.course];
             const assignmentsContainer = document.getElementById('assignments-container');
             if (!courseAssignments) {
