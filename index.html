@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAREER BUILD COMPUTER EDUCATION</title>
+    <title>CAREER BUILD COMPUTER EDUCATION | Happy Durga Puja</title>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 🔴 RED THEME COLORS */
-            --primary: #E11D48; /* Vibrant Rose Red */
+            /* 🔴 RED & FESTIVE GOLD THEME COLORS */
+            --primary: #E11D48; /* Vibrant Rose Red / Sindoor Red */
             --primary-hover: #BE123C; /* Darker Crimson */
-            --secondary: #F59E0B; /* Amber for contrasts */
+            --secondary: #F59E0B; /* Festive Marigold / Gold */
+            --gold-light: #FDE68A;
             --dark: #F8FAFC; /* White text for headings */
             --text-main: #E2E8F0; /* Off-white for readability */
             --text-muted: #9CA3AF; /* Muted gray for secondary text */
@@ -22,7 +23,7 @@
             --danger: #EF4444;
             --warning: #F59E0B;
             --border: #382525; /* Subtle red-tinted dark border */
-            --hero-bg: linear-gradient(180deg, #2a1616 0%, var(--bg-body) 100%);
+            --hero-bg: radial-gradient(circle at top, #3b1518 0%, #1c1010 55%, var(--bg-body) 100%);
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -39,9 +40,48 @@
         @keyframes slideUpStagger { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
         @keyframes pulseGlow { 
-            0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.5); } 
-            70% { box-shadow: 0 0 0 12px rgba(225, 29, 72, 0); } 
-            100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); } 
+            0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); } 
+            70% { box-shadow: 0 0 0 14px rgba(245, 158, 11, 0); } 
+            100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); } 
+        }
+        @keyframes shimmerGold {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* 🪔 DURGA PUJA TOP FESTIVE BAR */
+        .puja-top-bar {
+            background: linear-gradient(90deg, #7f1d1d, #be123c, #d97706, #be123c, #7f1d1d);
+            background-size: 200% auto;
+            animation: shimmerGold 8s linear infinite;
+            color: #FFFBEB;
+            text-align: center;
+            padding: 9px 15px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(252, 211, 77, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            z-index: 1001;
+            position: relative;
+        }
+        .puja-top-bar span.puja-highlight {
+            background: rgba(0, 0, 0, 0.35);
+            color: #FCD34D;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            border: 1px solid rgba(252, 211, 77, 0.5);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .puja-top-bar span.puja-highlight:hover {
+            background: #FCD34D;
+            color: #130f0f;
         }
 
         /* Nav */
@@ -52,15 +92,17 @@
             
             .logo { 
                 font-weight: 800; font-size: 1.2rem; color: var(--dark); letter-spacing: -0.5px; 
+                display: flex; align-items: center; gap: 8px;
                 span { color: var(--primary); }
+                .festive-icon { font-size: 1.1rem; animation: float 2.5s ease-in-out infinite; }
             }
             .nav-links button { 
                 background: transparent; color: var(--text-main); border: none; padding: 8px 16px; margin-left: 5px; 
                 border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease;
                 
-                &:hover { background: var(--bg-body); color: var(--primary); transform: translateY(-2px); }
-                &.btn-nav-primary { background: var(--primary); color: #FFFFFF; }
-                &.btn-nav-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3); }
+                &:hover { background: var(--bg-body); color: var(--secondary); transform: translateY(-2px); }
+                &.btn-nav-primary { background: linear-gradient(135deg, var(--primary) 0%, #d97706 100%); color: #FFFFFF; border: 1px solid rgba(252, 211, 77, 0.3); }
+                &.btn-nav-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
             }
         }
 
@@ -86,7 +128,7 @@
             color: var(--text-main); border: 1px solid var(--border); border-radius: 8px; 
             font-size: 0.95rem; transition: all 0.3s ease;
             
-            &:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.2); transform: translateY(-1px); }
+            &:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); transform: translateY(-1px); }
         }
 
         /* File Upload Box Styling */
@@ -164,20 +206,87 @@
             padding: 12px;
         }
 
-        /* HERO SECTION */
+        /* HERO SECTION WITH FESTIVE AMBIENCE */
         .hero { 
             position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; 
             text-align: center; padding: 80px 20px 60px; background: var(--hero-bg); 
             
             .hero-content { position: relative; z-index: 2; animation: slideUpStagger 0.8s ease-out; }
             .badge-hero { 
-                background: rgba(225, 29, 72, 0.15); color: #FDA4AF; padding: 8px 20px; border-radius: 20px; 
-                font-weight: 700; font-size: 0.9rem; margin-bottom: 24px; display: inline-block; 
-                border: 1px solid rgba(225, 29, 72, 0.3); animation: float 3s ease-in-out infinite;
+                background: linear-gradient(90deg, rgba(225, 29, 72, 0.25), rgba(245, 158, 11, 0.25));
+                color: #FDE68A; padding: 9px 22px; border-radius: 25px; 
+                font-weight: 700; font-size: 0.92rem; margin-bottom: 24px; display: inline-block; 
+                border: 1px solid rgba(252, 211, 77, 0.5); animation: float 3s ease-in-out infinite;
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
             }
             h1 { font-size: 3.5rem; font-weight: 800; color: var(--dark); line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
-            .text-gradient { background: linear-gradient(135deg, #FDA4AF 0%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-            p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-weight: 500; }
+            .text-gradient { background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 40%, #E11D48 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+            p { font-size: 1.1rem; color: var(--text-muted); max-width: 620px; margin: 0 auto 30px; font-weight: 500; }
+        }
+
+        /* 🌺 DURGA PUJA SPECIAL OFFER BANNER */
+        .puja-offer-banner {
+            background: linear-gradient(135deg, rgba(190, 18, 60, 0.22) 0%, rgba(217, 119, 6, 0.2) 100%);
+            border: 2px solid rgba(252, 211, 77, 0.45);
+            border-radius: 16px;
+            padding: 25px 35px;
+            max-width: 900px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.15), inset 0 0 20px rgba(245, 158, 11, 0.08);
+            animation: slideUpStagger 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .puja-offer-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+        .puja-icon-circle {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.2);
+            border: 2px solid #FCD34D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+        }
+        .puja-offer-text h3 {
+            color: #FDE68A;
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            letter-spacing: -0.3px;
+        }
+        .puja-offer-text p {
+            color: var(--text-main);
+            font-size: 0.92rem;
+            margin: 0;
+        }
+        .btn-puja {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: #130f0f;
+            font-weight: 800;
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+        }
+        .btn-puja:hover {
+            background: #FBBF24;
+            transform: translateY(-2px) scale(1.03);
         }
 
         /* PROMOTIONAL ISO BANNER */
@@ -221,18 +330,19 @@
                 background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; 
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column;
                 animation: slideUpStagger 0.6s backwards;
+                position: relative;
                 
                 &:nth-child(1) { animation-delay: 0.1s; }
                 &:nth-child(2) { animation-delay: 0.2s; }
                 &:nth-child(3) { animation-delay: 0.3s; }
                 &:nth-child(4) { animation-delay: 0.4s; }
 
-                &:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 25px -5px rgba(225, 29, 72, 0.15); border-color: var(--primary); }
+                &:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 25px -5px rgba(245, 158, 11, 0.18); border-color: var(--secondary); }
                 
-                .course-tag { background: rgba(245, 158, 11, 0.15); color: #FCD34D; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
+                .course-tag { background: rgba(245, 158, 11, 0.15); color: #FCD34D; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; width: fit-content; }
                 h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--dark); }
                 p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1; }
-                .course-features div { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; margin-bottom: 6px; font-weight: 500; i { color: var(--primary); } }
+                .course-features div { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; margin-bottom: 6px; font-weight: 500; i { color: var(--secondary); } }
                 .course-price { border-top: 1px solid var(--border); padding-top: 15px; display: flex; justify-content: space-between; align-items: flex-end; }
                 .price-amt { font-size: 1.5rem; font-weight: 800; color: var(--dark); }
                 .price-sub { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; }
@@ -382,21 +492,21 @@
             position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: center; pointer-events: none;
         }
         .ai-avatar {
-            width: 80px; height: 80px; border-radius: 50%; background: var(--white); border: 3px solid var(--primary);
-            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4); position: relative; pointer-events: auto; cursor: pointer;
+            width: 80px; height: 80px; border-radius: 50%; background: var(--white); border: 3px solid var(--secondary);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4); position: relative; pointer-events: auto; cursor: pointer;
             transition: transform 0.1s ease-out; 
         }
         .ai-avatar svg { width: 100%; height: 100%; border-radius: 50%; display: block; }
         .ai-pupil { transition: transform 0.05s linear; }
         
         .ai-speech-bubble {
-            background: var(--white); color: var(--text-main); padding: 12px 18px; border-radius: 12px; font-size: 0.85rem;
-            font-weight: 600; margin-bottom: 15px; border: 1px solid var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            background: var(--white); color: #FDE68A; padding: 12px 18px; border-radius: 12px; font-size: 0.85rem;
+            font-weight: 600; margin-bottom: 15px; border: 1px solid var(--secondary); box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             opacity: 0; transform: translateY(10px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; text-align: center;
         }
         .ai-speech-bubble::after {
             content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%) rotate(45deg);
-            width: 12px; height: 12px; background: var(--white); border-right: 1px solid var(--primary); border-bottom: 1px solid var(--primary);
+            width: 12px; height: 12px; background: var(--white); border-right: 1px solid var(--secondary); border-bottom: 1px solid var(--secondary);
         }
         .ai-companion:hover .ai-speech-bubble, .ai-speech-bubble.show-temp { opacity: 1; transform: translateY(0); }
 
@@ -484,7 +594,8 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .trust-bar { flex-direction: column; align-items: center; gap: 15px; }
-            .iso-banner { flex-direction: column; padding: 20px; text-align: center; }
+            .iso-banner, .puja-offer-banner { flex-direction: column; padding: 20px; text-align: center; }
+            .puja-offer-left { flex-direction: column; text-align: center; }
             .course-grid { grid-template-columns: 1fr; }
             #view-manage .course-grid, #view-add-course .course-grid, #view-notes .course-grid { grid-template-columns: 1fr !important; }
             .ai-companion { display: none; }
@@ -499,9 +610,15 @@
         <span id="loading-text">Connecting to Server...</span>
     </div>
 
+    <!-- 🪔 DURGA PUJA FESTIVE TOP ANNOUNCEMENT BAR -->
+    <div class="puja-top-bar">
+        <span>🪔 <b>Subho Sharadiya & Happy Durga Puja 2026!</b> May Maa Durga bless your career with wisdom and success. 🌺</span>
+        <span class="puja-highlight" onclick="showPage('apply')">🎁 Claim Puja Offer</span>
+    </div>
+
     <!-- AI Companion Widget -->
     <div id="ai-companion" class="ai-companion">
-        <div class="ai-speech-bubble" id="ai-speech">Hello! I'm your AI guide.</div>
+        <div class="ai-speech-bubble" id="ai-speech">Subho Sharadiya! 🪔 Welcome to Career Build!</div>
         <div class="ai-avatar">
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -516,6 +633,8 @@
                     <path d="M 25,35 Q 50,20 75,35 Q 60,45 50,30 Q 40,45 25,35 Z" fill="#DC2626"/>
                     <path d="M 15,35 Q 25,70 25,100 L 10,100 Z" fill="#B91C1C"/>
                     <path d="M 85,35 Q 75,70 75,100 L 90,100 Z" fill="#B91C1C"/>
+                    <!-- Festive Bindi -->
+                    <circle cx="50" cy="43" r="2" fill="#E11D48"/>
                     <ellipse cx="40" cy="58" rx="4" ry="2" fill="#FFA5A5" opacity="0.6"/>
                     <ellipse cx="60" cy="58" rx="4" ry="2" fill="#FFA5A5" opacity="0.6"/>
                     <circle cx="42" cy="50" r="5" fill="#FFF"/>
@@ -523,21 +642,23 @@
                     <circle cx="42" cy="50" r="2.5" fill="#111" class="ai-pupil"/>
                     <circle cx="58" cy="50" r="2.5" fill="#111" class="ai-pupil"/>
                     <path d="M 47,62 Q 50,65 53,62" stroke="#D97777" stroke-width="1.5" fill="transparent" stroke-linecap="round"/>
-                    <rect x="25" y="45" width="5" height="15" rx="2" fill="#F87171"/>
-                    <rect x="70" y="45" width="5" height="15" rx="2" fill="#F87171"/>
-                    <path d="M 27,52 Q 50,85 73,52" stroke="#F87171" stroke-width="1" fill="transparent" opacity="0.5"/>
+                    <rect x="25" y="45" width="5" height="15" rx="2" fill="#F59E0B"/>
+                    <rect x="70" y="45" width="5" height="15" rx="2" fill="#F59E0B"/>
+                    <path d="M 27,52 Q 50,85 73,52" stroke="#F59E0B" stroke-width="1" fill="transparent" opacity="0.5"/>
                 </g>
             </svg>
         </div>
     </div>
 
     <nav>
-        <div class="logo" id="main-logo">CAREER <span>BUILD</span></div>
+        <div class="logo" id="main-logo">
+            <span class="festive-icon">🪔</span> CAREER <span>BUILD</span>
+        </div>
         <div class="nav-links">
             <button onclick="showPage('home')">Home</button>
             <button onclick="showPage('login')" id="login-nav">Login</button>
             <button onclick="logout()" id="logout-nav" style="display:none;">Logout</button>
-            <button onclick="showPage('apply')" class="btn-nav-primary">Apply Now</button>
+            <button onclick="showPage('apply')" class="btn-nav-primary">🌺 Festive Admission</button>
         </div>
     </nav>
 
@@ -545,19 +666,33 @@
     <section id="home" class="page-section active" style="padding-top: 0;">
         <div class="hero" id="hero-section">
             <div class="hero-content">
-                <span class="badge-hero" id="hero-badge">📢 Admissions Open - Enroll Today!</span>
-                <h1 id="hero-title">Build Your Future with <span class="text-gradient" id="hero-gradient">Essential Tech Skills</span></h1>
-                <p id="hero-desc">Master basic to advanced computer applications, programming, and design with our hands-on, practical training programs tailored for your success.</p>
-                <button onclick="showPage('apply')" class="btn-action pulse" style="max-width: 200px; font-size: 1.1rem;">Start Your Journey</button>
+                <span class="badge-hero" id="hero-badge">🌺 শারদীয় শুভেচ্ছা | Sharadiya Utsav Admissions Open! 🪔</span>
+                <h1 id="hero-title">Celebrate New Beginnings with <span class="text-gradient" id="hero-gradient">Essential Tech Skills</span></h1>
+                <p id="hero-desc">This Durga Puja, empower your future! Master basic to advanced computer applications, programming, and graphic design with 100% practical training in Lalganesh, Guwahati.</p>
+                <button onclick="showPage('apply')" class="btn-action pulse" style="max-width: 240px; font-size: 1.05rem; background: linear-gradient(135deg, #E11D48 0%, #D97706 100%);">✨ Enroll This Festive Season</button>
             </div>
         </div>
 
-        <!-- ISO CERTIFICATION PROMOTIONAL BANNER -->
-        <div class="iso-banner">
-            <i class="fas fa-medal"></i>
-            <div>
-                <h3>Proudly ISO 9001:2015 Certified (IAF)</h3>
-                <p>We are officially recognized for our global standards in Quality Management and Computer Education. Choose an institute that guarantees excellence.</p>
+        <div style="padding: 0 5%;">
+            <!-- 🌺 NEW DURGA PUJA SPECIAL FESTIVE BANNER -->
+            <div class="puja-offer-banner">
+                <div class="puja-offer-left">
+                    <div class="puja-icon-circle">🔱</div>
+                    <div class="puja-offer-text">
+                        <h3>🌟 Sharadiya Durga Puja Special Admission Offer!</h3>
+                        <p>Enroll in <b>ADCA, ADCPA, DCA, or Programming</b> during the festive season to avail special Puja fee discounts & free digital study material kits!</p>
+                    </div>
+                </div>
+                <button class="btn-puja" onclick="showPage('apply')">Claim Festive Discount <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <!-- ISO CERTIFICATION PROMOTIONAL BANNER -->
+            <div class="iso-banner">
+                <i class="fas fa-medal"></i>
+                <div>
+                    <h3>Proudly ISO 9001:2015 Certified (IAF)</h3>
+                    <p>We are officially recognized for our global standards in Quality Management and Computer Education. Choose an institute that guarantees excellence.</p>
+                </div>
             </div>
         </div>
         
@@ -572,7 +707,7 @@
             <h2 class="section-title">Explore Our Programs</h2>
             <div class="course-grid">
                 <div class="course-card">
-                    <div class="course-tag">Diploma</div>
+                    <div class="course-tag">🌺 Puja Special • Diploma</div>
                     <h3>ADCA</h3>
                     <p>Advanced Diploma in Computer Application.</p>
                     <div class="course-features">
@@ -584,7 +719,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-tag" style="background:rgba(225, 29, 72, 0.15); color:var(--primary);">Advanced</div>
+                    <div class="course-tag" style="background:rgba(225, 29, 72, 0.15); color:#FDA4AF;">🪔 Festive Bestseller</div>
                     <h3>ADCPA</h3>
                     <p>Advanced Diploma in Computer Pro Application.</p>
                     <div class="course-features">
@@ -596,7 +731,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-tag" style="background:rgba(245, 158, 11, 0.15); color:var(--warning);">Popular</div>
+                    <div class="course-tag" style="background:rgba(245, 158, 11, 0.15); color:var(--warning);">✨ Popular Choice</div>
                     <h3>Programming Basic</h3>
                     <p>Master Python, Web Design, and AI implementations.</p>
                     <div class="course-features">
@@ -608,7 +743,7 @@
                     </div>
                 </div>
                 <div class="course-card">
-                    <div class="course-tag">Short Term</div>
+                    <div class="course-tag">🌺 8-Month Diploma</div>
                     <h3>DCA</h3>
                     <p>Diploma in Computer Application.</p>
                     <div class="course-features">
@@ -625,9 +760,10 @@
 
     <!-- Apply Page -->
     <section id="apply" class="page-section">
-        <div class="card" style="max-width: 500px; margin: 0 auto; animation: slideUpStagger 0.6s ease-out;">
-            <h2 style="text-align: center; color: var(--dark); font-weight: 800; margin-bottom: 10px;">Start Your Application</h2>
-            <p style="text-align: center; margin-bottom: 30px; font-size: 0.95rem; color: var(--text-muted);">Fill out the form below. Our career counselor will connect with you shortly.</p>
+        <div class="card" style="max-width: 500px; margin: 0 auto; animation: slideUpStagger 0.6s ease-out; border-color: rgba(252, 211, 77, 0.4);">
+            <div style="text-align: center; margin-bottom: 10px; font-size: 1.8rem;">🪔🌺</div>
+            <h2 style="text-align: center; color: var(--dark); font-weight: 800; margin-bottom: 8px;">Festive Admission Application</h2>
+            <p style="text-align: center; margin-bottom: 25px; font-size: 0.92rem; color: var(--text-muted);">Fill out the form below to lock in your Sharadiya Utsav offer. Our counselor will connect with you shortly.</p>
             <label>Full Name</label>
             <input type="text" id="apply-name" placeholder="e.g. Rahul Sharma" required>
             <label>WhatsApp Number</label>
@@ -636,7 +772,7 @@
             <select id="apply-course" required>
                 <!-- Filled dynamically by JS -->
             </select>
-            <button class="btn-action pulse" onclick="submitApplication()" style="margin-top: 10px;">Submit Application</button>
+            <button class="btn-action pulse" onclick="submitApplication()" style="margin-top: 10px; background: linear-gradient(135deg, #E11D48 0%, #D97706 100%);">Submit Festive Application</button>
         </div>
     </section>
 
@@ -685,9 +821,9 @@
             </div>
 
             <div id="view-overview">
-                <!-- Operational Launch Banner -->
-                <div style="background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 15px; border-radius: 12px; margin-bottom: 25px; text-align: center; font-weight: 600; animation: slideUpStagger 0.3s ease-out;">
-                    <i class="fas fa-rocket"></i> Official Operational Launch (October 2026) - All systems active and ready for batch enrollments.
+                <!-- Operational & Festive Launch Banner -->
+                <div style="background: linear-gradient(90deg, rgba(16, 185, 129, 0.15), rgba(245, 158, 11, 0.15)); color: #FDE68A; border: 1px solid rgba(245, 158, 11, 0.4); padding: 15px; border-radius: 12px; margin-bottom: 25px; text-align: center; font-weight: 600; animation: slideUpStagger 0.3s ease-out;">
+                    🪔 <b>Sharadiya Utsav & October 2026 Launch Active</b> — Festive UI theme & student study notes system live!
                 </div>
 
                 <div class="stats-grid">
@@ -750,7 +886,7 @@
                         <label>Note Title / Topic</label>
                         <input type="text" id="note-title" placeholder="e.g. MS Word 50+ Keyboard Shortcuts">
 
-                        <!-- NEW DIRECT FILE UPLOAD INPUT -->
+                        <!-- DIRECT FILE UPLOAD INPUT -->
                         <label><i class="fas fa-file-upload" style="color: var(--primary);"></i> Upload Note File (PDF, DOCX, XLSX, Image, etc.)</label>
                         <div class="file-upload-box">
                             <input type="file" id="note-file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.jpg,.jpeg,.png,.zip" onchange="validateNoteFile(this)">
@@ -891,6 +1027,12 @@
     <!-- Student Dashboard -->
     <section id="student-dash" class="page-section">
         <div class="dashboard-wrapper">
+            <!-- Festive Greeting inside Student Portal -->
+            <div style="background: linear-gradient(90deg, rgba(190, 18, 60, 0.2), rgba(245, 158, 11, 0.2)); border: 1px solid rgba(252, 211, 77, 0.35); padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <span style="color: #FDE68A; font-weight: 600; font-size: 0.92rem;">🪔 <b>Subho Sharadiya!</b> Wishing you and your family a joyful Durga Puja! 🌺</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Keep learning & shining ✨</span>
+            </div>
+
             <h2 id="std-welcome" style="font-weight: 800; margin-bottom: 20px; color: var(--dark);">Welcome Student</h2>
             
             <div class="tabs" style="margin-bottom: 20px;">
@@ -1013,7 +1155,7 @@
     <footer>
         <div class="footer-grid">
             <div>
-                <h3>CAREER BUILD</h3>
+                <h3>🪔 CAREER BUILD</h3>
                 <p style="color: var(--text-muted);">An ISO 9001:2015 (IAF) & MSME certified institute empowering the next generation of tech professionals with industry-standard skills and practical knowledge.</p>
                 <div class="social-links">
                     <a href="https://www.instagram.com/careerbuild_comp?stkn=Mzl1N2R5bXhwNmJi" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i></a>
@@ -1030,6 +1172,7 @@
             <div>
                 <h4>Operating Hours</h4>
                 <p><i class="fas fa-clock"></i> Monday - Sunday<br>08:00 AM - 10:00 PM</p>
+                <p style="color: #FCD34D; font-size: 0.85rem; margin-top: 8px;"><i class="fas fa-star"></i> Wishing everyone a joyous Sharadiya Durga Puja!</p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1085,20 +1228,20 @@
         });
 
         const aiMessages = [
-            "Hi there! Check out our courses.",
+            "Subho Sharadiya! 🪔 Happy Durga Puja!",
+            "Check out our Festive Puja Admission Offers! 🌺",
             "Check your Study Notes tab for new files!",
             "Any doubts? Use the Ask a Doubt tab!",
-            "Code Practice is fun, try it!",
-            "Don't forget to complete your assignments."
+            "May Maa Durga bless your learning journey! ✨"
         ];
         setInterval(() => {
             const bubble = document.getElementById('ai-speech');
             if(bubble) {
                 bubble.innerText = aiMessages[Math.floor(Math.random() * aiMessages.length)];
                 bubble.classList.add('show-temp');
-                setTimeout(() => bubble.classList.remove('show-temp'), 3000);
+                setTimeout(() => bubble.classList.remove('show-temp'), 3500);
             }
-        }, 12000);
+        }, 10000);
 
         // ==========================================
         // FIREBASE CONFIGURATION & STATE
@@ -1423,7 +1566,7 @@
             if (input.files && input.files[0]) {
                 const file = input.files[0];
                 const sizeKB = Math.round(file.size / 1024);
-                if (file.size > 768000) { // ~750 KB limit for Firestore 1MB document cap
+                if (file.size > 768000) {
                     alert(`File "${file.name}" (${sizeKB} KB) is too large for direct database upload! Please choose a file under 750 KB, or upload it to Google Drive and paste the link below.`);
                     input.value = "";
                     infoBox.innerHTML = `Max file size: <b>750 KB</b> for direct upload (For larger files, use the Link box below)`;
@@ -1779,7 +1922,7 @@
             const due = s.totalFee - (s.discount || 0) - (s.paidFee || 0);
             if(due <= 0) return alert("No pending dues for this student.");
 
-            const text = `Hello *${s.name}*,%0A%0AThis is a gentle reminder from *Career Build Computer Education* regarding your pending fee for the ${s.course} course.\%0A\%0A*Pending Amount:* ₹${due.toLocaleString()}%0A%0AKindly clear the dues at your earliest convenience to avoid interruption in your classes and certificate generation.%0A%0AIf you have already paid, please ignore this message.%0A%0ARegards,%0AAdmin, Career Build`;
+            const text = `Hello *${s.name}*,%0A%0ASubho Sharadiya! 🪔 This is a gentle reminder from *Career Build Computer Education* regarding your pending fee for the ${s.course} course.\%0A\%0A*Pending Amount:* ₹${due.toLocaleString()}%0A%0AKindly clear the dues at your earliest convenience to avoid interruption in your classes and certificate generation.%0A%0AIf you have already paid, please ignore this message.%0A%0ARegards,%0AAdmin, Career Build`;
 
             let phone = s.phone.replace(/[^0-9]/g, ''); 
             if(phone.length === 10) phone = '91' + phone;
@@ -2039,7 +2182,7 @@
             try { await db.collection("admissions").add({ name: name, phone: phone, course: course, date: new Date().toLocaleString('en-GB') }); } 
             catch(e) { console.error("Submission failed", e); }
             document.getElementById('loading-overlay').style.display = 'none';
-            alert("Application submitted successfully. Our counselor will contact you shortly.");
+            alert("Subho Sharadiya! 🪔 Your application has been submitted successfully. Our counselor will contact you shortly.");
             document.getElementById('apply-name').value = ''; document.getElementById('apply-phone').value = ''; document.getElementById('apply-course').value = ''; showPage('home');
         }
     </script>
