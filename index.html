@@ -602,6 +602,26 @@
         }
         
         #loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 10, 10, 0.9); z-index: 3000; justify-content: center; align-items: center; font-weight: 700; color: var(--primary); font-size: 1.2rem; flex-direction: column;}
+        
+        /* GOOGLE MAPS LOCATOR COMPONENT STYLING */
+        gmpx-store-locator {
+            width: 100%;
+            height: 100%;
+            --gmpx-color-surface: #1c1515; /* Matches --white */
+            --gmpx-color-on-surface: #E2E8F0; /* Matches --text-main */
+            --gmpx-color-on-surface-variant: #9CA3AF; /* Matches --text-muted */
+            --gmpx-color-primary: #E11D48; /* Matches --primary */
+            --gmpx-color-outline: #382525; /* Matches --border */
+            --gmpx-fixed-panel-width-row-layout: 28.5em;
+            --gmpx-fixed-panel-height-column-layout: 65%;
+            --gmpx-font-family-base: "Inter", sans-serif;
+            --gmpx-font-family-headings: "Inter", sans-serif;
+            --gmpx-font-size-base: 0.9rem;
+            --gmpx-hours-color-open: #34D399; /* Matches Tailwind Emerald for Success */
+            --gmpx-hours-color-closed: #EF4444; /* Matches --danger */
+            --gmpx-rating-color: #F59E0B; /* Matches --secondary */
+            --gmpx-rating-color-empty: #382525;
+        }
     </style>
 </head>
 <body>
@@ -754,6 +774,16 @@
                         <div style="text-align: right;"><span class="price-amt">₹1,000</span><br><span class="price-sub">/month EMI</span></div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- NEW GOOGLE MAPS LOCATOR SECTION -->
+        <div style="padding: 20px 5% 60px; max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Visit Our Institute</h2>
+            <div style="height: 600px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <!-- Extended Component Library HTML tags -->
+                <gmpx-api-loader key="AIzaSyAzYMINwIhbLRHvry__q-0EM4Ph_n27xiQ" solution-channel="GMP_QB_locatorplus_v11_cF"></gmpx-api-loader>
+                <gmpx-store-locator map-id="DEMO_MAP_ID"></gmpx-store-locator>
             </div>
         </div>
     </section>
@@ -1179,6 +1209,28 @@
             <p style="justify-content: center;">&copy; 2026 Career Build Computer Education & Cyber Solution. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- GOOGLE MAPS EXTENDED COMPONENT LIBRARY SCRIPT -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.15/index.min.js"></script>
+
+    <!-- MAP LOCATOR CONFIGURATION -->
+    <script>
+      const CONFIGURATION = {
+        "locations": [
+          {"title":"CAREERBUILD COMPUTER EDUCATION \u0026 CYBER SOLUTION","address1":"House no 5, Lalganesh, Banikpara, Near Kidzee School","address2":"Guwahati, Assam, India","coords":{"lat":26.1415267,"lng":91.7405997},"placeId":"ChIJNd5gPSFbWjcRcXqiaAlelPA","actions":[{"label":"Book appointment","defaultUrl":"https://careerbuildcomp.netlify.app/"}]}
+        ],
+        "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":4,"zoomControl":true,"maxZoom":17,"mapId":""},
+        "mapsApiKey": "AIzaSyAzYMINwIhbLRHvry__q-0EM4Ph_n27xiQ",
+        "capabilities": {"input":false,"autocomplete":false,"directions":false,"distanceMatrix":false,"details":false,"actions":true}
+      };
+    </script>
+    <script type="module">
+      document.addEventListener('DOMContentLoaded', async () => {
+        await customElements.whenDefined('gmpx-store-locator');
+        const locator = document.querySelector('gmpx-store-locator');
+        locator.configureFromQuickBuilder(CONFIGURATION);
+      });
+    </script>
 
     <!-- FIREBASE COMPAT SDK LIBRARIES -->
     <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
